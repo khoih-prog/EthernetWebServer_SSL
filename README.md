@@ -714,7 +714,7 @@ else
 
 **Note**: `sslClient.connect("www.arduino.cc", 443)` can take 5-15 seconds to finish. This an unavoidable consequence of the SSL protocol, and is detailed in [Implementation Notes](#resources).
 
-For more information on `EthernetSSLClient`, check out the [examples](./examples), [API documentation](https://openslab-osu.github.io/SSLClient/html/index.html), or the rest of this README.
+For more information on `EthernetSSLClient`, check out the [examples](./examples), [API documentation](https://openslab-osu.github.io/SSLClient/index.html), or the rest of this README.
 
 ---
 
@@ -917,7 +917,7 @@ If for some unfortunate reason you need SSL 3.0 or SSL 2.0, you will need to mod
 
 ### Known Issues
 
- * In some drivers (Ethernet), calls to `Client::flush` will hang if internet is available but there is no route to the destination. Unfortunately SSLClient cannot correct for this without modifying the driver itself, and as a result the recommended solution is ensuring you choose a driver with built-in timeouts to prevent freezing. [More information here](https://github.com/OPEnSLab-OSU/SSLClient/issues/13#issuecomment-643855923).
+ * In some drivers (Ethernet), calls to `Client::flush` will hang if internet is available but there is no route to the destination. Unfortunately SSLClient cannot correct for this without modifying the driver itself, and as a result the recommended solution is ensuring you choose a driver with built-in timeouts to prevent freezing. Check [Calls to stop before connected cause lockups.](https://github.com/OPEnSLab-OSU/SSLClient/issues/13#issuecomment-643855923).
  
  * When using PubSubClient on the ESP32, a stack overflow will occur if the user does not flush the buffer immediately after writing. The cause of this issue is under active investigation. More information in issue [PubSubClient on ESP32 overflows the stack](https://github.com/OPEnSLab-OSU/SSLClient/issues/9).
  
