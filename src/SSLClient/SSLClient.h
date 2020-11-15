@@ -129,7 +129,7 @@ class EthernetSSLClient : public Client
        from 16 consecutive analogReads, and given to BearSSL before the handshake
        starts.
 
-       The implementation for this function can be found in EthernetSSLClientImpl::connect_impl(IPAddress, uint16_t).
+       The implementation for this function can be found in EthernetSSLClient::connect(IPAddress, uint16_t).
 
        @pre The underlying client object (passed in through the constructor) is in a non-
        error state, and must be able to access the IP.
@@ -167,7 +167,7 @@ class EthernetSSLClient : public Client
        string, which will reduce connection time to 100-500ms. To read more about this
        functionality, check out Session Caching in the README.
 
-       The implementation for this function can be found in EthernetSSLClientImpl::connect_impl(const char*, uint16_t)
+       The implementation for this function can be found in EthernetSSLClient::connect_impl(const char*, uint16_t)
 
        @pre The underlying client object (passed in through the constructor) is in a non-
        error state, and must be able to access the IP.
@@ -193,12 +193,12 @@ class EthernetSSLClient : public Client
        buffer, BUT does not initially send the data. Instead, you must call
        EthernetSSLClient::available or EthernetSSLClient::flush, which will detect that
        the buffer is ready for writing, and will write the data to the network.
-       Alternatively, if this function is requested to write a larger amount of data than EthernetSSLClientImpl::m_iobuf
-       can handle, data will be written to the network in pages the size of EthernetSSLClientImpl::m_iobuf until
+       Alternatively, if this function is requested to write a larger amount of data than EthernetSSLClient::m_iobuf
+       can handle, data will be written to the network in pages the size of EthernetSSLClient::m_iobuf until
        all the data in buf is sent--attempting to keep all writes to the network grouped together. For information
        on why this is the case check out README.md .
 
-       The implementation for this function can be found in EthernetSSLClientImpl::write_impl(const uint8_t*, size_t)
+       The implementation for this function can be found in EthernetSSLClient::write_impl(const uint8_t*, size_t)
 
        @pre The socket and SSL layer must be connected, meaning EthernetSSLClient::connected must be true.
        @pre BearSSL must not be waiting for the recipt of user data (if it is, there is
@@ -228,7 +228,7 @@ class EthernetSSLClient : public Client
        preconditions are met before checking this function to prevent an ambiguous
        result.
 
-       The implementation for this function can be found in EthernetSSLClientImpl::available
+       The implementation for this function can be found in EthernetSSLClient::available
 
        @pre EthernetSSLClient::connected must be true. (Call EthernetSSLClient::connected before this function)
 
@@ -249,7 +249,7 @@ class EthernetSSLClient : public Client
        If you find that you are having a lot of timeout errors, EthernetSSLClient may be experiencing a buffer
        overflow. Checkout README.md for more information.
 
-       The implementation for this function can be found in EthernetSSLClientImpl::read_impl(uint8_t*, size_t)
+       The implementation for this function can be found in EthernetSSLClient::read_impl(uint8_t*, size_t)
 
        @pre EthernetSSLClient::available must be >0
 
@@ -273,7 +273,7 @@ class EthernetSSLClient : public Client
     /**
        @brief View the first byte of the buffer, without removing it from the EthernetSSLClient Buffer
 
-       The implementation for this function can be found in EthernetSSLClientImpl::peek
+       The implementation for this function can be found in EthernetSSLClient::peek
        @pre EthernetSSLClient::available must be >0
        @returns The first byte received, or -1 if the preconditions are not satisfied (warning:
        do not use if your data may be -1, as the return value is ambiguous)
@@ -285,7 +285,7 @@ class EthernetSSLClient : public Client
 
        This function is blocking until all bytes from the buffer are written. For
        an explanation of how writing with EthernetSSLClient works, please see EthernetSSLClient::write.
-       The implementation for this function can be found in EthernetSSLClientImpl::flush.
+       The implementation for this function can be found in EthernetSSLClient::flush.
     */
     void flush() override;
 
@@ -295,7 +295,7 @@ class EthernetSSLClient : public Client
        If the SSL session is still active, all incoming data is discarded and BearSSL will attempt to
        close the session gracefully (will write to the network), and then call m_client::stop. If the session is not active or an
        error was encountered previously, this function will simply call m_client::stop.
-       The implementation for this function can be found in EthernetSSLClientImpl::peek.
+       The implementation for this function can be found in EthernetSSLClient::peek.
     */
     void stop() override;
 
@@ -308,7 +308,7 @@ class EthernetSSLClient : public Client
        has some delays built in to protect EthernetSSLClient::m_client from being polled too frequently, and EthernetSSLClient::connected
        contains logic to ensure that if the socket is dropped EthernetSSLClient will react accordingly.
 
-       The implementation for this function can be found in EthernetSSLClientImpl::connected_impl.
+       The implementation for this function can be found in EthernetSSLClient::connected_impl.
 
        @returns 1 if connected, 0 if not
     */
@@ -336,7 +336,7 @@ class EthernetSSLClient : public Client
        however it will also result in old sessions being cleared and returned. In general, it is a
        good idea to use a SessionCache size equal to the number of domains you plan on connecting to.
 
-       The implementation for this function can be found at EthernetSSLClientImpl::get_session_impl.
+       The implementation for this function can be found at EthernetSSLClient::get_session_impl.
 
        @param host A hostname c string, or NULL if one is not available
        @param addr An IP address
@@ -347,7 +347,7 @@ class EthernetSSLClient : public Client
     /**
        @brief Clear the session corresponding to a host and IP
 
-       The implementation for this function can be found at EthernetSSLClientImpl::remove_session_impl.
+       The implementation for this function can be found at EthernetSSLClient::remove_session_impl.
 
        @param host A hostname c string, or nullptr if one is not available
        @param addr An IP address
@@ -399,7 +399,7 @@ class EthernetSSLClient : public Client
     }
 
   private:
-    /** @brief Returns an instance of m_client that is polymorphic and can be used by EthernetSSLClientImpl */
+    /** @brief Returns an instance of m_client that is polymorphic and can be used by EthernetSSLClient */
     Client& get_arduino_client() 
     {
       return m_client;
