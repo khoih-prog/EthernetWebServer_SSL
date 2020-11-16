@@ -1,5 +1,5 @@
 /****************************************************************************************************************************
-  MQTTClient_SSL.ino - Dead simple SSL MQTT Client for Ethernet shields
+  MQTTClient_SSL_Complex.ino - Dead simple SSL MQTT Client for Ethernet shields
 
   EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
 
@@ -41,8 +41,6 @@ const char my_key[]   = "FIXME";
 
 SSLClientParameters mTLS = SSLClientParameters::fromPEM(my_cert, sizeof my_cert, my_key, sizeof my_key);
 
-//const char* mqttServer = "broker.example";      // Broker address
-
 const char* mqttServer = "broker.emqx.io";        // Broker address
 
 const char *ID        = "MQTTClient_SSL-Client";  // Name of our device, must be unique
@@ -54,17 +52,17 @@ unsigned long lastMsg = 0;
 // Initialize the SSL client library
 // Arguments: EthernetClient, our trust anchors
 
-void callback(char* topic, byte* payload, unsigned int length) 
+void callback(char* topic, byte* payload, unsigned int length)
 {
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
-  
-  for (int i = 0; i < length; i++) 
+
+  for (int i = 0; i < length; i++)
   {
     Serial.print((char)payload[i]);
   }
-  
+
   Serial.println();
 }
 
@@ -87,7 +85,7 @@ void reconnect()
       Serial.println("...connected");
       
       // Once connected, publish an announcement...
-      String data = "Hello from MQTTClient_SSL on " + String(BOARD_NAME);
+      String data = "Hello from MQTTClient_SSL_Complex on " + String(BOARD_NAME);
 
       client.publish(TOPIC, data.c_str());
 
@@ -122,11 +120,11 @@ void setup()
   Serial.begin(115200);
   while (!Serial);
 
-  Serial.print("\nStart MQTTClient_SSL on " + String(BOARD_NAME));
+  Serial.print("\nStart MQTTClient_SSL_Complex on " + String(BOARD_NAME));
   Serial.println(" with " + String(SHIELD_TYPE));
 
   // Enable mutual TLS with SSLClient
-  ethClientSSL.setMutualAuthParams(mTLS);
+  //ethClientSSL.setMutualAuthParams(mTLS);
 
 #if USE_ETHERNET_WRAPPER
 
@@ -301,29 +299,27 @@ void setup()
   Serial.println(Ethernet.localIP());
 }
 
-
 #define MQTT_PUBLISH_INTERVAL_MS       5000L
 
-String data         = "Hello from MQTTClient_SSL on " + String(BOARD_NAME);
-const char *pubData = data.c_str();
-
-void loop() 
+void loop()
 {
   static unsigned long now;
   
-  if (!client.connected()) 
+  if (!client.connected())
   {
     reconnect();
   }
 
   // Sending Data
   now = millis();
-  
+
   if (now - lastMsg > MQTT_PUBLISH_INTERVAL_MS)
   {
     lastMsg = now;
 
-    if (!client.publish(TOPIC, pubData))
+    String data = "Hello from MQTTClient_SSL_Complex on " + String(BOARD_NAME) + ", millis = " + String(millis());
+
+    if (!client.publish(TOPIC, data.c_str()))
     {
       Serial.println("Message failed to send.");
     }

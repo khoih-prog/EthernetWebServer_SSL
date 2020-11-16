@@ -11,7 +11,7 @@
 
 ### Why do we need this [EthernetWebServer_SSL library](https://github.com/khoih-prog/EthernetWebServer_SSL)
 
-This [EthernetWebServer_SSL library](https://github.com/khoih-prog/EthernetWebServer_SSL) is a simple yet complete TLS/SSL WebClient and non-TLS/SSL WebServer library for **TAVR, eensy, SAM DUE, Arduino SAMD21, Adafruit SAMD21/SAMD51, Adafruit nRF52, ESP32/ESP8266, STM32, etc.** boards using Ethernet shields. The functions are similar and compatible to those of [`ESP32 WebServer`](https://github.com/espressif/arduino-esp32/tree/master/libraries/WebServer) and [`ESP8266WebServer`](https://github.com/esp8266/Arduino/tree/master/libraries/ESP8266WebServer) libraries to make life much easier to port sketches from ESP8266/ESP32.
+This [EthernetWebServer_SSL library](https://github.com/khoih-prog/EthernetWebServer_SSL) is a simple yet complete TLS/SSL WebClient and non-TLS/SSL WebServer library for **AVR, Teensy, SAM DUE, Arduino SAMD21, Adafruit SAMD21/SAMD51, Adafruit nRF52, ESP32/ESP8266, STM32, etc.** boards using Ethernet shields. The functions are similar and compatible to those of [`ESP32 WebServer`](https://github.com/espressif/arduino-esp32/tree/master/libraries/WebServer) and [`ESP8266WebServer`](https://github.com/esp8266/Arduino/tree/master/libraries/ESP8266WebServer) libraries to make life much easier to port sketches from ESP8266/ESP32.
 
 This [EthernetWebServer_SSL library](https://github.com/khoih-prog/EthernetWebServer_SSL) adds [TLS 1.2](https://www.websecurity.digicert.com/security-topics/what-is-ssl-tls-https) functionality to EthernetClient, using BearSSL as an underlying TLS engine.
 
@@ -935,15 +935,16 @@ If for some unfortunate reason you need SSL 3.0 or SSL 2.0, you will need to mod
  6. [MQTTClient_Basic](examples/MQTTClient_Basic)
  7. [MQTTClient_SSL](examples/MQTTClient_SSL)
  8. [MQTTClient_SSL_Auth](examples/MQTTClient_SSL_Auth)
- 9. [PostServer](examples/PostServer)
-10. [SimpleAuthentication](examples/SimpleAuthentication)
-11. [UdpNTPClient](examples/UdpNTPClient)
-12. [UdpSendReceive](examples/UdpSendReceive)
-13. [WebClient](examples/WebClient)
-14. [WebClientMulti_SSL](examples/WebClientMulti_SSL)
-15. [WebClientRepeating](examples/WebClientRepeating)
-16. [WebClient_SSL](examples/WebClient_SSL)
-17. [WebServer](examples/WebServer)
+ 9. [MQTTClient_SSL_Complex](examples/MQTTClient_SSL_Complex)
+10. [PostServer](examples/PostServer)
+11. [SimpleAuthentication](examples/SimpleAuthentication)
+12. [UdpNTPClient](examples/UdpNTPClient)
+13. [UdpSendReceive](examples/UdpSendReceive)
+14. [WebClient](examples/WebClient)
+15. [WebClientMulti_SSL](examples/WebClientMulti_SSL)
+16. [WebClientRepeating](examples/WebClientRepeating)
+17. [WebClient_SSL](examples/WebClient_SSL)
+18. [WebServer](examples/WebServer)
 
 ---
 ---
@@ -2056,6 +2057,46 @@ Disconnecting.
 Received 3405 bytes in 0.2072 s, rate = 16.43 kbytes/second
 
 ```
+
+---
+
+5. The terminal output of **SAM DUE with W5x00 using EthernetLarge Library** running [MQTTClient_SSL_Complex example](examples/MQTTClient_SSL_Complex)
+
+```
+Start MQTTClient_SSL_Complex on SAM DUE with W5x00 using EthernetLarge Library
+[ETHERNET_WEBSERVER] =========== USE_ETHERNET_LARGE ===========
+[ETHERNET_WEBSERVER] Default SPI pinout:
+[ETHERNET_WEBSERVER] MOSI: 75
+[ETHERNET_WEBSERVER] MISO: 74
+[ETHERNET_WEBSERVER] SCK: 76
+[ETHERNET_WEBSERVER] SS: 10
+[ETHERNET_WEBSERVER] =========================
+[ETHERNET_WEBSERVER] Board : SAM DUE , setCsPin: 10
+_pinCS = 0
+W5100 init, using SS_PIN_DEFAULT = 10, new ss_pin = 10, W5100Class::ss_pin = 10
+W5100::init: W5100, SSIZE =4096
+=========================
+Currently Used SPI pinout:
+MOSI:75
+MISO:74
+SCK:76
+SS:10
+=========================
+Using mac index = 6
+Connected! IP address: 192.168.2.71
+Attempting MQTT connection to broker.emqx.io...connected
+Message Send : MQTT_Pub => Hello from MQTTClient_SSL_Complex on SAM DUE, millis = 7694
+Message arrived [MQTT_Pub] Hello from MQTTClient_SSL_Complex on SAM DUE, millis = 7694
+Attempting MQTT connection to broker.emqx.io...connected
+Message Send : MQTT_Pub => Hello from MQTTClient_SSL_Complex on SAM DUE, millis = 15580
+Message arrived [MQTT_Pub] Hello from MQTTClient_SSL_Complex on SAM DUE, millis = 15580
+Attempting MQTT connection to broker.emqx.io...connected
+Message Send : MQTT_Pub => Hello from MQTTClient_SSL_Complex on SAM DUE, millis = 20587
+Message arrived [MQTT_Pub] Hello from MQTTClient_SSL_Complex on SAM DUE, millis = 20587
+
+```
+
+
 ---
 ---
 
@@ -2152,7 +2193,7 @@ Many thanks for everyone for bug reporting, new feature suggesting, testing and 
   <tr>
     <td align="center"><a href="https://github.com/igrr"><img src="https://github.com/igrr.png" width="100px;" alt="igrr"/><br /><sub><b>⭐️ Ivan Grokhotkov</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/OPEnSLab-OSU"><img src="https://github.com/OPEnSLab-OSU.png" width="100px;" alt="OPEnSLab-OSU"/><br /><sub><b>⭐️ OPEnSLab-OSU</b></sub></a><br /></td>
-    <td align="center"><a href="https://github.com/tcpipchip"><img src="https://github.com/tcpipchip.png" width="100px;" alt="tcpipchip"/><br /><sub><b>⭐️ Miguel Wisintainer</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/tcpipchip"><img src="https://github.com/tcpipchip.png" width="100px;" alt="tcpipchip"/><br /><sub><b>Miguel Wisintainer</b></sub></a><br /></td>
   </tr> 
 </table>
 
