@@ -2,7 +2,7 @@
 
 [![arduino-library-badge](https://www.ardu-badge.com/badge/EthernetWebServer_SSL.svg?)](https://www.ardu-badge.com/EthernetWebServer_SSL)
 [![GitHub release](https://img.shields.io/github/release/khoih-prog/EthernetWebServer_SSL.svg)](https://github.com/khoih-prog/EthernetWebServer_SSL/releases)
-[![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/khoih-prog/EthernetWebServer_SSL/blob/master/LICENSE)
+[![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/LICENSE)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](#Contributing)
 [![GitHub issues](https://img.shields.io/github/issues/khoih-prog/EthernetWebServer_SSL.svg)](http://github.com/khoih-prog/EthernetWebServer_SSL/issues)
 
@@ -105,9 +105,9 @@ You can also use this link [![arduino-library-badge](https://www.ardu-badge.com/
 ### Manual Install
 
 1. Navigate to [EthernetWebServer_SSL](https://github.com/khoih-prog/EthernetWebServer_SSL) page.
-2. Download the latest release `EthernetWebServer_SSL-master.zip`.
-3. Extract the zip file to `EthernetWebServer_SSL-master` directory 
-4. Copy the whole `EthernetWebServer_SSL-master` folder to Arduino libraries' directory such as `~/Arduino/libraries/`.
+2. Download the latest release `EthernetWebServer_SSL-main.zip`.
+3. Extract the zip file to `EthernetWebServer_SSL-main` directory 
+4. Copy the whole `EthernetWebServer_SSL-main` folder to Arduino libraries' directory such as `~/Arduino/libraries/`.
 
 ### VS Code & PlatformIO:
 
@@ -1646,7 +1646,7 @@ IPAddress ip(192, 168, 2, 222);
 1. The following are debug terminal output and screen shot when running example [AdvancedWebServer](examples/AdvancedWebServer) on Adafruit NRF52840_FEATHER_EXPRESS with ENC28J60 using EthernetENC Library
 
 <p align="center">
-    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/blob/master/pics/AdvancedWebServer.png">
+    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/pics/AdvancedWebServer.png">
 </p>
 
 ```
