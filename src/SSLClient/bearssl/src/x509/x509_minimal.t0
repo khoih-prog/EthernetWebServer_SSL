@@ -250,15 +250,33 @@ xm_end_chain(const br_x509_class **ctx)
 	br_x509_minimal_context *cc;
 
 	cc = (br_x509_minimal_context *)(void *)ctx;
-	if (cc->err == 0) {
-		if (cc->num_certs == 0) {
+	
+	if (cc->err == 0) 
+	{
+		if (cc->num_certs == 0) 
+		{
 			cc->err = BR_ERR_X509_EMPTY_CHAIN;
-		} else {
-			cc->err = BR_ERR_X509_NOT_TRUSTED;
+		} 
+		else 
+		{
+		  // KH mod to permit BR_ERR_X509_NOT_TRUSTED
+#if 1 //PERMIT_X509_NOT_TRUSTED		
+		  
+			//cc->err = BR_ERR_X509_NOT_TRUSTED;
+			cc->err = BR_ERR_X509_OK;
+			return 0;
+			
+#else
+      cc->err = BR_ERR_X509_NOT_TRUSTED;
+#endif		
+      //////	
 		}
-	} else if (cc->err == BR_ERR_X509_OK) {
+	} 
+	else if (cc->err == BR_ERR_X509_OK) 
+	{
 		return 0;
 	}
+	
 	return (unsigned)cc->err;
 }
 
