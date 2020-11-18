@@ -1,6 +1,6 @@
 {
   "name": "EthernetWebServer_SSL",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "keywords": "WebServer, Ethernet, Ethernet2, Ethernet3, EthernetLarge, EtnernetENC, UIPEthernet, Arduino, Teensy, SAMD21, SAMD51, SAM DUE, nRF52, ESP32, ESP8266, W5100, W5200, W5500, ENC28J60, Ethernet shield, SSL, TLS",
   "description": "Simple TLS/SSL EthernetWebServer library for Teensy, SAM DUE, SAMD21, SAMD51, nRF52, ESP32, ESP8266 boards using Ethernet shields W5100, W5200, W5500 or ENC28J60",
   "authors":

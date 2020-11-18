@@ -62,6 +62,12 @@ The EthernetSSLClient class, found in `SSLClient.h` header, is a simple WebClien
 ---
 ---
 
+### Release v1.1.1
+
+1. Permit sites with "Chain could not be linked to a trust anchor" such as mqtt.thingstream.io.
+2. Add example MQTTS_ThingStream to demonstrate new feature
+
+
 ### Release v1.1.0
 
 1. Initial coding for SAMD21/SAMD51, SAM DUE, Teensy to support Ethernet shields using SSL.
@@ -945,6 +951,7 @@ If for some unfortunate reason you need SSL 3.0 or SSL 2.0, you will need to mod
 16. [WebClientRepeating](examples/WebClientRepeating)
 17. [WebClient_SSL](examples/WebClient_SSL)
 18. [WebServer](examples/WebServer)
+19. [**MQTTS_ThingStream**](examples/MQTTS_ThingStream). New from v1.1.1
 
 ---
 ---
@@ -2096,11 +2103,46 @@ Message arrived [MQTT_Pub] Hello from MQTTClient_SSL_Complex on SAM DUE, millis 
 
 ```
 
+---
+
+6. The terminal output of **SEEED_XIAO_M0 with W5x00 using Ethernet3 Library** running [MQTTS_ThingStream example](examples/MQTTS_ThingStream)
+
+```
+Start MQTTS_ThingStream on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library
+[ETHERNET_WEBSERVER] Board : SEEED_XIAO_M0 , setCsPin: 1
+[ETHERNET_WEBSERVER] Default SPI pinout:
+[ETHERNET_WEBSERVER] MOSI: 10
+[ETHERNET_WEBSERVER] MISO: 9
+[ETHERNET_WEBSERVER] SCK: 8
+[ETHERNET_WEBSERVER] SS: 4
+[ETHERNET_WEBSERVER] =========================
+
+Ethernet3 W5500 init, using SPI_CS = 1, number of sockets = 4
+You're connected to the network, IP = 192.168.2.102
+***************************************
+esp32-sniffer/12345678/ble
+***************************************
+Attempting MQTT connection to mqtt.thingstream.io
+...connected
+Published connection message successfully!
+Subcribed to: esp32-sniffer/12345678/ble
+MQTT Message Send : esp32-sniffer/12345678/ble => Hello from MQTTS_ThingStream on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library
+MQTT Message receive [esp32-sniffer/12345678/ble] Hello from MQTTS_ThingStream on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library
+MQTT Message Send : esp32-sniffer/12345678/ble => Hello from MQTTS_ThingStream on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library
+MQTT Message receive [esp32-sniffer/12345678/ble] Hello from MQTTS_ThingStream on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library
+MQTT Message Send : esp32-sniffer/12345678/ble => Hello from MQTTS_ThingStream on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library
+MQTT Message receive [esp32-sniffer/12345678/ble] Hello from MQTTS_ThingStream on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library
+```
 
 ---
 ---
 
 ## Releases
+
+### Release v1.1.1
+
+1. Permit sites with "Chain could not be linked to a trust anchor" such as mqtt.thingstream.io.
+2. Add example MQTTS_ThingStream to demonstrate new feature
 
 ### Release v1.1.0
 
