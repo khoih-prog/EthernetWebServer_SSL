@@ -265,11 +265,11 @@
   //#define USE_THIS_SS_PIN   22  //21  //5 //4 //2 //15
   
   // Only one if the following to be true
-  #define USE_ETHERNET          false //true
-  #define USE_ETHERNET2         false //true
-  #define USE_ETHERNET3         false //true
+  #define USE_ETHERNET          false
+  #define USE_ETHERNET2         false
+  #define USE_ETHERNET3         false
   #define USE_ETHERNET_LARGE    true
-  #define USE_ETHERNET_ESP8266  false //true
+  #define USE_ETHERNET_ESP8266  false
   #define USE_ETHERNET_ENC      false
   #define USE_CUSTOM_ETHERNET   false
   

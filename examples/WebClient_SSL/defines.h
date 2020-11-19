@@ -281,9 +281,9 @@
   #define USE_ETHERNET          false
   #define USE_ETHERNET2         false
   #define USE_ETHERNET3         false
-  #define USE_ETHERNET_LARGE    true
+  #define USE_ETHERNET_LARGE    false
   #define USE_ETHERNET_ESP8266  false
-  #define USE_ETHERNET_ENC      false
+  #define USE_ETHERNET_ENC      true
   #define USE_CUSTOM_ETHERNET   false
   
   #if !USE_ETHERNET_WRAPPER

@@ -62,6 +62,11 @@ The EthernetSSLClient class, found in `SSLClient.h` header, is a simple WebClien
 ---
 ---
 
+### Release v1.1.2
+
+1. Add SSL debug feature.
+2. Enhance examples.
+
 ### Release v1.1.1
 
 1. Permit sites with "Chain could not be linked to a trust anchor" such as mqtt.thingstream.io.
@@ -2139,6 +2144,11 @@ MQTT Message receive [esp32-sniffer/12345678/ble] Hello from MQTTS_ThingStream o
 
 ## Releases
 
+### Release v1.1.2
+
+1. Add SSL debug feature.
+2. Enhance examples.
+
 ### Release v1.1.1
 
 1. Permit sites with "Chain could not be linked to a trust anchor" such as mqtt.thingstream.io.
@@ -2204,6 +2214,7 @@ Submit issues to: [EthernetWebServer_SSL issues](https://github.com/khoih-prog/E
 4. Support more non-compatible Ethernet Libraries such as Ethernet_Shield_W5200, EtherCard, EtherSia
 5. Add mDNS features.
 6. Add TLS/SSL Client support to AVR, nRF52, ESP8266, etc.
+7. Add **High-level HTTP (GET, POST, PUT, PATCH, DELETE) and WebSocket Client**
 
 ### DONE
 

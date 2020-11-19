@@ -64,10 +64,73 @@ void callback(char* topic, byte* payload, unsigned int length)
 }
 
 EthernetClient    ethClient;
-EthernetSSLClient ethClientSSL(ethClient, TAs, (size_t)TAs_NUM);
 
-PubSubClient client(mqttServer, 8883, callback, ethClientSSL);
+#define USE_PTR     true
 
+#if USE_PTR
+
+  //EthernetSSLClient ethClientSSL(ethClient, TAs, (size_t)TAs_NUM);
+  //EthernetSSLClient ethClientSSL(ethClient, TAs, (size_t)TAs_NUM, 1, EthernetSSLClient::SSL_NONE);
+  // Debug, max_sessions = 1, debug = SSL_INFO
+  EthernetSSLClient*  ethClientSSL;
+  
+  PubSubClient*       client;
+
+#else
+
+  //EthernetSSLClient ethClientSSL(ethClient, TAs, (size_t)TAs_NUM);
+  //EthernetSSLClient ethClientSSL(ethClient, TAs, (size_t)TAs_NUM, 1, EthernetSSLClient::SSL_NONE);
+  // Debug, max_sessions = 1, debug = SSL_INFO
+  EthernetSSLClient ethClientSSL(ethClient, TAs, (size_t)TAs_NUM, 1, EthernetSSLClient::SSL_INFO);
+
+  PubSubClient client(mqttServer, 8883, callback, ethClientSSL);
+
+#endif
+
+#if USE_PTR
+void reconnect()
+{
+  // Loop until we're reconnected
+  while (!client->connected())
+  {
+    Serial.print("Attempting MQTTS connection to ");
+    Serial.print(mqttServer);
+
+    // Attempt to connect
+    if (client->connect(ID))
+    {
+      Serial.println("...connected");
+      
+      // Once connected, publish an announcement...
+      String data = "Hello from MQTTClient_SSL on " + String(BOARD_NAME);
+
+      client->publish(TOPIC, data.c_str());
+
+      //Serial.println("Published connection message successfully!");
+      //Serial.print("Subcribed to: ");
+      //Serial.println(subTopic);
+      
+      // This is a workaround to address https://github.com/OPEnSLab-OSU/SSLClient/issues/9
+      //ethClientSSL->flush();
+      // ... and resubscribe
+      client->subscribe(subTopic);
+      // for loopback testing
+      client->subscribe(TOPIC);
+      // This is a workaround to address https://github.com/OPEnSLab-OSU/SSLClient/issues/9
+      //ethClientSSL->flush();
+    }
+    else
+    {
+      Serial.print("failed, rc=");
+      Serial.print(client->state());
+      Serial.println(" try again in 5 seconds");
+
+      // Wait 5 seconds before retrying
+      delay(5000);
+    }
+  }
+}
+#else
 void reconnect()
 {
   // Loop until we're reconnected
@@ -110,6 +173,7 @@ void reconnect()
     }
   }
 }
+#endif
 
 void setup()
 {
@@ -121,7 +185,7 @@ void setup()
   Serial.println(" with " + String(SHIELD_TYPE));
 
   // Enable mutual TLS with SSLClient
-  ethClientSSL.setMutualAuthParams(mTLS);
+  //ethClientSSL.setMutualAuthParams(mTLS);
 
 #if USE_ETHERNET_WRAPPER
 
@@ -294,13 +358,69 @@ void setup()
 
   Serial.print(F("Connected! IP address: "));
   Serial.println(Ethernet.localIP());
+
+#if USE_PTR
+
+  //EthernetSSLClient ethClientSSL(ethClient, TAs, (size_t)TAs_NUM);
+  //EthernetSSLClient ethClientSSL(ethClient, TAs, (size_t)TAs_NUM, 1, EthernetSSLClient::SSL_NONE);
+  // Debug, max_sessions = 1, debug = SSL_INFO
+  ethClientSSL = new EthernetSSLClient(ethClient, TAs, (size_t)TAs_NUM, 1, EthernetSSLClient::SSL_ERROR);
+  
+  client       = new PubSubClient(mqttServer, 8883, callback, *ethClientSSL);
+
+  // Note - the default maximum packet size is 256 bytes. If the
+  // combined length of clientId, username and password exceed this use the
+  // following to increase the buffer size:
+  client->setBufferSize(2048);
+  
+#else
+
+  // Note - the default maximum packet size is 256 bytes. If the
+  // combined length of clientId, username and password exceed this use the
+  // following to increase the buffer size:
+  client.setBufferSize(2048);
+  
+#endif
+  
 }
 
 
-#define MQTT_PUBLISH_INTERVAL_MS       5000L
+#define MQTT_PUBLISH_INTERVAL_MS       10000L
 
 String data         = "Hello from MQTTClient_SSL on " + String(BOARD_NAME);
 const char *pubData = data.c_str();
+
+#if USE_PTR
+
+void loop() 
+{
+  static unsigned long now;
+  
+  if (!client->connected()) 
+  {
+    reconnect();
+  }
+
+  // Sending Data
+  now = millis();
+  
+  if (now - lastMsg > MQTT_PUBLISH_INTERVAL_MS)
+  {
+    lastMsg = now;
+
+    if (!client->publish(TOPIC, pubData))
+    {
+      Serial.println("Message failed to send.");
+    }
+
+    Serial.print("Message Send : " + String(TOPIC) + " => ");
+    Serial.println(data);
+  }
+  
+  client->loop();
+}
+
+#else
 
 void loop() 
 {
@@ -329,3 +449,5 @@ void loop()
   
   client.loop();
 }
+
+#endif
