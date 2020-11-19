@@ -18,13 +18,12 @@
    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#pragma once
+
 #include "Client.h"
 #include "SSLClient/SSLSession.h"
 #include "SSLClient/SSLClientParameters.h"
 #include <vector>
-
-#ifndef SSLClient_H_
-#define SSLClient_H_
 
 /**
    @brief The main SSLClient class.
@@ -500,7 +499,11 @@ class EthernetSSLClient : public Client
        As a rule of thumb EthernetSSLClient will fail if it does not have at least 8000 bytes when starting a
        connection.
     */
+    // KH test increase
     unsigned char m_iobuf[2048];
+    //unsigned char m_iobuf[4096];
+    //////
+    
     // store the index of where we are writing in the buffer
     // so we can send our records all at once to prevent
     // weird timing issues
@@ -509,4 +512,4 @@ class EthernetSSLClient : public Client
     unsigned m_br_last_state;
 };
 
-#endif /** SSLClient_H_ */
+#include "SSLClient/SSLClient_Impl.h"

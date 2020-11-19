@@ -25,13 +25,12 @@
    for reuse later.
 */
 
+#pragma once
+
 #include "SSLClient/bearssl.h"
 #undef min
 #undef max
 #include <vector>
-
-#ifndef SSLClientParameters_H_
-#define SSLClientParameters_H_
 
 /**
    @brief This class stores data required for SSLClient to use mutual authentication.
@@ -145,4 +144,3 @@ class SSLClientParameters
     const br_skey_decoder_context m_key_struct;
 };
 
-#endif

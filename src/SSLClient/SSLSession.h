@@ -25,11 +25,10 @@
    for reuse later.
 */
 
+#pragma once
+
 #include "SSLClient/bearssl.h"
 #include "Arduino.h"
-
-#ifndef SSLSession_H_
-#define SSLSession_H_
 
 /**
    \brief This class stores values which allow SSLClient to save and resume SSL sessions.
@@ -84,4 +83,3 @@ class SSLSession : public br_ssl_session_parameters
     String m_hostname;
 };
 
-#endif /* SSLSession_H_ */
