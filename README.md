@@ -956,7 +956,8 @@ If for some unfortunate reason you need SSL 3.0 or SSL 2.0, you will need to mod
 16. [WebClientRepeating](examples/WebClientRepeating)
 17. [WebClient_SSL](examples/WebClient_SSL)
 18. [WebServer](examples/WebServer)
-19. [**MQTTS_ThingStream**](examples/MQTTS_ThingStream). New from v1.1.1
+19. [**MQTTS_ThingStream**](examples/MQTTS_ThingStream).
+20. [**MQTT_ThingStream**](examples/MQTT_ThingStream).
 
 ---
 ---
