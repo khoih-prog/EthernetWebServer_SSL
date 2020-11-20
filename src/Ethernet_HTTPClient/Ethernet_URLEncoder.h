@@ -1,6 +1,7 @@
 /****************************************************************************************************************************
-  inner.h
-  
+  Ethernet_URLEncoder.h - Dead simple HTTP WebClient.
+  For Ethernet shields
+
   EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
 
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
@@ -18,6 +19,29 @@
   1.1.2   K Hoang      19/11/2020 Add SSL debug feature. Enhance examples.
   1.2.0   K Hoang      20/11/2020 Add basic HTTP and WebSockets Client by merging ArduinoHttpClient
  *****************************************************************************************************************************/
+ 
+// Library to simplify HTTP fetching on Arduino
+// (c) Copyright Arduino. 2019
+// Released under Apache License, version 2.0
 
-#include "SSLClient/inner.h"
+#pragma once
 
+#include <Arduino.h>
+
+#include "detail/Debug.h"
+
+
+class EthernetURLEncoderClass
+{
+  public:
+    EthernetURLEncoderClass();
+    virtual ~EthernetURLEncoderClass();
+
+    static String encode(const char* str);
+    static String encode(const String& str);
+
+  private:
+    static String encode(const char* str, int length);
+};
+
+extern EthernetURLEncoderClass EthernetURLEncoder;

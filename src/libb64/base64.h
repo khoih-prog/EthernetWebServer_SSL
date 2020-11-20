@@ -1,6 +1,6 @@
 /****************************************************************************************************************************
-  inner.h
-  
+  base64.h - c source to a base64 encoding algorithm implementation
+
   EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
 
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
@@ -18,6 +18,9 @@
   1.1.2   K Hoang      19/11/2020 Add SSL debug feature. Enhance examples.
   1.2.0   K Hoang      20/11/2020 Add basic HTTP and WebSockets Client by merging ArduinoHttpClient
  *****************************************************************************************************************************/
+ 
+#pragma once
 
-#include "SSLClient/inner.h"
+int base64_encode(const unsigned char* aInput, int aInputLen, unsigned char* aOutput, int aOutputLen);
+
 
