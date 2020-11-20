@@ -150,6 +150,7 @@ void setup()
 
   Serial.print("\nStart MQTT_ThingStream on " + String(BOARD_NAME));
   Serial.println(" with " + String(SHIELD_TYPE));
+  Serial.println(ETHERNET_WEBSERVER_SSL_VERSION);
 
   ET_LOGWARN3(F("Board :"), BOARD_NAME, F(", setCsPin:"), USE_THIS_SS_PIN);
 

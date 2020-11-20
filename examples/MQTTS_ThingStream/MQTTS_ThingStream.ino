@@ -157,6 +157,7 @@ void setup()
 
   Serial.print("\nStart MQTTS_ThingStream on " + String(BOARD_NAME));
   Serial.println(" with " + String(SHIELD_TYPE));
+  Serial.println(ETHERNET_WEBSERVER_SSL_VERSION);
 
   // Enable mutual TLS with SSLClient
   //ethClientSSL.setMutualAuthParams(mTLS);

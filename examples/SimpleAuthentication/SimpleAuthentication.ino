@@ -145,6 +145,7 @@ void setup(void)
   //delay(1000);
   Serial.print("\nStarting SimpleAuthentication on " + String(BOARD_NAME));
   Serial.println(" with " + String(SHIELD_TYPE));
+  Serial.println(ETHERNET_WEBSERVER_SSL_VERSION);
 
 #if USE_ETHERNET_WRAPPER
 

@@ -15,6 +15,8 @@ This [EthernetWebServer_SSL library](https://github.com/khoih-prog/EthernetWebSe
 
 This [EthernetWebServer_SSL library](https://github.com/khoih-prog/EthernetWebServer_SSL) adds [TLS 1.2](https://www.websecurity.digicert.com/security-topics/what-is-ssl-tls-https) functionality to EthernetClient, using BearSSL as an underlying TLS engine.
 
+This [**EthernetWebServer_SSL library**](https://github.com/khoih-prog/EthernetWebServer_SSL), from v1.2.0, also provides high-level **HTTP and WebSocket Client** with the functions are similar and compatible to those of [**ArduinoHttpClient Library**](https://github.com/arduino-libraries/ArduinoHttpClient)
+
 #### Currently supported Boards
 
 This [**EthernetWebServer_SSL** library](https://github.com/khoih-prog/EthernetWebServer_SSL) currently supports these following boards:
@@ -48,12 +50,14 @@ The library provides these features:
 2. UDP Server and Client
 3. HTTP Server and HTTP/HTTPS Client
 4. HTTPS GET and POST requests, provides argument parsing, handles one client at a time.
+5. **High-level HTTP (GET, POST, PUT, PATCH, DELETE) and WebSocket Client**. From v1.2.0.
 
 Library is based on and modified from:
 
 1. [Ivan Grokhotkov's ESP8266WebServer](https://github.com/esp8266/Arduino/tree/master/libraries/ESP8266WebServer)
 2. [Ivan Grokhotkov's ESP32 WebServer](https://github.com/espressif/arduino-esp32/tree/master/libraries/WebServer)
 3. [OPEnSLab-OSU's SSLClient v1.6.9](https://github.com/OPEnSLab-OSU/SSLClient)
+4. [ArduinoHttpClient Library](https://github.com/arduino-libraries/ArduinoHttpClient)
 
 The EthernetWebServer class, found in `EthernetWebServer.h` header, is a simple WebServer class, knowing how to handle HTTP requests such as GET and POST and can only support one one client at a time.
 
@@ -61,6 +65,12 @@ The EthernetSSLClient class, found in `SSLClient.h` header, is a simple WebClien
 
 ---
 ---
+
+### Major Release v1.2.0
+
+1. Add high-level **HTTP and WebSockets Client** by merging [ArduinoHttpClient Library](https://github.com/arduino-libraries/ArduinoHttpClient)
+2. Add many more examples for HTTP and WebSockets Client.
+3. Add Version String.
 
 ### Release v1.1.2
 
@@ -938,6 +948,8 @@ If for some unfortunate reason you need SSL 3.0 or SSL 2.0, you will need to mod
 
 ### Examples:
 
+#### Original Examples
+
  1. [AdvancedWebServer](examples/AdvancedWebServer)
  2. [HelloServer](examples/HelloServer)
  3. [HelloServer2](examples/HelloServer2)
@@ -958,6 +970,22 @@ If for some unfortunate reason you need SSL 3.0 or SSL 2.0, you will need to mod
 18. [WebServer](examples/WebServer)
 19. [**MQTTS_ThingStream**](examples/MQTTS_ThingStream).
 20. [**MQTT_ThingStream**](examples/MQTT_ThingStream).
+
+#### HTTP and WebSocket Client New Examples
+
+ 1. [BasicAuthGet](examples/HTTPClient/BasicAuthGet)
+ 2. [CustomHeader](examples/HTTPClient/CustomHeader)
+ 3. [DweetGet](examples/HTTPClient/DweetGet)
+ 4. [DweetPost](examples/HTTPClient/DweetPost)
+ 5. [HueBlink](examples/HTTPClient/HueBlink)
+ 6. [node_test_server](examples/HTTPClient/node_test_server)
+ 7. [PostWithHeaders](examples/HTTPClient/PostWithHeaders)
+ 8. [SimpleDelete](examples/HTTPClient/SimpleDelete)
+ 9. [SimpleGet](examples/HTTPClient/SimpleGet)
+10. [SimpleHTTPExample](examples/HTTPClient/SimpleHTTPExample)
+11. [SimplePost](examples/HTTPClient/SimplePost)
+12. [SimplePut](examples/HTTPClient/SimplePut)
+13. [SimpleWebSocket](examples/HTTPClient/SimpleWebSocket)
 
 ---
 ---
@@ -1060,6 +1088,7 @@ void setup(void)
 
   Serial.print("\nStarting AdvancedWebServer on " + String(BOARD_NAME));
   Serial.println(" with " + String(SHIELD_TYPE));
+  Serial.println(ETHERNET_WEBSERVER_SSL_VERSION);
 
 #if USE_ETHERNET_WRAPPER
 
@@ -1664,6 +1693,7 @@ IPAddress ip(192, 168, 2, 222);
 
 ```
 Starting AdvancedWebServer on NRF52840_FEATHER with ENC28J60 using EthernetENC Library
+EthernetWebServer_SSL v1.2.0
 [ETHERNET_WEBSERVER] =========================
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 25
@@ -1838,6 +1868,7 @@ BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB
 
 ```
 Start WebClientMulti_SSL on SAM DUE with W5x00 using EthernetLarge Library
+EthernetWebServer_SSL v1.2.0
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_LARGE ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 75
@@ -1974,6 +2005,7 @@ Disconnecting.
 
 ```
 Start WebClient_SSL on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library
+EthernetWebServer_SSL v1.2.0
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET3 ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 10
@@ -2077,6 +2109,7 @@ Received 3405 bytes in 0.2072 s, rate = 16.43 kbytes/second
 
 ```
 Start MQTTClient_SSL_Complex on SAM DUE with W5x00 using EthernetLarge Library
+EthernetWebServer_SSL v1.2.0
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_LARGE ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 75
@@ -2115,6 +2148,7 @@ Message arrived [MQTT_Pub] Hello from MQTTClient_SSL_Complex on SAM DUE, millis 
 
 ```
 Start MQTTS_ThingStream on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library
+EthernetWebServer_SSL v1.2.0
 [ETHERNET_WEBSERVER] Board : SEEED_XIAO_M0 , setCsPin: 1
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 10
@@ -2144,6 +2178,12 @@ MQTT Message receive [esp32-sniffer/12345678/ble] Hello from MQTTS_ThingStream o
 ---
 
 ## Releases
+
+### Major Release v1.2.0
+
+1. Add high-level **HTTP and WebSockets Client** by merging [ArduinoHttpClient Library](https://github.com/arduino-libraries/ArduinoHttpClient)
+2. Add many more examples for HTTP and WebSockets Client.
+3. Add Version String.
 
 ### Release v1.1.2
 
@@ -2215,7 +2255,7 @@ Submit issues to: [EthernetWebServer_SSL issues](https://github.com/khoih-prog/E
 4. Support more non-compatible Ethernet Libraries such as Ethernet_Shield_W5200, EtherCard, EtherSia
 5. Add mDNS features.
 6. Add TLS/SSL Client support to AVR, nRF52, ESP8266, etc.
-7. Add **High-level HTTP (GET, POST, PUT, PATCH, DELETE) and WebSocket Client**
+
 
 ### DONE
 
@@ -2231,6 +2271,7 @@ Submit issues to: [EthernetWebServer_SSL issues](https://github.com/khoih-prog/E
 10. Add support to [`EthernetENC`](https://github.com/jandrassy/EthernetENC)
 11. Add support to PROGMEM-related commands, such as sendContent_P() and send_P()
 12. Add TLS/SSL Client support to SAMD21/SAMD51, SAM DUE, Teensy, ESP32, etc.
+13. Add **High-level HTTP (GET, POST, PUT, PATCH, DELETE) and WebSocket Client**
  
 ---
 ---
@@ -2242,11 +2283,13 @@ Many thanks for everyone for bug reporting, new feature suggesting, testing and 
 1. Based on and modified from the good [Ivan Grokhotkov's ESP8266WebServer](https://github.com/esp8266/Arduino/tree/master/libraries/ESP8266WebServer) and [ESP32 WebServer](https://github.com/espressif/arduino-esp32/tree/master/libraries/WebServer) libraries.
 2. [OPEnSLab-OSU](https://github.com/PEnSLab-OSU) for [OPEnSLab-OSU's SSLClient](https://github.com/OPEnSLab-OSU/SSLClient)
 3. Thanks to good work of [Miguel Alexandre Wisintainer](https://github.com/tcpipchip) for initiating, inspriring, working with, developing, debugging and testing. Without that, support to nRF52, especially **U-Blox B302 running as nRF52840 and U-Blox B112 running as nRF52832**, has never been started and finished. Also see [ESP32-based U-BLOX NINA W102 running ENC28J60](https://u-blox-ethernet-ninaw.blogspot.com/).
+4. [Adrian McEwen](https://github.com/amcewen) for [HttpClient Library](https://github.com/amcewen/HttpClient) on which the [ArduinoHttpClient Library](https://github.com/arduino-libraries/ArduinoHttpClient) and this [EthernetWebServer library](https://github.com/khoih-prog/EthernetWebServer) are relied.
 
 <table>
   <tr>
     <td align="center"><a href="https://github.com/igrr"><img src="https://github.com/igrr.png" width="100px;" alt="igrr"/><br /><sub><b>⭐️ Ivan Grokhotkov</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/OPEnSLab-OSU"><img src="https://github.com/OPEnSLab-OSU.png" width="100px;" alt="OPEnSLab-OSU"/><br /><sub><b>⭐️ OPEnSLab-OSU</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/amcewen"><img src="https://github.com/amcewen.png" width="100px;" alt="amcewen"/><br /><sub><b>⭐️ Adrian McEwen</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/tcpipchip"><img src="https://github.com/tcpipchip.png" width="100px;" alt="tcpipchip"/><br /><sub><b>Miguel Wisintainer</b></sub></a><br /></td>
   </tr> 
 </table>

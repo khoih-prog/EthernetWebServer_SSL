@@ -60,6 +60,7 @@ void setup(void)
 
   Serial.print("\nStarting HelloServer2 on " + String(BOARD_TYPE));
   Serial.println(" with " + String(SHIELD_TYPE));
+  Serial.println(ETHERNET_WEBSERVER_SSL_VERSION);
 
 #if USE_ETHERNET_WRAPPER
 
