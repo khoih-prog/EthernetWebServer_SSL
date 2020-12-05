@@ -8,7 +8,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
   Licensed under MIT license
        
-  Version: 1.2.0
+  Version: 1.3.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -17,9 +17,15 @@
   1.1.1   K Hoang      18/11/2020 Permit sites with "Chain could not be linked to a trust anchor" such as ThingStream
   1.1.2   K Hoang      19/11/2020 Add SSL debug feature. Enhance examples.
   1.2.0   K Hoang      20/11/2020 Add basic HTTP and WebSockets Client by merging ArduinoHttpClient
+  1.3.0   K Hoang      04/12/2020 Add support to NativeEthernet Library for Teensy 4.1
  *****************************************************************************************************************************/
 
 #pragma once
+
+// Reintroduce to prevent duplication compile error if other lib/core already has LIB64
+// pragma once can't prevent that
+#ifndef BASE64_CDECODE_H
+#define BASE64_CDECODE_H
 
 #define base64_decode_expected_len(n) ((n * 3) / 4)
 
@@ -49,4 +55,6 @@ int base64_decode_chars(const char* code_in, const int length_in, char* plaintex
 #ifdef __cplusplus
 } // extern "C"
 #endif
+
+#endif /* BASE64_CDECODE_H */
 

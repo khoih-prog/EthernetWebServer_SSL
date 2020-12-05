@@ -9,7 +9,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
   Licensed under MIT license
        
-  Version: 1.2.0
+  Version: 1.3.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -18,11 +18,12 @@
   1.1.1   K Hoang      18/11/2020 Permit sites with "Chain could not be linked to a trust anchor" such as ThingStream
   1.1.2   K Hoang      19/11/2020 Add SSL debug feature. Enhance examples.
   1.2.0   K Hoang      20/11/2020 Add basic HTTP and WebSockets Client by merging ArduinoHttpClient
+  1.3.0   K Hoang      04/12/2020 Add support to NativeEthernet Library for Teensy 4.1
  *****************************************************************************************************************************/
 
 #pragma once
 
-#define ETHERNET_WEBSERVER_SSL_VERSION      "EthernetWebServer_SSL v1.2.0"
+#define ETHERNET_WEBSERVER_SSL_VERSION      "EthernetWebServer_SSL v1.3.0"
 
 #define USE_NEW_WEBSERVER_VERSION           true
 
@@ -73,7 +74,7 @@
   #warning Using UIPEthernet library from EthernetWebServer
 #elif USE_CUSTOM_ETHERNET
   #warning Using Custom Ethernet library from EthernetWebServer. You must include a library or error.
-#elif !( USE_ETHERNET2 || USE_ETHERNET3 || USE_ETHERNET_LARGE || USE_ETHERNET_ESP8266 || USE_ETHERNET_ENC )
+#elif !( USE_ETHERNET2 || USE_ETHERNET3 || USE_ETHERNET_LARGE || USE_ETHERNET_ESP8266 || USE_ETHERNET_ENC || USE_NATIVE_ETHERNET)
   #include <Ethernet.h>
   #warning Using Ethernet library from EthernetWebServer
 #endif

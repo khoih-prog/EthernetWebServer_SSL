@@ -9,7 +9,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
   Licensed under MIT license
        
-  Version: 1.2.0
+  Version: 1.3.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -18,6 +18,7 @@
   1.1.1   K Hoang      18/11/2020 Permit sites with "Chain could not be linked to a trust anchor" such as ThingStream
   1.1.2   K Hoang      19/11/2020 Add SSL debug feature. Enhance examples.
   1.2.0   K Hoang      20/11/2020 Add basic HTTP and WebSockets Client by merging ArduinoHttpClient
+  1.3.0   K Hoang      04/12/2020 Add support to NativeEthernet Library for Teensy 4.1
  *****************************************************************************************************************************/
  
 // Class to simplify HTTP fetching on Arduino
@@ -113,7 +114,8 @@ int EthernetHttpClient::startRequest(const char* aURLPath, const char* aHttpMeth
   {
     if (iServerName)
     {
-      if (!iClient->connect(iServerName, iServerPort) > 0)
+      //if (!iClient->connect(iServerName, iServerPort) > 0)
+      if (iClient->connect(iServerName, iServerPort) == 0)
       {
         ET_LOGDEBUG(F("EthernetHttpClient::startRequest: Connection failed"));
 
@@ -122,7 +124,8 @@ int EthernetHttpClient::startRequest(const char* aURLPath, const char* aHttpMeth
     }
     else
     {
-      if (!iClient->connect(iServerAddress, iServerPort) > 0)
+      //if (!iClient->connect(iServerAddress, iServerPort) > 0)
+      if (iClient->connect(iServerAddress, iServerPort) == 0)
       {
         ET_LOGDEBUG(F("EthernetHttpClient::startRequest: Connection failed"));
 
