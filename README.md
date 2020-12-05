@@ -1025,8 +1025,8 @@ If for some unfortunate reason you need SSL 3.0 or SSL 2.0, you will need to mod
 18. [WebServer](examples/WebServer)
 19. [**MQTTS_ThingStream**](examples/MQTTS_ThingStream).
 20. [**MQTT_ThingStream**](examples/MQTT_ThingStream).
-21. [AdvancedWebServer_NativeEthernet](examples/AdvancedWebServer_NativeEthernet). New.
-22. [WebClientMulti_SSL_NativeEthernet](examples/WebClientMulti_SSL_NativeEthernet). New.
+21. [**AdvancedWebServer_NativeEthernet**](examples/AdvancedWebServer_NativeEthernet). New.
+22. [**WebClientMulti_SSL_NativeEthernet**](examples/WebClientMulti_SSL_NativeEthernet). New.
 
 #### HTTP and WebSocket Client New Examples
 
@@ -2319,7 +2319,7 @@ This [**EthernetWebServer_SSL** library](https://github.com/khoih-prog/EthernetW
 
 1. W5x00 using [`Ethernet`](https://www.arduino.cc/en/Reference/Ethernet), [`EthernetLarge`](https://github.com/OPEnSLab-OSU/EthernetLarge), [`Ethernet2`](https://github.com/adafruit/Ethernet2) or [`Ethernet3`](https://github.com/sstaub/Ethernet3) library
 2. ENC28J60 using [`EthernetENC`](https://github.com/jandrassy/EthernetENC) or [`UIPEthernet`](https://github.com/UIPEthernet/UIPEthernet) library
-
+3. Teensy 4.1 built-in NativeEthernet using [NativeEthernet Library](https://github.com/vjmuzik/NativeEthernet)
 
 ---
 
