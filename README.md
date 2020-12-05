@@ -2346,8 +2346,6 @@ Submit issues to: [EthernetWebServer_SSL issues](https://github.com/khoih-prog/E
 3. Support more types of boards using Ethernet shields.
 4. Support more non-compatible Ethernet Libraries such as Ethernet_Shield_W5200, EtherCard, EtherSia
 5. Add mDNS features.
-6. Add TLS/SSL Client support to AVR, nRF52, ESP8266, etc.
-
 
 ### DONE
 
@@ -2364,6 +2362,7 @@ Submit issues to: [EthernetWebServer_SSL issues](https://github.com/khoih-prog/E
 11. Add support to PROGMEM-related commands, such as sendContent_P() and send_P()
 12. Add TLS/SSL Client support to SAMD21/SAMD51, SAM DUE, Teensy, ESP32, etc.
 13. Add **High-level HTTP (GET, POST, PUT, PATCH, DELETE) and WebSocket Client**
+14. Add support to [NativeEthernet Library](https://github.com/vjmuzik/NativeEthernet) for Teensy 4.1
  
 ---
 ---
