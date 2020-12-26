@@ -9,7 +9,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
   Licensed under MIT license
        
-  Version: 1.3.0
+  Version: 1.3.1
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -19,11 +19,12 @@
   1.1.2   K Hoang      19/11/2020 Add SSL debug feature. Enhance examples.
   1.2.0   K Hoang      20/11/2020 Add basic HTTP and WebSockets Client by merging ArduinoHttpClient
   1.3.0   K Hoang      04/12/2020 Add support to NativeEthernet Library for Teensy 4.1
+  1.3.1   K Hoang      26/12/2020 Suppress all possible compiler warnings
  *****************************************************************************************************************************/
 
 #pragma once
 
-#define ETHERNET_WEBSERVER_SSL_VERSION      "EthernetWebServer_SSL v1.3.0"
+#define ETHERNET_WEBSERVER_SSL_VERSION      "EthernetWebServer_SSL v1.3.1"
 
 #define USE_NEW_WEBSERVER_VERSION           true
 

@@ -9,7 +9,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
   Licensed under MIT license
        
-  Version: 1.3.0
+  Version: 1.3.1
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -19,9 +19,15 @@
   1.1.2   K Hoang      19/11/2020 Add SSL debug feature. Enhance examples.
   1.2.0   K Hoang      20/11/2020 Add basic HTTP and WebSockets Client by merging ArduinoHttpClient
   1.3.0   K Hoang      04/12/2020 Add support to NativeEthernet Library for Teensy 4.1
+  1.3.1   K Hoang      26/12/2020 Suppress all possible compiler warnings
  *****************************************************************************************************************************/
 
 #pragma once
+
+#ifndef ETW_UNUSED
+  #define ETW_UNUSED(x) (void)(x)
+#endif
+
 
 class RequestHandler
 {
@@ -31,20 +37,34 @@ class RequestHandler
 
     virtual bool canHandle(HTTPMethod method, String uri)
     {
+      ETW_UNUSED(method);
+      ETW_UNUSED(uri);
+      
       return false;
     }
 
     virtual bool canUpload(String uri)
     {
+      ETW_UNUSED(uri);
+      
       return false;
     }
 
     virtual bool handle(EthernetWebServer& server, HTTPMethod requestMethod, String requestUri)
     {
+      ETW_UNUSED(server);
+      ETW_UNUSED(requestMethod);
+      ETW_UNUSED(requestUri);
+      
       return false;
     }
 
-    virtual void upload(EthernetWebServer& server, String requestUri, HTTPUpload& upload) {}
+    virtual void upload(EthernetWebServer& server, String requestUri, HTTPUpload& upload) 
+    {
+      ETW_UNUSED(server);
+      ETW_UNUSED(requestUri);
+      ETW_UNUSED(upload);
+    }
 
     RequestHandler* next()
     {
