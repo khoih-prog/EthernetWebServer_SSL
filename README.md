@@ -15,7 +15,7 @@
 * [Why do we need this EthernetWebServer_SSL library](#why-do-we-need-this-ethernetwebserver_ssl-library)
   * [Features](#features)
   * [Currently supported Boards](#currently-supported-boards)
-  * [Currently supported Ethernet shields or modules](#currently-supported-ethernet-shields-or-modules)
+  * [Currently supported Ethernet shields/modules](#currently-supported-ethernet-shieldsmodules)
 * [Changelog](#changelog)
   * [Releases v1.3.1](#releases-v131)
   * [Releases v1.3.0](#releases-v130)
@@ -39,7 +39,7 @@
   * [6. For Seeeduino SAMD boards](#6-for-seeeduino-samd-boards)
   * [7. For STM32 boards](#7-for-stm32-boards) 
 * [Libraries' Patches](#libraries-patches)
-  * [1. For application requiring 2K+ HTML page](#1-for-application-requiring-2K+-html-page)
+  * [1. For application requiring 2K+ HTML page](#1-for-application-requiring-2k-html-page)
   * [2. For Ethernet library](#2-for-ethernet-library)
   * [3. For EthernetLarge library](#3-for-ethernetlarge-library)
   * [4. For Etherne2 library](#4-for-ethernet2-library)
@@ -52,12 +52,12 @@
   * [3. ESP32 WiFi uses ADC2 for WiFi functions](#3-esp32-wifi-uses-adc2-for-wifi-functions)
   
 * [Configuration Notes](#configuration-notes)
-  * [1. For application requiring 2K+ HTML page](#1-how-to-select-which-built-in-ethernet-or-shield-to-use)
+  * [1. How to select which built-in Ethernet or shield to use](#1-how-to-select-which-built-in-ethernet-or-shield-to-use)
     *[Important](#important)
   * [2. How to select another CS/SS pin to use](#2-how-to-select-another-csss-pin-to-use)
   * [3. How to use W5x00 with ESP8266](#3-how-to-use-w5x00-with-esp8266)
   * [4. How to increase W5x00 TX/RX buffer](#4-how-to-increase-w5x00-txrx-buffer)
-  * [How to adjust sendContent_P() and send_P() buffer size](#5-how-to-adjust-sendcontent_p-and-send_p-buffer-size)
+  * [5. How to adjust sendContent_P() and send_P() buffer size](#5-how-to-adjust-sendcontent_p-and-send_p-buffer-size)
 * [WebServer and non TLS/SSL WebClient Usage](#webserver-and-non-tlsssl-webclient-usage)
   * [Init the CS/SS pin if use EthernetWrapper](#init-the-csss-pin-if-use-ethernetwrapper) 
   * [Class Constructor](#class-constructor)
@@ -69,7 +69,7 @@
     * [1. Board and Network Peripheral Requirements](#1-board-and-network-peripheral-requirements)
     * [2. How to use Trust Anchors TA](#2-how-to-use-trust-anchors-ta)
     * [3. Note](#3-note)
-* [How It Works](how-it-works)
+* [How It Works](#how-it-works)
 * [Other Features](#other-features)
   * [Logging](#logging) 
   * [Errors](#errors)
@@ -204,33 +204,33 @@ This [**EthernetWebServer_SSL** library](https://github.com/khoih-prog/EthernetW
 
 # Changelog
 
-### Release v1.3.1
+### Releases v1.3.1
 
 1. Clean-up all compiler warnings possible.
 2. Add Table of Contents
 
-### Release v1.3.0
+### Releases v1.3.0
 
 1. Add support to [NativeEthernet Library](https://github.com/vjmuzik/NativeEthernet) for Teensy 4.1
 
-### Major Release v1.2.0
+### Major Releases v1.2.0
 
 1. Add high-level **HTTP and WebSockets Client** by merging [ArduinoHttpClient Library](https://github.com/arduino-libraries/ArduinoHttpClient)
 2. Add many more examples for HTTP and WebSockets Client.
 3. Add Version String.
 
-### Release v1.1.2
+### Releases v1.1.2
 
 1. Add SSL debug feature.
 2. Enhance examples.
 
-### Release v1.1.1
+### Releases v1.1.1
 
 1. Permit sites with "Chain could not be linked to a trust anchor" such as mqtt.thingstream.io.
 2. Add example MQTTS_ThingStream to demonstrate new feature
 
 
-### Release v1.1.0
+### Releases v1.1.0
 
 1. Initial coding for SAMD21/SAMD51, SAM DUE, Teensy to support Ethernet shields using SSL.
 2. Supporting W5x00 using Ethernet, EthernetLarge, Ethernet2 and Ethernet3 libraries
