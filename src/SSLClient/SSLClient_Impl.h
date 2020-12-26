@@ -737,7 +737,7 @@ unsigned EthernetSSLClient::m_update_engine()
         ET_LOGDEBUG3(F("avail ="),   avail, F(", len ="), len);
         
         // I suppose so!
-        int rlen = m_client.read(buf, avail < len ? avail : len);
+        int rlen = m_client.read(buf, avail < (int) len ? avail : len);
       
         if (rlen <= 0) 
         {
