@@ -9,13 +9,169 @@
 ---
 ---
 
+## Table of Contents
+
+
+* [Why do we need this EthernetWebServer_SSL library](#why-do-we-need-this-ethernetwebserver_ssl-library)
+  * [Features](#features)
+  * [Currently supported Boards](#currently-supported-boards)
+  * [Currently supported Ethernet shields or modules](#currently-supported-ethernet-shields-or-modules)
+* [Changelog](#changelog)
+  * [Releases v1.3.1](#releases-v131)
+  * [Releases v1.3.0](#releases-v130)
+  * [Major Releases v1.2.0](#major-releases-v120)
+  * [Releases v1.1.2](#releases-v112)
+  * [Releases v1.1.1](#releases-v111)
+  * [Releases v1.1.0](#releases-v110)
+* [Prerequisites](#prerequisites)
+* [Installation](#installation)
+  * [Use Arduino Library Manager](#use-arduino-library-manager)
+  * [Manual Install](#manual-install)
+  * [VS Code & PlatformIO](#vs-code--platformio)
+* [Packages' Patches](#packages-patches)
+  * [1. For Adafruit nRF52840 and nRF52832 boards](#1-for-adafruit-nRF52840-and-nRF52832-boards)
+  * [2. For Teensy boards](#2-for-teensy-boards)
+  * [3. For Arduino SAM DUE boards](#3-for-arduino-sam-due-boards)
+  * [4. For Arduino SAMD boards](#4-for-arduino-samd-boards)
+      * [For core version v1.8.10+](#for-core-version-v1810)
+      * [For core version v1.8.9-](#for-core-version-v189-)
+  * [5. For Adafruit SAMD boards](#5-for-adafruit-samd-boards)
+  * [6. For Seeeduino SAMD boards](#6-for-seeeduino-samd-boards)
+  * [7. For STM32 boards](#7-for-stm32-boards) 
+* [Libraries' Patches](#libraries-patches)
+  * [1. For application requiring 2K+ HTML page](#1-for-application-requiring-2K+-html-page)
+  * [2. For Ethernet library](#2-for-ethernet-library)
+  * [3. For EthernetLarge library](#3-for-ethernetlarge-library)
+  * [4. For Etherne2 library](#4-for-ethernet2-library)
+  * [5. For Ethernet3 library](#5-for-ethernet3-library)
+  * [6. For UIPEthernet library](#6-for-uipethernet-library)
+  * [7. For fixing ESP32 compile error](#7-for-fixing-esp32-compile-error) 
+* [HOWTO Use analogRead() with ESP32 running WiFi and/or BlueTooth (BT/BLE)](#howto-use-analogread-with-esp32-running-wifi-andor-bluetooth-btble)
+  * [1. ESP32 has 2 ADCs, named ADC1 and ADC2](#1--esp32-has-2-adcs-named-adc1-and-adc2)
+  * [2. ESP32 ADCs functions](#2-esp32-adcs-functions)
+  * [3. ESP32 WiFi uses ADC2 for WiFi functions](#3-esp32-wifi-uses-adc2-for-wifi-functions)
+  
+* [Configuration Notes](#configuration-notes)
+  * [1. For application requiring 2K+ HTML page](#1-how-to-select-which-built-in-ethernet-or-shield-to-use)
+    *[Important](#important)
+  * [2. How to select another CS/SS pin to use](#2-how-to-select-another-csss-pin-to-use)
+  * [3. How to use W5x00 with ESP8266](#3-how-to-use-w5x00-with-esp8266)
+  * [4. How to increase W5x00 TX/RX buffer](#4-how-to-increase-w5x00-txrx-buffer)
+  * [How to adjust sendContent_P() and send_P() buffer size](#5-how-to-adjust-sendcontent_p-and-send_p-buffer-size)
+* [WebServer and non TLS/SSL WebClient Usage](#webserver-and-non-tlsssl-webclient-usage)
+  * [Init the CS/SS pin if use EthernetWrapper](#init-the-csss-pin-if-use-ethernetwrapper) 
+  * [Class Constructor](#class-constructor)
+  * [Basic Operation](#basic-operations)
+  * [Advanced Options](#advanced-options)
+  * [Other Function Calls](#other-function-calls)
+* [TLS/SSL WebClient Usage](#tlsssl-webclient-usage)
+  * [Overview](#overview) 
+    * [1. Board and Network Peripheral Requirements](#1-board-and-network-peripheral-requirements)
+    * [2. How to use Trust Anchors TA](#2-how-to-use-trust-anchors-ta)
+    * [3. Note](#3-note)
+* [How It Works](how-it-works)
+* [Other Features](#other-features)
+  * [Logging](#logging) 
+  * [Errors](#errors)
+  * [Write Buffering](#write-buffering)
+  * [Session Caching](#session-caching)
+  * [mTLS](#mtls)
+* [Implementation Notes](#implementation-notes)
+  * [Seeding Random Data](#seeding-random-data) 
+  * [Certificate Verification](#certificate-verification)
+  * [Resources](#resources)
+  * [Read Buffer Overflow](#read-buffer-overflow)
+  * [Cipher Support](#cipher-support)
+  * [Known Issues](#known-issues) 
+* [Examples](#examples)
+  * [WebServer, TLS/SSL Client Examples](#webserver-tlsssl-client-examples)
+    * [ 1. AdvancedWebServer](examples/AdvancedWebServer)
+    * [ 2. HelloServer](examples/HelloServer)
+    * [ 3. HelloServer2](examples/HelloServer2)
+    * [ 4. HttpBasicAuth](examples/HttpBasicAuth)
+    * [ 5. MQTTClient_Auth](examples/MQTTClient_Auth)
+    * [ 6. MQTTClient_Basic](examples/MQTTClient_Basic)
+    * [ 7. MQTTClient_SSL](examples/MQTTClient_SSL)
+    * [ 8. MQTTClient_SSL_Auth](examples/MQTTClient_SSL_Auth)
+    * [ 9. MQTTClient_SSL_Complex](examples/MQTTClient_SSL_Complex)
+    * [10. PostServer](examples/PostServer)
+    * [11. SimpleAuthentication](examples/SimpleAuthentication)
+    * [12. UdpNTPClient](examples/UdpNTPClient)
+    * [13. UdpSendReceive](examples/UdpSendReceive)
+    * [14. WebClient](examples/WebClient)
+    * [15. WebClientMulti_SSL](examples/WebClientMulti_SSL)
+    * [16. WebClientRepeating](examples/WebClientRepeating)
+    * [17. WebClient_SSL](examples/WebClient_SSL)
+    * [18. WebServer](examples/WebServer)
+    * [19. **MQTTS_ThingStream**](examples/MQTTS_ThingStream).
+    * [20. **MQTT_ThingStream**](examples/MQTT_ThingStream).
+    * [21. **AdvancedWebServer_NativeEthernet**](examples/AdvancedWebServer_NativeEthernet).
+    * [22. **WebClientMulti_SSL_NativeEthernet**](examples/WebClientMulti_SSL_NativeEthernet).
+  * [HTTP and WebSocket Client New Examples](#http-and-websocket-client-new-examples)
+    * [ 1. BasicAuthGet](examples/BasicAuthGet)
+    * [ 2. CustomHeader](examples/CustomHeader)
+    * [ 3. DweetGet](examples/DweetGet)
+    * [ 4. DweetPost](examples/DweetPost)
+    * [ 5. HueBlink](examples/HueBlink)
+    * [ 6. node_test_server](examples/node_test_server)
+    * [ 7. PostWithHeaders](examples/PostWithHeaders)
+    * [ 8. SimpleDelete](examples/SimpleDelete)
+    * [ 9. SimpleGet](examples/SimpleGet)
+    * [10. SimpleHTTPExample](examples/SimpleHTTPExample)
+    * [11. SimplePost](examples/SimplePost)
+    * [12. SimplePut](examples/SimplePut)
+    * [13. SimpleWebSocket](examples/SimpleWebSocket)
+* [Example AdvancedWebServer](#example-advancedwebserver)
+  * [1. File AdvancedWebServer.ino](#1-file-advancedwebserverino)
+  * [2. File defines.h](#2-file-definesh) 
+* [Debug Terminal Output Samples](#debug-termimal-output-samples)
+  * [1. AdvancedWebServer on NRF52840_FEATHER_EXPRESS with ENC28J60 using EthernetENC Library](#1-advancedwebserver-on-nrf52840_feather_express-with-enc28j60-using-ethernetenc-library)
+  * [2. ENC28J60_WM_Config on ESP32 with ENC28J60 using UIPEthernet Library](#2-enc28j60_wm_config-on-esp32-with-enc28j60-using-uipethernet-library)
+  * [3. WebClientMulti_SSL on SAM DUE with W5x00 using EthernetLarge Library](#3-webclientmulti_ssl-on-sam-due-with-w5x00-using-ethernetlarge-library)
+  * [4. WebClient_SSL on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library](#4-webclient_ssl-on-seeed_xiao_m0-with-w5x00-using-ethernet3-library)
+  * [5. MQTTClient_SSL_Complex on SAM DUE with W5x00 using EthernetLarge Library](#5-mqttclient_ssl_complex-on-sam-due-with-w5x00-using-ethernetlarge-library)
+* [Debug](#debug)
+* [Troubleshooting](#troubleshooting)
+* [Releases](#releases)
+* [Issues](#issues)
+* [TO DO](#to-do)
+* [DONE](#done)
+* [Contributions and Thanks](#contributions-and-thanks)
+* [Contributing](#contributing)
+* [License](#license)
+* [Copyright](#copyright)
+
+---
+---
+
 ### Why do we need this [EthernetWebServer_SSL library](https://github.com/khoih-prog/EthernetWebServer_SSL)
 
-This [EthernetWebServer_SSL library](https://github.com/khoih-prog/EthernetWebServer_SSL) is a simple yet complete TLS/SSL WebClient and non-TLS/SSL WebServer library for **AVR, Teensy, SAM DUE, Arduino SAMD21, Adafruit SAMD21/SAMD51, Adafruit nRF52, ESP32/ESP8266, STM32, etc.** boards using Ethernet shields. The functions are similar and compatible to those of [`ESP32 WebServer`](https://github.com/espressif/arduino-esp32/tree/master/libraries/WebServer) and [`ESP8266WebServer`](https://github.com/esp8266/Arduino/tree/master/libraries/ESP8266WebServer) libraries to make life much easier to port sketches from ESP8266/ESP32.
+#### Features
+
+This [EthernetWebServer_SSL library](https://github.com/khoih-prog/EthernetWebServer_SSL) is a simple yet complete TLS/SSL WebClient and non-TLS/SSL WebServer library for **Teensy, SAM DUE, Arduino SAMD21, Adafruit SAMD21/SAMD51, Adafruit nRF52, ESP32/ESP8266, STM32, etc.** boards using Ethernet shields. The functions are similar and compatible to those of [`ESP32 WebServer`](https://github.com/espressif/arduino-esp32/tree/master/libraries/WebServer) and [`ESP8266WebServer`](https://github.com/esp8266/Arduino/tree/master/libraries/ESP8266WebServer) libraries to make life much easier to port sketches from ESP8266/ESP32.
 
 This [EthernetWebServer_SSL library](https://github.com/khoih-prog/EthernetWebServer_SSL) adds [TLS 1.2](https://www.websecurity.digicert.com/security-topics/what-is-ssl-tls-https) functionality to EthernetClient, using BearSSL as an underlying TLS engine.
 
 This [**EthernetWebServer_SSL library**](https://github.com/khoih-prog/EthernetWebServer_SSL), from v1.2.0, also provides high-level **HTTP and WebSocket Client** with the functions are similar and compatible to those of [**ArduinoHttpClient Library**](https://github.com/arduino-libraries/ArduinoHttpClient)
+
+The library provides these features:
+
+1. TCP Server and Client
+2. UDP Server and Client
+3. HTTP Server and HTTP/HTTPS Client
+4. HTTPS GET and POST requests, provides argument parsing, handles one client at a time.
+5. **High-level HTTP (GET, POST, PUT, PATCH, DELETE) and WebSocket Client**. From v1.2.0.
+
+Library is based on and modified from:
+
+1. [Ivan Grokhotkov's ESP8266WebServer](https://github.com/esp8266/Arduino/tree/master/libraries/ESP8266WebServer)
+2. [Ivan Grokhotkov's ESP32 WebServer](https://github.com/espressif/arduino-esp32/tree/master/libraries/WebServer)
+3. [OPEnSLab-OSU's SSLClient v1.6.9](https://github.com/OPEnSLab-OSU/SSLClient)
+4. [ArduinoHttpClient Library](https://github.com/arduino-libraries/ArduinoHttpClient)
+
+The EthernetWebServer class, found in `EthernetWebServer.h` header, is a simple WebServer class, knowing how to handle HTTP requests such as GET and POST and can only support one one client at a time.
+
+The EthernetSSLClient class, found in `SSLClient.h` header, is a simple WebClient class, knowing how to handle HTTP/HTTPS requests such as GET and POST and can only support one client at a time.
 
 #### Currently supported Boards
 
@@ -37,35 +193,21 @@ This [**EthernetWebServer_SSL** library](https://github.com/khoih-prog/EthernetW
  7. ESP32
  8. ESP8266. SSL WebClient not supported yet. Check [HTTPS GET request - ESP8266 - ENC28j60](https://github.com/OPEnSLab-OSU/SSLClient/issues/5)
 
-#### Supporting Ethernet shields/modules:
+#### Currently supported Ethernet shields/modules
 
 1. W5x00 using [`Ethernet`](https://www.arduino.cc/en/Reference/Ethernet), [`EthernetLarge`](https://github.com/OPEnSLab-OSU/EthernetLarge), [`Ethernet2`](https://github.com/adafruit/Ethernet2) or [`Ethernet3`](https://github.com/sstaub/Ethernet3) library
 2. ENC28J60 using [`EthernetENC`](https://github.com/jandrassy/EthernetENC) or [`UIPEthernet`](https://github.com/UIPEthernet/UIPEthernet) library
 3. Teensy 4.1 built-in NativeEthernet using [NativeEthernet Library](https://github.com/vjmuzik/NativeEthernet)
 
 ---
-
-The library provides these features:
-
-1. TCP Server and Client
-2. UDP Server and Client
-3. HTTP Server and HTTP/HTTPS Client
-4. HTTPS GET and POST requests, provides argument parsing, handles one client at a time.
-5. **High-level HTTP (GET, POST, PUT, PATCH, DELETE) and WebSocket Client**. From v1.2.0.
-
-Library is based on and modified from:
-
-1. [Ivan Grokhotkov's ESP8266WebServer](https://github.com/esp8266/Arduino/tree/master/libraries/ESP8266WebServer)
-2. [Ivan Grokhotkov's ESP32 WebServer](https://github.com/espressif/arduino-esp32/tree/master/libraries/WebServer)
-3. [OPEnSLab-OSU's SSLClient v1.6.9](https://github.com/OPEnSLab-OSU/SSLClient)
-4. [ArduinoHttpClient Library](https://github.com/arduino-libraries/ArduinoHttpClient)
-
-The EthernetWebServer class, found in `EthernetWebServer.h` header, is a simple WebServer class, knowing how to handle HTTP requests such as GET and POST and can only support one one client at a time.
-
-The EthernetSSLClient class, found in `SSLClient.h` header, is a simple WebClient class, knowing how to handle HTTP/HTTPS requests such as GET and POST and can only support one client at a time.
-
 ---
----
+
+# Changelog
+
+### Release v1.3.1
+
+1. Clean-up all compiler warnings possible.
+2. Add Table of Contents
 
 ### Release v1.3.0
 
@@ -104,7 +246,7 @@ The EthernetSSLClient class, found in `SSLClient.h` header, is a simple WebClien
  2. [`Arduino AVR core 1.8.3+`](https://github.com/arduino/ArduinoCore-avr) for Arduino AVR boards. Use Arduino Board Manager to install.
  3. [`Teensy core v1.53+`](https://www.pjrc.com/teensy/td_download.html) for Teensy (4.1, 4.0, 3.6, 3.5, 3,2, 3.1, 3.0) boards.
  4. [`Arduino SAM DUE core v1.6.12+`](https://www.arduino.cc/en/Guide/ArduinoDue) for SAM DUE ARM Cortex-M3 boards.
- 5. [`Arduino SAMD core 1.8.10+`](https://www.arduino.cc/en/Guide/ArduinoM0) for SAMD ARM Cortex-M0+ boards  (Nano 33 IoT, etc.).
+ 5. [`Arduino SAMD core 1.8.11+`](https://www.arduino.cc/en/Guide/ArduinoM0) for SAMD ARM Cortex-M0+ boards  (Nano 33 IoT, etc.).
  6. [`Adafruit SAMD core 1.6.4+`](https://www.adafruit.com/) for SAMD ARM Cortex-M0+ and M4 boards (Itsy-Bitsy M4, etc.)
  7. [`Seeeduino SAMD core 1.8.1+`](https://www.seeedstudio.com/) for SAMD21/SAMD51 boards (XIAO M0, Wio Terminal, etc.) 
  8. [`Adafruit nRF52 v0.21.0+`](https://www.adafruit.com/) for nRF52 boards such as AdaFruit Feather nRF52840 Express, NINA_B302_ublox, NINA_B112_ublox, etc.
@@ -148,7 +290,9 @@ You can also use this link [![arduino-library-badge](https://www.ardu-badge.com/
 
 ### Packages' Patches
 
- 1. **To be able to compile, run and automatically detect and display BOARD_NAME on nRF52840/nRF52832 boards**, you have to copy the whole [nRF52 0.21.0](Packages_Patches/adafruit/hardware/nrf52/0.21.0) directory into Adafruit nRF52 directory (~/.arduino15/packages/adafruit/hardware/nrf52/0.21.0). 
+#### 1. For Adafruit nRF52840 and nRF52832 boards
+
+**To be able to compile, run and automatically detect and display BOARD_NAME on nRF52840/nRF52832 boards**, you have to copy the whole [nRF52 0.21.0](Packages_Patches/adafruit/hardware/nrf52/0.21.0) directory into Adafruit nRF52 directory (~/.arduino15/packages/adafruit/hardware/nrf52/0.21.0). 
 
 Supposing the Adafruit nRF52 version is 0.21.0. These files must be copied into the directory:
 - `~/.arduino15/packages/adafruit/hardware/nrf52/0.21.0/platform.txt`
@@ -170,20 +314,22 @@ These files must be copied into the directory:
 - `~/.arduino15/packages/adafruit/hardware/nrf52/x.yy.z/variants/NINA_B112_ublox/variant.cpp`
 - **`~/.arduino15/packages/adafruit/hardware/nrf52/x.yy.z/cores/nRF5/Udp.h`**
 
- 2. **To be able to compile and run on Teensy boards**, you have to copy the file [Teensy boards.txt](Packages_Patches/hardware/teensy/avr/boards.txt) into Teensy hardware directory (./arduino-1.8.13/hardware/teensy/avr/boards.txt). 
+#### 2. For Teensy boards
+ 
+ **To be able to compile and run on Teensy boards**, you have to copy the file [Teensy boards.txt](Packages_Patches/hardware/teensy/avr/boards.txt) into Teensy hardware directory (./arduino-1.8.12/hardware/teensy/avr/boards.txt). 
 
-Supposing the Arduino version is 1.8.13. These files must be copied into the directory:
+Supposing the Arduino version is 1.8.12. This file must be copied into the directory:
 
-- `./arduino-1.8.13/hardware/teensy/avr/boards.txt`
-- ***`./arduino-1.8.13/hardware/teensy/avr/cores/teensy4/Stream.h`***
+- `./arduino-1.8.12/hardware/teensy/avr/boards.txt`
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz
-These files must be copied into the directory:
+This file must be copied into the directory:
 
 - `./arduino-x.yy.zz/hardware/teensy/avr/boards.txt`
-- ***`./arduino-x.yy.zz/hardware/teensy/avr/cores/teensy4/Stream.h`***
 
- 3. **To be able to compile and run on SAM DUE boards**, you have to copy the whole [SAM DUE](Packages_Patches/arduino/hardware/sam/1.6.12) directory into Arduino sam directory (~/.arduino15/packages/arduino/hardware/sam/1.6.12). 
+#### 3. For Arduino SAM DUE boards
+ 
+ **To be able to compile and run on SAM DUE boards**, you have to copy the whole [SAM DUE](Packages_Patches/arduino/hardware/sam/1.6.12) directory into Arduino sam directory (~/.arduino15/packages/arduino/hardware/sam/1.6.12). 
 
 Supposing the Arduino SAM core version is 1.6.12. This file must be copied into the directory:
 
@@ -194,13 +340,15 @@ This file must be copied into the directory:
 
 - `~/.arduino15/packages/arduino/hardware/sam/x.yy.zz/platform.txt`
 
- 4. ***To be able to compile without error and automatically detect and display BOARD_NAME on Arduino SAMD (Nano-33-IoT, etc) boards***, you have to copy the whole [Arduino SAMD cores 1.8.10](Packages_Patches/arduino/hardware/samd/1.8.10) directory into Arduino SAMD directory (~/.arduino15/packages/arduino/hardware/samd/1.8.10).
+#### 4. For Arduino SAMD boards
  
-#### For core version v1.8.10+
+ ***To be able to compile without error and automatically detect and display BOARD_NAME on Arduino SAMD (Nano-33-IoT, etc) boards***, you have to copy the whole [Arduino SAMD cores 1.8.10](Packages_Patches/arduino/hardware/samd/1.8.10) directory into Arduino SAMD directory (~/.arduino15/packages/arduino/hardware/samd/1.8.10).
+ 
+#### For core version v1.8.11+
 
-Supposing the Arduino SAMD version is 1.8.10. Now only one file must be copied into the directory:
+Supposing the Arduino SAMD version is 1.8.11. Now only one file must be copied into the directory:
 
-- `~/.arduino15/packages/arduino/hardware/samd/1.8.10/platform.txt`
+- `~/.arduino15/packages/arduino/hardware/samd/1.8.11/platform.txt`
 
 Whenever a new version is installed, remember to copy this files into the new version directory. For example, new version is x.yy.zz
 
@@ -231,7 +379,9 @@ These files must be copied into the directory:
 
 Whenever the above-mentioned compiler error issue is fixed with the new Arduino SAMD release, you don't need to copy the `Arduino.h` file anymore.
 
- 5. ***To be able to automatically detect and display BOARD_NAME on Adafruit SAMD (Itsy-Bitsy M4, etc) boards***, you have to copy the file [Adafruit SAMD platform.txt](Packages_Patches/adafruit/hardware/samd/1.6.4) into Adafruit samd directory (~/.arduino15/packages/adafruit/hardware/samd/1.6.4). 
+#### 5. For Adafruit SAMD boards
+ 
+ ***To be able to automatically detect and display BOARD_NAME on Adafruit SAMD (Itsy-Bitsy M4, etc) boards***, you have to copy the file [Adafruit SAMD platform.txt](Packages_Patches/adafruit/hardware/samd/1.6.4) into Adafruit samd directory (~/.arduino15/packages/adafruit/hardware/samd/1.6.4). 
 
 Supposing the Adafruit SAMD core version is 1.6.4. This file must be copied into the directory:
 
@@ -242,7 +392,9 @@ This file must be copied into the directory:
 
 - `~/.arduino15/packages/adafruit/hardware/samd/x.yy.zz/platform.txt`
 
- 6. ***To be able to automatically detect and display BOARD_NAME on Seeeduino SAMD (XIAO M0, Wio Terminal, etc) boards***, you have to copy the file [Seeeduino SAMD platform.txt](Packages_Patches/Seeeduino/hardware/samd/1.8.1) into Adafruit samd directory (~/.arduino15/packages/Seeeduino/hardware/samd/1.8.1). 
+#### 6. For Seeeduino SAMD boards
+ 
+ ***To be able to automatically detect and display BOARD_NAME on Seeeduino SAMD (XIAO M0, Wio Terminal, etc) boards***, you have to copy the file [Seeeduino SAMD platform.txt](Packages_Patches/Seeeduino/hardware/samd/1.8.1) into Adafruit samd directory (~/.arduino15/packages/Seeeduino/hardware/samd/1.8.1). 
 
 Supposing the Seeeduino SAMD core version is 1.8.1. This file must be copied into the directory:
 
@@ -253,7 +405,9 @@ This file must be copied into the directory:
 
 - `~/.arduino15/packages/Seeeduino/hardware/samd/x.yy.zz/platform.txt`
 
-7. **To use Serial1 on some STM32 boards without Serial1 definition (Nucleo-144 NUCLEO_F767ZI, Nucleo-64 NUCLEO_L053R8, etc.) boards**, you have to copy the files [STM32 variant.h](Packages_Patches/STM32/hardware/stm32/1.9.0) into STM32 stm32 directory (~/.arduino15/packages/STM32/hardware/stm32/1.9.0). You have to modify the files corresponding to your boards, this is just an illustration how to do.
+#### 7. For STM32 boards
+
+**To use Serial1 on some STM32 boards without Serial1 definition (Nucleo-144 NUCLEO_F767ZI, Nucleo-64 NUCLEO_L053R8, etc.) boards**, you have to copy the files [STM32 variant.h](Packages_Patches/STM32/hardware/stm32/1.9.0) into STM32 stm32 directory (~/.arduino15/packages/STM32/hardware/stm32/1.9.0). You have to modify the files corresponding to your boards, this is just an illustration how to do.
 
 Supposing the STM32 stm32 core version is 1.9.0. These files must be copied into the directory:
 
@@ -270,35 +424,48 @@ theses files must be copied into the corresponding directory:
 
 ### Libraries' Patches
 
-1. If your application requires 2K+ HTML page, the current [`Ethernet library`](https://www.arduino.cc/en/Reference/Ethernet) must be modified if you are using W5200/W5500 Ethernet shields. W5100 is not supported for 2K+ buffer. If you use boards requiring different CS/SS pin for W5x00 Ethernet shield, for example ESP32, ESP8266, nRF52, etc., you also have to modify the following libraries to be able to specify the CS/SS pin correctly.
+#### 1. For application requiring 2K+ HTML page
 
-2. To fix [`Ethernet library`](https://www.arduino.cc/en/Reference/Ethernet), just copy these following files into the [`Ethernet library`](https://www.arduino.cc/en/Reference/Ethernet) directory to overwrite the old files:
+If your application requires 2K+ HTML page, the current [`Ethernet library`](https://www.arduino.cc/en/Reference/Ethernet) must be modified if you are using W5200/W5500 Ethernet shields. W5100 is not supported for 2K+ buffer. If you use boards requiring different CS/SS pin for W5x00 Ethernet shield, for example ESP32, ESP8266, nRF52, etc., you also have to modify the following libraries to be able to specify the CS/SS pin correctly.
+
+#### 2. For Ethernet library
+
+To fix [`Ethernet library`](https://www.arduino.cc/en/Reference/Ethernet), just copy these following files into the [`Ethernet library`](https://www.arduino.cc/en/Reference/Ethernet) directory to overwrite the old files:
 - [Ethernet.h](LibraryPatches/Ethernet/src/Ethernet.h)
 - [Ethernet.cpp](LibraryPatches/Ethernet/src/Ethernet.cpp)
 - [EthernetServer.cpp](LibraryPatches/Ethernet/src/EthernetServer.cpp)
 - [w5100.h](LibraryPatches/Ethernet/src/utility/w5100.h)
 - [w5100.cpp](LibraryPatches/Ethernet/src/utility/w5100.cpp)
 
-3. To fix [`EthernetLarge library`](https://github.com/OPEnSLab-OSU/EthernetLarge), just copy these following files into the [`EthernetLarge library`](https://github.com/OPEnSLab-OSU/EthernetLarge) directory to overwrite the old files:
+#### 3. For EthernetLarge library
+
+To fix [`EthernetLarge library`](https://github.com/OPEnSLab-OSU/EthernetLarge), just copy these following files into the [`EthernetLarge library`](https://github.com/OPEnSLab-OSU/EthernetLarge) directory to overwrite the old files:
 - [EthernetLarge.h](LibraryPatches/EthernetLarge/src/EthernetLarge.h)
 - [EthernetLarge.cpp](LibraryPatches/EthernetLarge/src/EthernetLarge.cpp)
 - [EthernetServer.cpp](LibraryPatches/EthernetLarge/src/EthernetServer.cpp)
 - [w5100.h](LibraryPatches/EthernetLarge/src/utility/w5100.h)
 - [w5100.cpp](LibraryPatches/EthernetLarge/src/utility/w5100.cpp)
 
-4. To fix [`Ethernet2 library`](https://github.com/khoih-prog/Ethernet2), just copy these following files into the [`Ethernet2 library`](https://github.com/khoih-prog/Ethernet2) directory to overwrite the old files:
+
+#### 4. For Ethernet2 library
+
+To fix [`Ethernet2 library`](https://github.com/khoih-prog/Ethernet2), just copy these following files into the [`Ethernet2 library`](https://github.com/khoih-prog/Ethernet2) directory to overwrite the old files:
 
 - [Ethernet2.h](LibraryPatches/Ethernet2/src/Ethernet2.h)
 - [Ethernet2.cpp](LibraryPatches/Ethernet2/src/Ethernet2.cpp)
 
-To add UDP Multicast support, necessary for this [**UPnP_Generic library**](https://github.com/khoih-prog/UPnP_Generic):
+To add UDP Multicast support, necessary for the [**UPnP_Generic library**](https://github.com/khoih-prog/UPnP_Generic):
 
 - [EthernetUdp2.h](LibraryPatches/Ethernet2/src/EthernetUdp2.h)
 - [EthernetUdp2.cpp](LibraryPatches/Ethernet2/src/EthernetUdp2.cpp)
 
+#### 5. For Ethernet3 library
+
 5. To fix [`Ethernet3 library`](https://github.com/sstaub/Ethernet3), just copy these following files into the [`Ethernet3 library`](https://github.com/sstaub/Ethernet3) directory to overwrite the old files:
 - [Ethernet3.h](LibraryPatches/Ethernet3/src/Ethernet3.h)
 - [Ethernet3.cpp](LibraryPatches/Ethernet3/src/Ethernet3.cpp)
+
+#### 6. For UIPEthernet library
 
 6. ***To be able to compile and run on nRF52 boards with ENC28J60 using UIPEthernet library***, you have to copy these following files into the UIPEthernet `utility` directory to overwrite the old files:
 
@@ -306,6 +473,8 @@ To add UDP Multicast support, necessary for this [**UPnP_Generic library**](http
 - [UIPEthernet.cpp](LibraryPatches/UIPEthernet/UIPEthernet.cpp)
 - [Enc28J60Network.h](LibraryPatches/UIPEthernet/utility/Enc28J60Network.h)
 - [Enc28J60Network.cpp](LibraryPatches/UIPEthernet/utility/Enc28J60Network.cpp)
+
+#### 4. For fixing ESP32 compile error
 
 7. To fix [`ESP32 compile error`](https://github.com/espressif/arduino-esp32), just copy the following file into the [`ESP32`](https://github.com/espressif/arduino-esp32) cores/esp32 directory (e.g. ./arduino-1.8.12/hardware/espressif/cores/esp32) to overwrite the old file:
 - [Server.h](LibraryPatches/esp32/cores/esp32/Server.h)
@@ -752,9 +921,13 @@ The following info is taken and modified from [SSLClient README](https://github.
 
 Using EthernetSSLClient is similar to using any other Arduino-based Client class. There are a few extra things, however, that you will need to get started:
 
-1. **Board and Network Peripheral** - Your board should have a lot of resources (>110kb flash and >7kb RAM), and your network peripheral should have a large internal buffer (>7kb).
+##### 1. Board and Network Peripheral Requirements
 
-2. **Trust Anchors (TA)** - You will need a header containing array of trust anchors ([trust_anchors](examples/WebClient_SSL/trust_anchors.h)), which are used to verify the SSL connection later on. **This file must generated for every project if connecting to different TLS/SSL WebServers.** Check out [TrustAnchors.md](./TrustAnchors.md#generating-trust-anchors) on how to generate this file for your project, and for more information about what a trust anchor is.
+Your board should have a lot of resources (>110kb flash and >7kb RAM), and your network peripheral should have a large internal buffer (>7kb).
+
+##### 2. How to use Trust Anchors TA
+
+You will need a header containing array of trust anchors ([trust_anchors](examples/WebClient_SSL/trust_anchors.h)), which are used to verify the SSL connection later on. **This file must generated for every project if connecting to different TLS/SSL WebServers.** Check out [TrustAnchors.md](./TrustAnchors.md#generating-trust-anchors) on how to generate this file for your project, and for more information about what a trust anchor is.
 
 
 Once all those are ready, you can create an SSLClient object like this:
@@ -803,7 +976,9 @@ else
 }
 ```
 
-**Note**: `sslClient.connect("www.arduino.cc", 443)` can take 5-15 seconds to finish. This an unavoidable consequence of the SSL protocol, and is detailed in [Implementation Notes](#resources).
+##### 3. Note
+
+`sslClient.connect("www.arduino.cc", 443)` can take 5-15 seconds to finish. This an unavoidable consequence of the SSL protocol, and is detailed in [Implementation Notes](#resources).
 
 For more information on `EthernetSSLClient`, check out the [examples](./examples), [API documentation](https://openslab-osu.github.io/SSLClient/index.html), or the rest of this README.
 
@@ -1788,7 +1963,9 @@ IPAddress myDns(8, 8, 8, 8);
 
 ### Debug Termimal Output Samples
 
-1. The following are debug terminal output and screen shot when running example [AdvancedWebServer](examples/AdvancedWebServer) on Adafruit NRF52840_FEATHER_EXPRESS with ENC28J60 using EthernetENC Library
+#### 1. AdvancedWebServer on NRF52840_FEATHER_EXPRESS with ENC28J60 using EthernetENC Library
+
+The following are debug terminal output and screen shot when running example [AdvancedWebServer](examples/AdvancedWebServer) on Adafruit NRF52840_FEATHER_EXPRESS with ENC28J60 using EthernetENC Library
 
 <p align="center">
     <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/pics/AdvancedWebServer.png">
@@ -1929,7 +2106,9 @@ Connection: close
 
 ---
 
-2. The terminal output of ESP32 running a [ENC28J60_WM_Config example](https://github.com/khoih-prog/BlynkEthernet_WM/tree/master/examples/ENC28J60_WM_Config) of [BlynkEthernet_WM Library](https://github.com/khoih-prog/BlynkEthernet_WM)
+#### 2. ENC28J60_WM_Config on ESP32 with ENC28J60 using UIPEthernet Library
+
+The terminal output of ESP32 running a [ENC28J60_WM_Config example](https://github.com/khoih-prog/BlynkEthernet_WM/tree/master/examples/ENC28J60_WM_Config) of [BlynkEthernet_WM Library](https://github.com/khoih-prog/BlynkEthernet_WM)
 
 ```cpp
 Start ENC28J60_WM_Config on ESP32
@@ -1966,7 +2145,9 @@ BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB
 
 ---
 
-3. The terminal output of **SAM DUE with W5x00 using EthernetLarge Library** running [WebClientMulti_SSL example](examples/WebClientMulti_SSL)
+#### 3. WebClientMulti_SSL on SAM DUE with W5x00 using EthernetLarge Library
+
+The terminal output of **SAM DUE with W5x00 using EthernetLarge Library** running [WebClientMulti_SSL example](examples/WebClientMulti_SSL)
 
 ```
 Start WebClientMulti_SSL on SAM DUE with W5x00 using EthernetLarge Library
@@ -2103,7 +2284,9 @@ Disconnecting.
 
 ---
 
-4. The terminal output of **SEEED_XIAO_M0 with W5x00 using Ethernet3 Library** running [WebClient_SSL example](examples/WebClient_SSL)
+#### 4. WebClient_SSL on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library
+
+The terminal output of **SEEED_XIAO_M0 with W5x00 using Ethernet3 Library** running [WebClient_SSL example](examples/WebClient_SSL)
 
 ```
 Start WebClient_SSL on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library
@@ -2207,6 +2390,8 @@ Received 3405 bytes in 0.2072 s, rate = 16.43 kbytes/second
 
 ---
 
+#### 5. MQTTClient_SSL_Complex on SAM DUE with W5x00 using EthernetLarge Library
+
 5. The terminal output of **SAM DUE with W5x00 using EthernetLarge Library** running [MQTTClient_SSL_Complex example](examples/MQTTClient_SSL_Complex)
 
 ```
@@ -2279,7 +2464,34 @@ MQTT Message receive [esp32-sniffer/12345678/ble] Hello from MQTTS_ThingStream o
 ---
 ---
 
+### Debug
+
+Debug is enabled by default on Serial. Debug Level from 0 to 4. To disable, change the _ETHERNET_WEBSERVER_LOGLEVEL_ to 0
+
+```cpp
+// Use this to output debug msgs to Serial
+#define DEBUG_ETHERNET_WEBSERVER_PORT       Serial
+// Use this to disable all output debug msgs
+// Debug Level from 0 to 4
+#define _ETHERNET_WEBSERVER_LOGLEVEL_       0
+```
+
+---
+
+## Troubleshooting
+
+If you get compilation errors, more often than not, you may need to install a newer version of the board's core, applying Libraries' Patches, Packages' Patches or this library latest version.
+
+
+---
+---
+
 ## Releases
+
+### Release v1.3.1
+
+1. Clean-up all compiler warnings possible.
+2. Add Table of Contents
 
 ### Release v1.3.0
 
