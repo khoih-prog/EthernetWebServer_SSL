@@ -8,7 +8,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
   Licensed under MIT license
        
-  Version: 1.3.1
+  Version: 1.4.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -19,6 +19,7 @@
   1.2.0   K Hoang      20/11/2020 Add basic HTTP and WebSockets Client by merging ArduinoHttpClient
   1.3.0   K Hoang      04/12/2020 Add support to NativeEthernet Library for Teensy 4.1
   1.3.1   K Hoang      26/12/2020 Suppress all possible compiler warnings
+  1.4.0   K Hoang      13/05/2021 Add support to RP2040-based boards using Arduino mbed_rp2040 core
  *****************************************************************************************************************************/
  
 #include "cencode.h"
