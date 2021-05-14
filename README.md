@@ -11,12 +11,12 @@
 
 ## Table of Contents
 
-
 * [Why do we need this EthernetWebServer_SSL library](#why-do-we-need-this-ethernetwebserver_ssl-library)
   * [Features](#features)
   * [Currently supported Boards](#currently-supported-boards)
   * [Currently supported Ethernet shields/modules](#currently-supported-ethernet-shieldsmodules)
 * [Changelog](#changelog)
+  * [Major Releases v1.4.0](#major-releases-v140)
   * [Releases v1.3.1](#releases-v131)
   * [Releases v1.3.0](#releases-v130)
   * [Major Releases v1.2.0](#major-releases-v120)
@@ -38,6 +38,9 @@
   * [5. For Adafruit SAMD boards](#5-for-adafruit-samd-boards)
   * [6. For Seeeduino SAMD boards](#6-for-seeeduino-samd-boards)
   * [7. For STM32 boards](#7-for-stm32-boards) 
+    * [7.1. For STM32 boards to use LAN8720](#71-for-stm32-boards-to-use-lan8720)
+    * [7.2. For STM32 boards to use Serial1](#72-for-stm32-boards-to-use-serial1)
+  * [8. For RP2040-based boards](#8-for-rp2040-based-boards)
 * [Libraries' Patches](#libraries-patches)
   * [1. For application requiring 2K+ HTML page](#1-for-application-requiring-2k-html-page)
   * [2. For Ethernet library](#2-for-ethernet-library)
@@ -46,11 +49,11 @@
   * [5. For Ethernet3 library](#5-for-ethernet3-library)
   * [6. For UIPEthernet library](#6-for-uipethernet-library)
   * [7. For fixing ESP32 compile error](#7-for-fixing-esp32-compile-error) 
+  * [8. For fixing ESP8266 compile error](#8-for-fixing-esp8266-compile-error)
 * [HOWTO Use analogRead() with ESP32 running WiFi and/or BlueTooth (BT/BLE)](#howto-use-analogread-with-esp32-running-wifi-andor-bluetooth-btble)
   * [1. ESP32 has 2 ADCs, named ADC1 and ADC2](#1--esp32-has-2-adcs-named-adc1-and-adc2)
   * [2. ESP32 ADCs functions](#2-esp32-adcs-functions)
   * [3. ESP32 WiFi uses ADC2 for WiFi functions](#3-esp32-wifi-uses-adc2-for-wifi-functions)
-  
 * [Configuration Notes](#configuration-notes)
   * [1. How to select which built-in Ethernet or shield to use](#1-how-to-select-which-built-in-ethernet-or-shield-to-use)
     *[Important](#important)
@@ -130,6 +133,10 @@
   * [3. WebClientMulti_SSL on SAM DUE with W5x00 using EthernetLarge Library](#3-webclientmulti_ssl-on-sam-due-with-w5x00-using-ethernetlarge-library)
   * [4. WebClient_SSL on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library](#4-webclient_ssl-on-seeed_xiao_m0-with-w5x00-using-ethernet3-library)
   * [5. MQTTClient_SSL_Complex on SAM DUE with W5x00 using EthernetLarge Library](#5-mqttclient_ssl_complex-on-sam-due-with-w5x00-using-ethernetlarge-library)
+  * [6. MQTTS_ThingStream on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library](#6-mqtts_thingstream-on-seeed_xiao_m0-with-w5x00-using-ethernet3-library)
+  * [7. MQTTS_ThingStream on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet Library](#7-mqtts_thingstream-on-mbed-raspberry_pi_pico-with-w5x00-using-ethernet-library)
+  * [8. MQTTClient_SSL on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet Library](#8-mqttclient_ssl-on-mbed-raspberry_pi_pico-with-w5x00-using-ethernet-library)
+  * [9. AdvancedWebServer on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet3 Library](#9-advancedwebserver-on-mbed-raspberry_pi_pico-with-w5x00-using-ethernet3-library)
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Releases](#releases)
@@ -149,6 +156,8 @@
 #### Features
 
 This [EthernetWebServer_SSL library](https://github.com/khoih-prog/EthernetWebServer_SSL) is a simple yet complete TLS/SSL WebClient and non-TLS/SSL WebServer library for **Teensy, SAM DUE, Arduino SAMD21, Adafruit SAMD21/SAMD51, Adafruit nRF52, ESP32/ESP8266, STM32, etc.** boards using Ethernet shields. The functions are similar and compatible to those of [`ESP32 WebServer`](https://github.com/espressif/arduino-esp32/tree/master/libraries/WebServer) and [`ESP8266WebServer`](https://github.com/esp8266/Arduino/tree/master/libraries/ESP8266WebServer) libraries to make life much easier to port sketches from ESP8266/ESP32.
+
+The **RP2040-based boards, such as RASPBERRY_PI_PICO**, are currently supported using [**Arduino-mbed RP2040** core](https://github.com/arduino/ArduinoCore-mbed). The support to [Earle Philhower's arduino-pico core](https://github.com/earlephilhower/arduino-pico) will be added in the future.
 
 This [EthernetWebServer_SSL library](https://github.com/khoih-prog/EthernetWebServer_SSL) adds [TLS 1.2](https://www.websecurity.digicert.com/security-topics/what-is-ssl-tls-https) functionality to EthernetClient, using BearSSL as an underlying TLS engine.
 
@@ -192,7 +201,9 @@ This [**EthernetWebServer_SSL** library](https://github.com/khoih-prog/EthernetW
  6. **AVR Mega1280, 2560, ADK.**. SSL WebClient not supported yet. Check [Trivial sketch won't compile using Arduino 1.8.13](https://github.com/mike-matera/ArduinoSTL/issues/56)
  7. ESP32
  8. ESP8266. SSL WebClient not supported yet. Check [HTTPS GET request - ESP8266 - ENC28j60](https://github.com/OPEnSLab-OSU/SSLClient/issues/5)
-
+ 9. RP2040-based boards, such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, using [**Arduino-mbed RP2040** core](https://github.com/arduino/ArduinoCore-mbed). 
+ 
+  
 #### Currently supported Ethernet shields/modules
 
 1. W5x00 using [`Ethernet`](https://www.arduino.cc/en/Reference/Ethernet), [`EthernetLarge`](https://github.com/OPEnSLab-OSU/EthernetLarge), [`Ethernet2`](https://github.com/adafruit/Ethernet2) or [`Ethernet3`](https://github.com/sstaub/Ethernet3) library
@@ -203,6 +214,11 @@ This [**EthernetWebServer_SSL** library](https://github.com/khoih-prog/EthernetW
 ---
 
 # Changelog
+
+### Major Releases v1.4.0
+
+1. Add support to RP2040-based boards, such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, using [**Arduino-mbed RP2040** core](https://github.com/arduino/ArduinoCore-mbed).
+2. Update examples with new features
 
 ### Releases v1.3.1
 
@@ -247,18 +263,19 @@ This [**EthernetWebServer_SSL** library](https://github.com/khoih-prog/EthernetW
  3. [`Teensy core v1.51`](https://www.pjrc.com/teensy/td_download.html) for Teensy (4.1, 4.0, 3.6, 3.5, 3,2, 3.1, 3.0) boards using W5500, ENC28J60 Ethernet shields. [`Teensy core v1.53+`](https://www.pjrc.com/teensy/td_download.html) for Teensy (4.1) boards using NativeEthernet.
  4. [`Arduino SAM DUE core v1.6.12+`](https://github.com/arduino/ArduinoCore-sam) for SAM DUE ARM Cortex-M3 boards.
  5. [`Arduino SAMD core 1.8.11+`](https://github.com/arduino/ArduinoCore-samd) for SAMD ARM Cortex-M0+ boards. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-samd.svg)](https://github.com/arduino/ArduinoCore-samd/releases/latest)
- 6. [`Adafruit SAMD core 1.6.5+`](https://github.com/adafruit/ArduinoCore-samd) for SAMD ARM Cortex-M0+ and M4 boards (Nano 33 IoT, etc.). [![GitHub release](https://img.shields.io/github/release/adafruit/ArduinoCore-samd.svg)](https://github.com/adafruit/ArduinoCore-samd/releases/latest)
+ 6. [`Adafruit SAMD core 1.6.8+`](https://github.com/adafruit/ArduinoCore-samd) for SAMD ARM Cortex-M0+ and M4 boards (Nano 33 IoT, etc.). [![GitHub release](https://img.shields.io/github/release/adafruit/ArduinoCore-samd.svg)](https://github.com/adafruit/ArduinoCore-samd/releases/latest)
  7. [`Seeeduino SAMD core 1.8.1+`](https://github.com/Seeed-Studio/ArduinoCore-samd) for SAMD21/SAMD51 boards (XIAO M0, Wio Terminal, etc.). [![Latest release](https://img.shields.io/github/release/Seeed-Studio/ArduinoCore-samd.svg)](https://github.com/Seeed-Studio/ArduinoCore-samd/releases/latest/)
  8. [`Adafruit nRF52 v0.21.0+`](https://github.com/adafruit/Adafruit_nRF52_Arduino) for nRF52 boards such as Adafruit NRF52840_FEATHER, NRF52832_FEATHER, NRF52840_FEATHER_SENSE, NRF52840_ITSYBITSY, NRF52840_CIRCUITPLAY, NRF52840_CLUE, NRF52840_METRO, NRF52840_PCA10056, PARTICLE_XENON, **NINA_B302_ublox**, etc. [![GitHub release](https://img.shields.io/github/release/adafruit/Adafruit_nRF52_Arduino.svg)](https://github.com/adafruit/Adafruit_nRF52_Arduino/releases/latest)
  9. [`ESP8266 Core 2.7.4+`](https://github.com/esp8266/Arduino) for ESP8266-based boards. [![Latest release](https://img.shields.io/github/release/esp8266/Arduino.svg)](https://github.com/esp8266/Arduino/releases/latest/). To use ESP8266 core 2.7.1+ for LittleFS. 
-10. [`ESP32 Core 1.0.4+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards. [![Latest release](https://img.shields.io/github/release/espressif/arduino-esp32.svg)](https://github.com/espressif/arduino-esp32/releases/latest/)
-11. [`Functional-VLPP library v1.0.2+`](https://github.com/khoih-prog/functional-vlpp) to use server's lambda function. To install. check [![arduino-library-badge](https://www.ardu-badge.com/badge/Functional-Vlpp.svg?)](https://www.ardu-badge.com/Functional-Vlpp)
-12. Depending on which Ethernet card you're using:
+10. [`ESP32 Core 1.0.6+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards. [![Latest release](https://img.shields.io/github/release/espressif/arduino-esp32.svg)](https://github.com/espressif/arduino-esp32/releases/latest/)
+11. [`Arduino mbed_rp2040 core 2.0.0+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino (Use Arduino Board Manager) RP2040-based boards, such as RASPBERRY_PI_PICO. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
+12. [`Functional-VLPP library v1.0.2+`](https://github.com/khoih-prog/functional-vlpp) to use server's lambda function. To install. check [![arduino-library-badge](https://www.ardu-badge.com/badge/Functional-Vlpp.svg?)](https://www.ardu-badge.com/Functional-Vlpp)
+13. Depending on which Ethernet card you're using:
    - [`Ethernet library v2.0.0+`](https://github.com/arduino-libraries/Ethernet) for W5100, W5200 and W5500.  [![GitHub release](https://img.shields.io/github/release/arduino-libraries/Ethernet.svg)](https://github.com/arduino-libraries/Ethernet/releases/latest)
    - [`EthernetLarge library v2.0.0+`](https://github.com/OPEnSLab-OSU/EthernetLarge) for W5100, W5200 and W5500.
    - [`Ethernet2 library v1.0.4+`](https://github.com/khoih-prog/Ethernet2) for W5500. [![GitHub release](https://img.shields.io/github/release/adafruit/Ethernet2.svg)](https://github.com/adafruit/Ethernet2/releases/latest)
    - [`Ethernet3 library v1.5.5+`](https://github.com/sstaub/Ethernet3) for W5500/WIZ550io/WIZ850io/USR-ES1 with Wiznet W5500 chip. [![GitHub release](https://img.shields.io/github/release/sstaub/Ethernet3.svg)](https://github.com/sstaub/Ethernet3/releases/latest)
-   - [`EthernetENC library v2.0.0+`](https://github.com/jandrassy/EthernetENC) for ENC28J60. [![GitHub release](https://img.shields.io/github/release/jandrassy/EthernetENC.svg)](https://github.com/jandrassy/EthernetENC/releases/latest). **New and Better**
+   - [`EthernetENC library v2.0.1+`](https://github.com/jandrassy/EthernetENC) for ENC28J60. [![GitHub release](https://img.shields.io/github/release/jandrassy/EthernetENC.svg)](https://github.com/jandrassy/EthernetENC/releases/latest). **New and Better**
    - [`UIPEthernet library v2.0.9+`](https://github.com/UIPEthernet/UIPEthernet) for ENC28J60. [![GitHub release](https://img.shields.io/github/release/UIPEthernet/UIPEthernet.svg)](https://github.com/UIPEthernet/UIPEthernet/releases/latest)
    - [`NativeEthernet Library version stable111+`](https://github.com/vjmuzik/NativeEthernet) for Teensy 4.1 built-in NativeEthernet.
 
@@ -413,6 +430,30 @@ This file must be copied into the directory:
 
 #### 7. For STM32 boards
 
+#### 7.1 For STM32 boards to use LAN8720
+
+To use LAN8720 on some STM32 boards 
+
+- **Nucleo-144 (F429ZI, NUCLEO_F746NG, NUCLEO_F746ZG, NUCLEO_F756ZG)**
+- **Discovery (DISCO_F746NG)**
+- **STM32F4 boards (BLACK_F407VE, BLACK_F407VG, BLACK_F407ZE, BLACK_F407ZG, BLACK_F407VE_Mini, DIYMORE_F407VGT, FK407M1)**
+
+you have to copy the files [stm32f4xx_hal_conf_default.h](Packages_Patches/STM32/hardware/stm32/1.9.0/system/STM32F4xx) and [stm32f7xx_hal_conf_default.h](Packages_Patches/STM32/hardware/stm32/1.9.0/system/STM32F7xx) into STM32 stm32 directory (~/.arduino15/packages/STM32/hardware/stm32/1.9.0/system) to overwrite the old files.
+
+Supposing the STM32 stm32 core version is 1.9.0. These files must be copied into the directory:
+
+- `~/.arduino15/packages/STM32/hardware/stm32/1.9.0/system/STM32F4xx/stm32f4xx_hal_conf_default.h` for STM32F4.
+- `~/.arduino15/packages/STM32/hardware/stm32/1.9.0/system/STM32F7xx/stm32f7xx_hal_conf_default.h` for Nucleo-144 STM32F7.
+
+Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz,
+theses files must be copied into the corresponding directory:
+
+- `~/.arduino15/packages/STM32/hardware/stm32/x.yy.zz/system/STM32F4xx/stm32f4xx_hal_conf_default.h`
+- `~/.arduino15/packages/STM32/hardware/stm32/x.yy.zz/system/STM32F7xx/stm32f7xx_hal_conf_default.h
+
+
+#### 7.2 For STM32 boards to use Serial1
+
 **To use Serial1 on some STM32 boards without Serial1 definition (Nucleo-144 NUCLEO_F767ZI, Nucleo-64 NUCLEO_L053R8, etc.) boards**, you have to copy the files [STM32 variant.h](Packages_Patches/STM32/hardware/stm32/1.9.0) into STM32 stm32 directory (~/.arduino15/packages/STM32/hardware/stm32/1.9.0). You have to modify the files corresponding to your boards, this is just an illustration how to do.
 
 Supposing the STM32 stm32 core version is 1.9.0. These files must be copied into the directory:
@@ -425,6 +466,19 @@ theses files must be copied into the corresponding directory:
 
 - `~/.arduino15/packages/STM32/hardware/stm32/x.yy.zz/variants/NUCLEO_F767ZI/variant.h`
 - `~/.arduino15/packages/STM32/hardware/stm32/x.yy.zz/variants/NUCLEO_L053R8/variant.h`
+
+#### 8. For RP2040-based boards using [Earle Philhower arduino-pico core](https://github.com/earlephilhower/arduino-pico)
+ 
+ ***To be able to automatically detect and display BOARD_NAME on Seeeduino SAMD (RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040, GENERIC_RP2040, etc) boards***, you have to copy the file [RP2040 platform.txt](Packages_Patches/rp2040/hardware/rp2040/1.2.1) into rp2040 directory (~/.arduino15/packages/rp2040/hardware/rp2040/1.2.1). 
+
+Supposing the rp2040 core version is 1.2.1. This file must be copied into the directory:
+
+- `~/.arduino15/packages/rp2040/hardware/rp2040/1.2.1/platform.txt`
+
+Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz
+This file must be copied into the directory:
+
+- `~/.arduino15/packages/rp2040/hardware/rp2040/x.yy.zz/platform.txt`
 
 ---
 
@@ -1271,6 +1325,8 @@ void handleRoot()
   int hr = min / 60;
   int day = hr / 24;
 
+  hr = hr % 24;
+
   snprintf(temp, BUFFER_SIZE - 1,
            "<html>\
 <head>\
@@ -1281,7 +1337,7 @@ body { background-color: #cccccc; font-family: Arial, Helvetica, Sans-Serif; Col
 </style>\
 </head>\
 <body>\
-<h2>Hi from EthernetWebServer_SSL!</h2>\
+<h2>Hi from EthernetWebServer!</h2>\
 <h3>on %s</h3>\
 <p>Uptime: %d d %02d:%02d:%02d</p>\
 <img src=\"/test.svg\" />\
@@ -1341,7 +1397,7 @@ void setup(void)
 
   Serial.print("\nStarting AdvancedWebServer on " + String(BOARD_NAME));
   Serial.println(" with " + String(SHIELD_TYPE));
-  Serial.println(ETHERNET_WEBSERVER_SSL_VERSION);
+  Serial.println(ETHERNET_WEBSERVER_VERSION);
 
 #if USE_ETHERNET_WRAPPER
 
@@ -1452,6 +1508,39 @@ void setup(void)
     Ethernet.init(USE_THIS_SS_PIN); 
   
   #endif  //( USE_ETHERNET || USE_ETHERNET2 || USE_ETHERNET3 || USE_ETHERNET_LARGE )
+
+#elif ETHERNET_USE_RPIPICO
+
+  pinMode(USE_THIS_SS_PIN, OUTPUT);
+  digitalWrite(USE_THIS_SS_PIN, HIGH);
+  
+  // ETHERNET_USE_RPIPICO, use default SS = 5 or 13
+  #ifndef USE_THIS_SS_PIN
+    #define USE_THIS_SS_PIN   5   //13    // For other boards
+  #endif
+
+  ET_LOGWARN1(F("RPIPICO setCsPin:"), USE_THIS_SS_PIN);
+
+  // For other boards, to change if necessary
+  #if ( USE_ETHERNET || USE_ETHERNET_LARGE || USE_ETHERNET2 || USE_ETHERNET_ENC )
+    // Must use library patch for Ethernet, EthernetLarge libraries
+    // For RPI Pico
+    // SCK1: GPIO14,  MOSI1: GPIO15, MISO1: GPIO12, SS/CS1: GPIO13
+    // Default pin 13 to SS/CS
+  
+    //Ethernet.setCsPin (USE_THIS_SS_PIN);
+    Ethernet.init (USE_THIS_SS_PIN);
+  
+  #elif USE_ETHERNET3
+    // Use  MAX_SOCK_NUM = 4 for 4K, 2 for 8K, 1 for 16K RX/TX buffer
+    #ifndef ETHERNET3_MAX_SOCK_NUM
+      #define ETHERNET3_MAX_SOCK_NUM      4
+    #endif
+  
+    Ethernet.setCsPin (USE_THIS_SS_PIN);
+    Ethernet.init (ETHERNET3_MAX_SOCK_NUM);
+    
+  #endif    //( USE_ETHERNET || USE_ETHERNET2 || USE_ETHERNET3 || USE_ETHERNET_LARGE )
 
 #else   //defined(ESP8266)
   // unknown board, do nothing, use default SS = 10
@@ -1581,7 +1670,8 @@ void loop(void)
 #### 2. File [defines.h](examples/AdvancedWebServer/defines.h)
 
 ```cpp
-#pragma once
+#ifndef defines_h
+#define defines_h
 
 #define DEBUG_ETHERNET_WEBSERVER_PORT       Serial
 
@@ -1597,7 +1687,7 @@ void loop(void)
     #undef ETHERNET_USE_SAMD
   #endif
   #define ETHERNET_USE_SAMD      true
-  #endif
+#endif
 
 #if ( defined(NRF52840_FEATHER) || defined(NRF52832_FEATHER) || defined(NRF52_SERIES) || defined(ARDUINO_NRF52_ADAFRUIT) || \
         defined(NRF52840_FEATHER_SENSE) || defined(NRF52840_ITSYBITSY) || defined(NRF52840_CIRCUITPLAY) || defined(NRF52840_CLUE) || \
@@ -1613,6 +1703,13 @@ void loop(void)
     #undef ETHERNET_USE_SAM_DUE
   #endif
   #define ETHERNET_USE_SAM_DUE      true
+#endif
+
+#if ( defined(ARDUINO_ARCH_RP2040) || defined(ARDUINO_RASPBERRY_PI_PICO) || defined(ARDUINO_ADAFRUIT_FEATHER_RP2040) || defined(ARDUINO_GENERIC_RP2040) )
+  #if defined(ETHERNET_USE_RPIPICO)
+    #undef ETHERNET_USE_RPIPICO
+  #endif
+  #define ETHERNET_USE_RPIPICO      true
 #endif
 
 #if defined(ETHERNET_USE_SAMD)
@@ -1811,25 +1908,49 @@ void loop(void)
   
   #define W5500_RST_PORT   21
 
-#elif (__AVR__)
+#elif ETHERNET_USE_RPIPICO
+
+  // For RPI Pico
+  // SCK1: GPIO14,  MOSI1: GPIO15, MISO1: GPIO12, SS/CS1: GPIO13
+  // Default pin 5 (in Mbed) or 13 to SS/CS
+  #if defined(ARDUINO_ARCH_MBED)
+    
+    #define USE_THIS_SS_PIN       5
+
+    #if defined(BOARD_NAME)
+      #undef BOARD_NAME
+    #endif
+
+    #if defined(ARDUINO_RASPBERRY_PI_PICO) 
+      #define BOARD_TYPE      "MBED RASPBERRY_PI_PICO"
+    #elif defined(ARDUINO_ADAFRUIT_FEATHER_RP2040)
+      #define BOARD_TYPE      "MBED DAFRUIT_FEATHER_RP2040"
+    #elif defined(ARDUINO_GENERIC_RP2040)
+      #define BOARD_TYPE      "MBED GENERIC_RP2040"
+    #else
+      #define BOARD_TYPE      "MBED Unknown RP2040"
+    #endif
+    
+  #else
+  
+    #define USE_THIS_SS_PIN       13
+
+  #endif
+    
+  #define SS_PIN_DEFAULT        USE_THIS_SS_PIN
+
+  // For RPI Pico
+  #warning Use RPI-Pico RP2040 architecture
+
+#else
   // For Mega
   // Default pin 10 to SS/CS
   #define USE_THIS_SS_PIN       10
-  #define BOARD_TYPE            "AVR"
 
-  #error Not supporting AVR Mega, Nano, UNO, etc. yet.
-  // Currently not OK. See https://github.com/mike-matera/ArduinoSTL/issues/56
-  // Hopefully will be fixed in Arduino IDE 1.8.14
-  #include "ArduinoSTL.h"                                   // https://github.com/mike-matera/ArduinoSTL
-
-#else
-
-  // Default pin 10 to SS/CS
-  #define USE_THIS_SS_PIN       10
-  #define BOARD_TYPE            "Unknown"
-
-  //#error Not supporting yet.
+  // Reduce size for Mega
+  #define SENDCONTENT_P_BUFFER_SZ     512
   
+  #define BOARD_TYPE            "AVR Mega"
 #endif
 
 #ifndef BOARD_NAME
@@ -1857,9 +1978,9 @@ void loop(void)
   //#define USE_THIS_SS_PIN   22  //21  //5 //4 //2 //15
   
   // Only one if the following to be true
-  #define USE_ETHERNET          true
+  #define USE_ETHERNET          false
   #define USE_ETHERNET2         false
-  #define USE_ETHERNET3         false
+  #define USE_ETHERNET3         true
   #define USE_ETHERNET_LARGE    false
   #define USE_ETHERNET_ESP8266  false 
   #define USE_ETHERNET_ENC      false
@@ -1924,7 +2045,7 @@ void loop(void)
     #define SHIELD_TYPE           "ENC28J60 using UIPEthernet Library"
 #endif      // #if !USE_UIP_ETHERNET
 
-#include <EthernetWebServer_SSL.h>
+#include <EthernetWebServer.h>
 
 #ifndef SHIELD_TYPE
   #define SHIELD_TYPE     "Unknown Ethernet shield/library" 
@@ -1963,6 +2084,8 @@ IPAddress ip(192, 168, 2, 222);
 // Google DNS Server IP
 IPAddress myDns(8, 8, 8, 8);
 
+#endif    //defines_h
+
 ```
 ---
 ---
@@ -1979,7 +2102,7 @@ The following are debug terminal output and screen shot when running example [Ad
 
 ```
 Starting AdvancedWebServer on NRF52840_FEATHER with ENC28J60 using EthernetENC Library
-EthernetWebServer_SSL v1.3.0
+EthernetWebServer_SSL v1.4.0
 [ETHERNET_WEBSERVER] =========================
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 25
@@ -2157,7 +2280,7 @@ The terminal output of **SAM DUE with W5x00 using EthernetLarge Library** runnin
 
 ```
 Start WebClientMulti_SSL on SAM DUE with W5x00 using EthernetLarge Library
-EthernetWebServer_SSL v1.3.0
+EthernetWebServer_SSL v1.4.0
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_LARGE ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 75
@@ -2296,7 +2419,7 @@ The terminal output of **SEEED_XIAO_M0 with W5x00 using Ethernet3 Library** runn
 
 ```
 Start WebClient_SSL on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library
-EthernetWebServer_SSL v1.3.0
+EthernetWebServer_SSL v1.4.0
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET3 ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 10
@@ -2402,7 +2525,7 @@ Received 3405 bytes in 0.2072 s, rate = 16.43 kbytes/second
 
 ```
 Start MQTTClient_SSL_Complex on SAM DUE with W5x00 using EthernetLarge Library
-EthernetWebServer_SSL v1.3.0
+EthernetWebServer_SSL v1.4.0
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_LARGE ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 75
@@ -2437,11 +2560,13 @@ Message arrived [MQTT_Pub] Hello from MQTTClient_SSL_Complex on SAM DUE, millis 
 
 ---
 
-6. The terminal output of **SEEED_XIAO_M0 with W5x00 using Ethernet3 Library** running [MQTTS_ThingStream example](examples/MQTTS_ThingStream)
+#### 6. MQTTS_ThingStream on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library
+
+The terminal output of **SEEED_XIAO_M0 with W5x00 using Ethernet3 Library** running [MQTTS_ThingStream example](examples/MQTTS_ThingStream)
 
 ```
 Start MQTTS_ThingStream on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library
-EthernetWebServer_SSL v1.3.0
+EthernetWebServer_SSL v1.4.0
 [ETHERNET_WEBSERVER] Board : SEEED_XIAO_M0 , setCsPin: 1
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 10
@@ -2465,6 +2590,113 @@ MQTT Message Send : esp32-sniffer/12345678/ble => Hello from MQTTS_ThingStream o
 MQTT Message receive [esp32-sniffer/12345678/ble] Hello from MQTTS_ThingStream on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library
 MQTT Message Send : esp32-sniffer/12345678/ble => Hello from MQTTS_ThingStream on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library
 MQTT Message receive [esp32-sniffer/12345678/ble] Hello from MQTTS_ThingStream on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library
+```
+
+---
+
+#### 7. MQTTS_ThingStream on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet Library
+
+The terminal output of **MBED RASPBERRY_PI_PICO with W5x00 using Ethernet Library** running [MQTTS_ThingStream example](examples/MQTTS_ThingStream)
+
+```
+Start MQTTS_ThingStream on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet Library
+EthernetWebServer_SSL v1.4.0
+[ETHERNET_WEBSERVER] =========== USE_ETHERNET ===========
+[ETHERNET_WEBSERVER] Default SPI pinout:
+[ETHERNET_WEBSERVER] MOSI: 3
+[ETHERNET_WEBSERVER] MISO: 4
+[ETHERNET_WEBSERVER] SCK: 2
+[ETHERNET_WEBSERVER] SS: 5
+[ETHERNET_WEBSERVER] =========================
+[ETHERNET_WEBSERVER] Board : MBED RASPBERRY_PI_PICO , setCsPin: 5
+You're connected to the network, IP = 192.168.2.92
+***************************************
+esp32-sniffer/12345678/ble
+***************************************
+Attempting MQTT connection to mqtt.thingstream.io
+...connected
+Published connection message successfully!
+Subcribed to: esp32-sniffer/12345678/ble
+MQTT Message Send : esp32-sniffer/12345678/ble => Hello from MQTTS_ThingStream on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet Library
+MQTT Message receive [esp32-sniffer/12345678/ble] Hello from MQTTS_ThingStream on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet Library
+MQTT Message Send : esp32-sniffer/12345678/ble => Hello from MQTTS_ThingStream on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet Library
+MQTT Message receive [esp32-sniffer/12345678/ble] Hello from MQTTS_ThingStream on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet Library
+```
+
+---
+
+#### 8. MQTTClient_SSL on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet Library
+
+The terminal output of **MBED RASPBERRY_PI_PICO with W5x00 using Ethernet Library** running [MQTTClient_SSL example](examples/MQTTClient_SSL)
+
+```
+Start MQTTClient_SSL on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet Library
+EthernetWebServer_SSL v1.4.0
+[ETHERNET_WEBSERVER] =========== USE_ETHERNET ===========
+[ETHERNET_WEBSERVER] Default SPI pinout:
+[ETHERNET_WEBSERVER] MOSI: 3
+[ETHERNET_WEBSERVER] MISO: 4
+[ETHERNET_WEBSERVER] SCK: 2
+[ETHERNET_WEBSERVER] SS: 5
+[ETHERNET_WEBSERVER] =========================
+[ETHERNET_WEBSERVER] Board : MBED RASPBERRY_PI_PICO , setCsPin: 5
+=========================
+Currently Used SPI pinout:
+MOSI:3
+MISO:4
+SCK:2
+SS:5
+=========================
+Using mac index = 17
+Connected! IP address: 192.168.2.101
+Attempting MQTTS connection to broker.emqx.io...connected
+Message Send : MQTT_Pub => Hello from MQTTClient_SSL on MBED RASPBERRY_PI_PICO
+Message arrived [MQTT_Pub] Hello from MQTTClient_SSL on MBED RASPBERRY_PI_PICO
+Message Send : MQTT_Pub => Hello from MQTTClient_SSL on MBED RASPBERRY_PI_PICO
+Message arrived [MQTT_Pub] Hello from MQTTClient_SSL on MBED RASPBERRY_PI_PICO
+Message Send : MQTT_Pub => Hello from MQTTClient_SSL on MBED RASPBERRY_PI_PICO
+Message arrived [MQTT_Pub] Hello from MQTTClient_SSL on MBED RASPBERRY_PI_PICO
+Message Send : MQTT_Pub => Hello from MQTTClient_SSL on MBED RASPBERRY_PI_PICO
+Message arrived [MQTT_Pub] Hello from MQTTClient_SSL on MBED RASPBERRY_PI_PICO
+Message Send : MQTT_Pub => Hello from MQTTClient_SSL on MBED RASPBERRY_PI_PICO
+Message arrived [MQTT_Pub] Hello from MQTTClient_SSL on MBED RASPBERRY_PI_PICO
+Message Send : MQTT_Pub => Hello from MQTTClient_SSL on MBED RASPBERRY_PI_PICO
+```
+
+---
+
+
+#### 9. AdvancedWebServer on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet3 Library
+
+The following are debug terminal output and screen shot when running example [AdvancedWebServer](examples/AdvancedWebServer) on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet3 Library
+
+<p align="center">
+    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/pics/AdvancedWebServer_RPi_Pico.png">
+</p>
+
+
+```
+Starting AdvancedWebServer on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet3 Library
+EthernetWebServer_SSL v1.4.0
+[EWS] =========== USE_ETHERNET3 ===========
+[EWS] Default SPI pinout:
+[EWS] MOSI: 3
+[EWS] MISO: 4
+[EWS] SCK: 2
+[EWS] SS: 5
+[EWS] =========================
+[EWS] RPIPICO setCsPin: 5
+=========================
+Currently Used SPI pinout:
+MOSI:3
+MISO:4
+SCK:2
+SS:5
+SPI_CS:5
+=========================
+Using mac index = 12
+Connected! IP address: 192.168.2.95
+HTTP EthernetWebServer is @ IP : 192.168.2.95
 ```
 
 ---
@@ -2493,6 +2725,11 @@ If you get compilation errors, more often than not, you may need to install a ne
 ---
 
 ## Releases
+
+### Major Releases v1.4.0
+
+1. Add support to RP2040-based boards, such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, using [**Arduino-mbed RP2040** core](https://github.com/arduino/ArduinoCore-mbed).
+2. Update examples with new features
 
 ### Release v1.3.1
 
@@ -2547,7 +2784,9 @@ This [**EthernetWebServer_SSL** library](https://github.com/khoih-prog/EthernetW
  6. **AVR Mega1280, 2560, ADK.**. SSL WebClient not supported yet. Check [Trivial sketch won't compile using Arduino 1.8.13](https://github.com/mike-matera/ArduinoSTL/issues/56)
  7. ESP32
  8. ESP8266. SSL WebClient not supported yet. Check [HTTPS GET request - ESP8266 - ENC28j60](https://github.com/OPEnSLab-OSU/SSLClient/issues/5)
-
+ 9. RP2040-based boards, such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, using [**Arduino-mbed RP2040** core](https://github.com/arduino/ArduinoCore-mbed). 
+ 
+ 
 #### Supporting Ethernet shields/modules:
 
 1. W5x00 using [`Ethernet`](https://www.arduino.cc/en/Reference/Ethernet), [`EthernetLarge`](https://github.com/OPEnSLab-OSU/EthernetLarge), [`Ethernet2`](https://github.com/adafruit/Ethernet2) or [`Ethernet3`](https://github.com/sstaub/Ethernet3) library
@@ -2579,6 +2818,7 @@ Submit issues to: [EthernetWebServer_SSL issues](https://github.com/khoih-prog/E
 3. Support more types of boards using Ethernet shields.
 4. Support more non-compatible Ethernet Libraries such as Ethernet_Shield_W5200, EtherCard, EtherSia
 5. Add mDNS features.
+6. Add support to RP2040-based boards such as RASPBERRY_PI_PICO, using [Earle Philhower's arduino-pico core](https://github.com/earlephilhower/arduino-pico)
 
 ### DONE
 
@@ -2596,7 +2836,8 @@ Submit issues to: [EthernetWebServer_SSL issues](https://github.com/khoih-prog/E
 12. Add TLS/SSL Client support to SAMD21/SAMD51, SAM DUE, Teensy, ESP32, etc.
 13. Add **High-level HTTP (GET, POST, PUT, PATCH, DELETE) and WebSocket Client**
 14. Add support to [NativeEthernet Library](https://github.com/vjmuzik/NativeEthernet) for Teensy 4.1
- 
+15. Add support to RP2040-based boards such as RASPBERRY_PI_PICO, using [**Arduino-mbed RP2040** core](https://github.com/arduino/ArduinoCore-mbed)
+
 ---
 ---
 
