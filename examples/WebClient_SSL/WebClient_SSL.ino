@@ -27,7 +27,7 @@ const uint16_t  server_port     = 443;
 
 // Choose the analog pin to get semi-random data from for SSL
 // Pick a pin that's not connected or attached to a randomish voltage source
-const int rand_pin = A5;
+const int rand_pin = A0;
 
 // Initialize the SSL client library
 // Arguments: EthernetClient, our trust anchors
