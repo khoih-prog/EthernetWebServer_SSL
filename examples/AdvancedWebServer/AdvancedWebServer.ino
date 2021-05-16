@@ -245,9 +245,13 @@ void setup(void)
   pinMode(USE_THIS_SS_PIN, OUTPUT);
   digitalWrite(USE_THIS_SS_PIN, HIGH);
   
-  // ETHERNET_USE_RPIPICO, use default SS = 5 or 13
+  // ETHERNET_USE_RPIPICO, use default SS = 5 or 17
   #ifndef USE_THIS_SS_PIN
-    #define USE_THIS_SS_PIN   5   //13    // For other boards
+    #if defined(ARDUINO_ARCH_MBED)
+      #define USE_THIS_SS_PIN   5     // For Arduino Mbed core
+    #else  
+      #define USE_THIS_SS_PIN   17    // For E.Philhower core
+    #endif
   #endif
 
   ET_LOGWARN1(F("RPIPICO setCsPin:"), USE_THIS_SS_PIN);
@@ -255,10 +259,11 @@ void setup(void)
   // For other boards, to change if necessary
   #if ( USE_ETHERNET || USE_ETHERNET_LARGE || USE_ETHERNET2 || USE_ETHERNET_ENC )
     // Must use library patch for Ethernet, EthernetLarge libraries
-    // For RPI Pico
-    // MBED => SCK: GPIO2,  MOSI: GPIO3, MISO: GPIO4, SS/CS: GPIO5
-    // Arduino-pico: SCK1: GPIO14,  MOSI1: GPIO15, MISO1: GPIO12, SS/CS1: GPIO13
-    // Default pin SS/CS : 5 (for Mbed) or 13 (for Arduino-pico)
+    // For RPI Pico using Arduino Mbed RP2040 core
+    // SCK: GPIO2,  MOSI: GPIO3, MISO: GPIO4, SS/CS: GPIO5
+    // For RPI Pico using E. Philhower RP2040 core
+    // SCK: GPIO18,  MOSI: GPIO19, MISO: GPIO16, SS/CS: GPIO17
+    // Default pin 5/17 to SS/CS
   
     //Ethernet.setCsPin (USE_THIS_SS_PIN);
     Ethernet.init (USE_THIS_SS_PIN);
