@@ -1,6 +1,6 @@
 {
   "name": "EthernetWebServer_SSL",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "keywords": "WebServer, Ethernet, Ethernet2, Ethernet3, EthernetLarge, EtnernetENC, UIPEthernet, NativeEthernet, Arduino, Teensy, SAMD21, SAMD51, SAM DUE, nRF52, ESP32, ESP8266, rpi-pico, rp2040, W5x00, W5500, ENC28J60, Ethernet shield, SSL, TLS, HTTP-Client, WebSocket-Client, server, client, websocket",
   "description": "Simple TLS/SSL Ethernet WebServer, HTTP Client and WebSocket Client library for Teensy, SAM DUE, SAMD21, SAMD51, nRF52, ESP32, ESP8266 and RASPBERRY_PI_PICO boards using Ethernet shields W5100, W5200, W5500, ENC28J60 or Teensy 4.1 NativeEthernet",
   "authors":
