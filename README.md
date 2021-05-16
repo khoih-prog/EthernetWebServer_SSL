@@ -128,7 +128,7 @@
 * [Example AdvancedWebServer](#example-advancedwebserver)
   * [1. File AdvancedWebServer.ino](#1-file-advancedwebserverino)
   * [2. File defines.h](#2-file-definesh) 
-* [Debug Terminal Output Samples](#debug-termimal-output-samples)
+* [Debug Terminal Output Samples](#debug-terminal-output-samples)
   * [1. AdvancedWebServer on NRF52840_FEATHER_EXPRESS with ENC28J60 using EthernetENC Library](#1-advancedwebserver-on-nrf52840_feather_express-with-enc28j60-using-ethernetenc-library)
   * [2. ENC28J60_WM_Config on ESP32 with ENC28J60 using UIPEthernet Library](#2-enc28j60_wm_config-on-esp32-with-enc28j60-using-uipethernet-library)
   * [3. WebClientMulti_SSL on SAM DUE with W5x00 using EthernetLarge Library](#3-webclientmulti_ssl-on-sam-due-with-w5x00-using-ethernetlarge-library)
@@ -413,11 +413,11 @@ Whenever the above-mentioned compiler error issue is fixed with the new Arduino 
 
 #### 5. For Adafruit SAMD boards
  
- ***To be able to automatically detect and display BOARD_NAME on Adafruit SAMD (Itsy-Bitsy M4, etc) boards***, you have to copy the file [Adafruit SAMD platform.txt](Packages_Patches/adafruit/hardware/samd/1.6.4) into Adafruit samd directory (~/.arduino15/packages/adafruit/hardware/samd/1.6.4). 
+ ***To be able to automatically detect and display BOARD_NAME on Adafruit SAMD (Itsy-Bitsy M4, etc) boards***, you have to copy the file [Adafruit SAMD platform.txt](Packages_Patches/adafruit/hardware/samd/1.6.8) into Adafruit samd directory (~/.arduino15/packages/adafruit/hardware/samd/1.6.8). 
 
-Supposing the Adafruit SAMD core version is 1.6.4. This file must be copied into the directory:
+Supposing the Adafruit SAMD core version is 1.6.8. This file must be copied into the directory:
 
-- `~/.arduino15/packages/adafruit/hardware/samd/1.6.4/platform.txt`
+- `~/.arduino15/packages/adafruit/hardware/samd/1.6.8/platform.txt`
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz
 This file must be copied into the directory:
@@ -447,12 +447,12 @@ To use LAN8720 on some STM32 boards
 - **Discovery (DISCO_F746NG)**
 - **STM32F4 boards (BLACK_F407VE, BLACK_F407VG, BLACK_F407ZE, BLACK_F407ZG, BLACK_F407VE_Mini, DIYMORE_F407VGT, FK407M1)**
 
-you have to copy the files [stm32f4xx_hal_conf_default.h](Packages_Patches/STM32/hardware/stm32/1.9.0/system/STM32F4xx) and [stm32f7xx_hal_conf_default.h](Packages_Patches/STM32/hardware/stm32/1.9.0/system/STM32F7xx) into STM32 stm32 directory (~/.arduino15/packages/STM32/hardware/stm32/1.9.0/system) to overwrite the old files.
+you have to copy the files [stm32f4xx_hal_conf_default.h](Packages_Patches/STM32/hardware/stm32/2.0.0/system/STM32F4xx) and [stm32f7xx_hal_conf_default.h](Packages_Patches/STM32/hardware/stm32/2.0.0/system/STM32F7xx) into STM32 stm32 directory (~/.arduino15/packages/STM32/hardware/stm32/2.0.0/system) to overwrite the old files.
 
-Supposing the STM32 stm32 core version is 1.9.0. These files must be copied into the directory:
+Supposing the STM32 stm32 core version is 2.0.0. These files must be copied into the directory:
 
-- `~/.arduino15/packages/STM32/hardware/stm32/1.9.0/system/STM32F4xx/stm32f4xx_hal_conf_default.h` for STM32F4.
-- `~/.arduino15/packages/STM32/hardware/stm32/1.9.0/system/STM32F7xx/stm32f7xx_hal_conf_default.h` for Nucleo-144 STM32F7.
+- `~/.arduino15/packages/STM32/hardware/stm32/2.0.0/system/STM32F4xx/stm32f4xx_hal_conf_default.h` for STM32F4.
+- `~/.arduino15/packages/STM32/hardware/stm32/2.0.0/system/STM32F7xx/stm32f7xx_hal_conf_default.h` for Nucleo-144 STM32F7.
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz,
 theses files must be copied into the corresponding directory:
@@ -463,12 +463,12 @@ theses files must be copied into the corresponding directory:
 
 #### 7.2 For STM32 boards to use Serial1
 
-**To use Serial1 on some STM32 boards without Serial1 definition (Nucleo-144 NUCLEO_F767ZI, Nucleo-64 NUCLEO_L053R8, etc.) boards**, you have to copy the files [STM32 variant.h](Packages_Patches/STM32/hardware/stm32/1.9.0) into STM32 stm32 directory (~/.arduino15/packages/STM32/hardware/stm32/1.9.0). You have to modify the files corresponding to your boards, this is just an illustration how to do.
+**To use Serial1 on some STM32 boards without Serial1 definition (Nucleo-144 NUCLEO_F767ZI, Nucleo-64 NUCLEO_L053R8, etc.) boards**, you have to copy the files [STM32 variant.h](Packages_Patches/STM32/hardware/stm32/2.0.0) into STM32 stm32 directory (~/.arduino15/packages/STM32/hardware/stm32/2.0.0). You have to modify the files corresponding to your boards, this is just an illustration how to do.
 
-Supposing the STM32 stm32 core version is 1.9.0. These files must be copied into the directory:
+Supposing the STM32 stm32 core version is 2.0.0. These files must be copied into the directory:
 
-- `~/.arduino15/packages/STM32/hardware/stm32/1.9.0/variants/NUCLEO_F767ZI/variant.h` for Nucleo-144 NUCLEO_F767ZI.
-- `~/.arduino15/packages/STM32/hardware/stm32/1.9.0/variants/NUCLEO_L053R8/variant.h` for Nucleo-64 NUCLEO_L053R8.
+- `~/.arduino15/packages/STM32/hardware/stm32/2.0.0/variants/NUCLEO_F767ZI/variant.h` for Nucleo-144 NUCLEO_F767ZI.
+- `~/.arduino15/packages/STM32/hardware/stm32/2.0.0/variants/NUCLEO_L053R8/variant.h` for Nucleo-64 NUCLEO_L053R8.
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz,
 theses files must be copied into the corresponding directory:
@@ -1334,8 +1334,6 @@ void handleRoot()
   int hr = min / 60;
   int day = hr / 24;
 
-  hr = hr % 24;
-
   snprintf(temp, BUFFER_SIZE - 1,
            "<html>\
 <head>\
@@ -1346,7 +1344,7 @@ body { background-color: #cccccc; font-family: Arial, Helvetica, Sans-Serif; Col
 </style>\
 </head>\
 <body>\
-<h2>Hi from EthernetWebServer!</h2>\
+<h2>Hi from EthernetWebServer_SSL!</h2>\
 <h3>on %s</h3>\
 <p>Uptime: %d d %02d:%02d:%02d</p>\
 <img src=\"/test.svg\" />\
@@ -1406,7 +1404,7 @@ void setup(void)
 
   Serial.print("\nStarting AdvancedWebServer on " + String(BOARD_NAME));
   Serial.println(" with " + String(SHIELD_TYPE));
-  Serial.println(ETHERNET_WEBSERVER_VERSION);
+  Serial.println(ETHERNET_WEBSERVER_SSL_VERSION);
 
 #if USE_ETHERNET_WRAPPER
 
@@ -1523,9 +1521,13 @@ void setup(void)
   pinMode(USE_THIS_SS_PIN, OUTPUT);
   digitalWrite(USE_THIS_SS_PIN, HIGH);
   
-  // ETHERNET_USE_RPIPICO, use default SS = 5 or 13
+  // ETHERNET_USE_RPIPICO, use default SS = 5 or 17
   #ifndef USE_THIS_SS_PIN
-    #define USE_THIS_SS_PIN   5   //13    // For other boards
+    #if defined(ARDUINO_ARCH_MBED)
+      #define USE_THIS_SS_PIN   5     // For Arduino Mbed core
+    #else  
+      #define USE_THIS_SS_PIN   17    // For E.Philhower core
+    #endif
   #endif
 
   ET_LOGWARN1(F("RPIPICO setCsPin:"), USE_THIS_SS_PIN);
@@ -1533,9 +1535,11 @@ void setup(void)
   // For other boards, to change if necessary
   #if ( USE_ETHERNET || USE_ETHERNET_LARGE || USE_ETHERNET2 || USE_ETHERNET_ENC )
     // Must use library patch for Ethernet, EthernetLarge libraries
-    // For RPI Pico
-    // SCK1: GPIO14,  MOSI1: GPIO15, MISO1: GPIO12, SS/CS1: GPIO13
-    // Default pin 13 to SS/CS
+    // For RPI Pico using Arduino Mbed RP2040 core
+    // SCK: GPIO2,  MOSI: GPIO3, MISO: GPIO4, SS/CS: GPIO5
+    // For RPI Pico using E. Philhower RP2040 core
+    // SCK: GPIO18,  MOSI: GPIO19, MISO: GPIO16, SS/CS: GPIO17
+    // Default pin 5/17 to SS/CS
   
     //Ethernet.setCsPin (USE_THIS_SS_PIN);
     Ethernet.init (USE_THIS_SS_PIN);
@@ -1679,8 +1683,7 @@ void loop(void)
 #### 2. File [defines.h](examples/AdvancedWebServer/defines.h)
 
 ```cpp
-#ifndef defines_h
-#define defines_h
+#pragma once
 
 #define DEBUG_ETHERNET_WEBSERVER_PORT       Serial
 
@@ -1696,7 +1699,7 @@ void loop(void)
     #undef ETHERNET_USE_SAMD
   #endif
   #define ETHERNET_USE_SAMD      true
-#endif
+  #endif
 
 #if ( defined(NRF52840_FEATHER) || defined(NRF52832_FEATHER) || defined(NRF52_SERIES) || defined(ARDUINO_NRF52_ADAFRUIT) || \
         defined(NRF52840_FEATHER_SENSE) || defined(NRF52840_ITSYBITSY) || defined(NRF52840_CIRCUITPLAY) || defined(NRF52840_CLUE) || \
@@ -1918,11 +1921,11 @@ void loop(void)
   #define W5500_RST_PORT   21
 
 #elif ETHERNET_USE_RPIPICO
-
-  // For RPI Pico
-  // SCK1: GPIO14,  MOSI1: GPIO15, MISO1: GPIO12, SS/CS1: GPIO13
-  // Default pin 5 (in Mbed) or 13 to SS/CS
+  
+  // Default pin 5 (in Mbed) or 17 to SS/CS
   #if defined(ARDUINO_ARCH_MBED)
+    // For RPI Pico using Arduino Mbed RP2040 core
+    // SCK: GPIO2,  MOSI: GPIO3, MISO: GPIO4, SS/CS: GPIO5
     
     #define USE_THIS_SS_PIN       5
 
@@ -1941,25 +1944,36 @@ void loop(void)
     #endif
     
   #else
-  
-    #define USE_THIS_SS_PIN       13
+    // For RPI Pico using E. Philhower RP2040 core
+    // SCK: GPIO18,  MOSI: GPIO19, MISO: GPIO16, SS/CS: GPIO17
+    #define USE_THIS_SS_PIN       17
 
   #endif
     
   #define SS_PIN_DEFAULT        USE_THIS_SS_PIN
 
   // For RPI Pico
-  #warning Use RPI-Pico RP2040 architecture
+  #warning Use RPI-Pico RP2040 architecture  
 
-#else
+#elif (__AVR__)
   // For Mega
   // Default pin 10 to SS/CS
   #define USE_THIS_SS_PIN       10
+  #define BOARD_TYPE            "AVR"
 
-  // Reduce size for Mega
-  #define SENDCONTENT_P_BUFFER_SZ     512
+  #error Not supporting AVR Mega, Nano, UNO, etc. yet.
+  // Currently not OK. See https://github.com/mike-matera/ArduinoSTL/issues/56
+  // Hopefully will be fixed in Arduino IDE 1.8.14
+  #include "ArduinoSTL.h"                                   // https://github.com/mike-matera/ArduinoSTL
+
+#else
+
+  // Default pin 10 to SS/CS
+  #define USE_THIS_SS_PIN       10
+  #define BOARD_TYPE            "Unknown"
+
+  //#error Not supporting yet.
   
-  #define BOARD_TYPE            "AVR Mega"
 #endif
 
 #ifndef BOARD_NAME
@@ -1987,9 +2001,9 @@ void loop(void)
   //#define USE_THIS_SS_PIN   22  //21  //5 //4 //2 //15
   
   // Only one if the following to be true
-  #define USE_ETHERNET          false
+  #define USE_ETHERNET          true
   #define USE_ETHERNET2         false
-  #define USE_ETHERNET3         true
+  #define USE_ETHERNET3         false
   #define USE_ETHERNET_LARGE    false
   #define USE_ETHERNET_ESP8266  false 
   #define USE_ETHERNET_ENC      false
@@ -2054,7 +2068,7 @@ void loop(void)
     #define SHIELD_TYPE           "ENC28J60 using UIPEthernet Library"
 #endif      // #if !USE_UIP_ETHERNET
 
-#include <EthernetWebServer.h>
+#include <EthernetWebServer_SSL.h>
 
 #ifndef SHIELD_TYPE
   #define SHIELD_TYPE     "Unknown Ethernet shield/library" 
@@ -2093,13 +2107,11 @@ IPAddress ip(192, 168, 2, 222);
 // Google DNS Server IP
 IPAddress myDns(8, 8, 8, 8);
 
-#endif    //defines_h
-
 ```
 ---
 ---
 
-### Debug Termimal Output Samples
+### Debug Terminal Output Samples
 
 #### 1. AdvancedWebServer on NRF52840_FEATHER_EXPRESS with ENC28J60 using EthernetENC Library
 
@@ -2920,7 +2932,7 @@ Submit issues to: [EthernetWebServer_SSL issues](https://github.com/khoih-prog/E
 13. Add **High-level HTTP (GET, POST, PUT, PATCH, DELETE) and WebSocket Client**
 14. Add support to [NativeEthernet Library](https://github.com/vjmuzik/NativeEthernet) for Teensy 4.1
 15. Add support to RP2040-based boards such as RASPBERRY_PI_PICO, using [**Arduino-mbed RP2040** core](https://github.com/arduino/ArduinoCore-mbed)
-16. Add support to RP2040-based boards such as RASPBERRY_PI_PICO, using [Earle Philhower's arduino-pico core](https://github.com/earlephilhower/arduino-pico)
+16. Add support to RP2040-based boards such as RASPBERRY_PI_PICO, using [**Earle Philhower's arduino-pico** core](https://github.com/earlephilhower/arduino-pico)
 
 ---
 ---
