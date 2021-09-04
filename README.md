@@ -2904,7 +2904,7 @@ HTTP EthernetWebServer is @ IP : 192.168.2.99
 The following are debug terminal output and screen shot when running example [AdvancedWebServer_QNEthernet](examples/QNEthernet/AdvancedWebServer_QNEthernet) on **Teensy 4.1** using QNEthernet Library
 
 <p align="center">
-    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/blob/master/pics/AdvancedWebServer_QNEthernet.png">
+    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/pics/AdvancedWebServer_QNEthernet.png">
 </p>
 
 ```
@@ -3219,7 +3219,7 @@ If you want to contribute to this project:
 
 ### License
 
-- The library is licensed under [MIT](https://github.com/khoih-prog/EthernetWebServer_SSL/blob/master/LICENSE)
+- The library is licensed under [MIT](https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/LICENSE)
 
 ---
 
