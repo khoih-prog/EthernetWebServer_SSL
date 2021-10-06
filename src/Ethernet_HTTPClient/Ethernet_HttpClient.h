@@ -9,7 +9,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
   Licensed under MIT license
        
-  Version: 1.6.0
+  Version: 1.6.1
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -23,7 +23,8 @@
   1.4.0   K Hoang      13/05/2021 Add support to RP2040-based boards using Arduino mbed_rp2040 core
   1.5.0   K Hoang      15/05/2021 Add support to RP2040-based boards using Arduino-pico rp2040 core
   1.6.0   K Hoang      04/09/2021 Add support to QNEthernet Library for Teensy 4.1
- *****************************************************************************************************************************/
+  1.6.1   K Hoang      04/10/2021 Change option for PIO `lib_compat_mode` from default `soft` to `strict`. Update Packages Patches
+ *************************************************************************************************************************************/
 
 // Class to simplify HTTP fetching on Arduino
 // (c) Copyright MCQN Ltd. 2010-2012
