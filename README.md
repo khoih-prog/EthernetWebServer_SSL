@@ -146,6 +146,7 @@
   * [12. AdvancedWebServer_QNEthernet on Teensy 4.1 using QNEthernet Library](#12-advancedwebserver_qnethernet-on-teensy-41-using-qnethernet-library)
   * [13. MQTTClient_SSL on Teensy 4.1 using QNEthernet Library](#13-mqttclient_ssl-on-teensy-41-using-qnethernet-library)
   * [14. WebClientMulti_SSL on Teensy 4.1 using QNEthernet Library](#14-webclientmulti_ssl-on-teensy-41-using-qnethernet-library)
+  * [15. AdvancedWebServer on PORTENTA_H7_M7 using Portenta_Ethernet Library](#15-AdvancedWebServer-on-PORTENTA_H7_M7-using-Portenta_Ethernet-Library)
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
@@ -2989,8 +2990,6 @@ HTTP EthernetWebServer is @ IP : 192.168.2.99
 
 ---
 
----
-
 
 #### 12. AdvancedWebServer_QNEthernet on Teensy 4.1 using QNEthernet Library
 
@@ -3040,8 +3039,6 @@ Message arrived [MQTT_Pub] Hello from MQTTClient_SSL on TEENSY 4.1
 
 ---
 
-
----
 
 #### 14. WebClientMulti_SSL on TEENSY 4.1 using QNEthernet Library
 
@@ -3119,6 +3116,27 @@ alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400, h3-28=":443"; ma=86400, h3
 
 Disconnecting.
 LoopCount 1, Received 2876 bytes in 0.0002 s, rate = 12186.44 kbytes/second
+```
+
+---
+
+#### 15. AdvancedWebServer on PORTENTA_H7_M7 using Portenta_Ethernet Library
+
+The following are debug terminal output and screen shot when running example [AdvancedWebServer](examples/AdvancedWebServer) on **PORTENTA_H7_M7** using Portenta_Ethernet Library
+
+<p align="center">
+    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/pics/AdvancedWebServer_PortentaH7.png">
+</p>
+
+```
+
+Starting AdvancedWebServer on PORTENTA_H7_M7 with Ethernet using Portenta_Ethernet Library
+EthernetWebServer_SSL v1.7.0
+[ETHERNET_WEBSERVER] ======== USE_PORTENTA_H7_ETHERNET ========
+Using mac index = 2
+Connected! IP address: 192.168.2.101
+HTTP EthernetWebServer is @ IP : 192.168.2.101
+.......... .......... .......... .......... .......... ..
 ```
 
 
