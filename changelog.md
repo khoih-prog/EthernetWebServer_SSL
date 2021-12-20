@@ -13,6 +13,7 @@
 
 
 * [Changelog](#changelog)
+  * [Major Releases v1.7.0](#major-releases-v170)
   * [Releases v1.6.1](#releases-v161)
   * [Major Releases v1.6.0](#major-releases-v160)
   * [Major Releases v1.5.0](#major-releases-v150)
@@ -27,7 +28,15 @@
 ---
 ---
 
-# Changelog
+## Changelog
+
+### Major Releases v1.7.0
+
+1. Add support to **Portenta_H7** using [**Arduino mbed_portenta core**](https://github.com/arduino/ArduinoCore-mbed)
+2. Reduce usage of Arduino String with std::string
+3. Optimize library code and examples by using **reference-passing instead of value-passing**.
+4. Update `Packages' Patches`
+5. Add more ESP32/ESP8266 supporting code
 
 ### Releases v1.6.1
 
