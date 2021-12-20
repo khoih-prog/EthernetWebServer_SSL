@@ -9,7 +9,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
   Licensed under MIT license
        
-  Version: 1.6.1
+  Version: 1.7.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -24,15 +24,36 @@
   1.5.0   K Hoang      15/05/2021 Add support to RP2040-based boards using Arduino-pico rp2040 core
   1.6.0   K Hoang      04/09/2021 Add support to QNEthernet Library for Teensy 4.1
   1.6.1   K Hoang      04/10/2021 Change option for PIO `lib_compat_mode` from default `soft` to `strict`. Update Packages Patches
+  1.7.0   K Hoang      19/12/2021 Reduce usage of Arduino String with std::string. Add support to Portenta H7 Ethernet
  *************************************************************************************************************************************/
 
 #pragma once
 
-#define ETHERNET_WEBSERVER_SSL_VERSION      "EthernetWebServer_SSL v1.6.1"
+#define ETHERNET_WEBSERVER_SSL_VERSION          "EthernetWebServer_SSL v1.7.0"
+
+#define ETHERNET_WEBSERVER_SSL_VERSION_MAJOR    1
+#define ETHERNET_WEBSERVER_SSL_VERSION_MINOR    7
+#define ETHERNET_WEBSERVER_SSL_VERSION_PATCH    0
+
+#define ETHERNET_WEBSERVER_SSL_VERSION_INT      1007000
 
 #define USE_NEW_WEBSERVER_VERSION           true
 
 #include <functional-vlpp.h>
+
+#if ( defined(ARDUINO_PORTENTA_H7_M7) || defined(ARDUINO_PORTENTA_H7_M4) )
+  #if defined(ETHERNET_USE_PORTENTA_H7)
+    #undef ETHERNET_USE_PORTENTA_H7
+  #endif
+  #define ETHERNET_USE_PORTENTA_H7        true
+  
+  #if defined(USE_NEW_WEBSERVER_VERSION)
+    #undef USE_NEW_WEBSERVER_VERSION
+  #endif
+  #define USE_NEW_WEBSERVER_VERSION   false
+  
+  #warning Use mbed-portenta architecture for PORTENTA_H7 from EthernetWebServer_SSL
+#endif
 
 #if    ( defined(ARDUINO_SAMD_ZERO) || defined(ARDUINO_SAMD_MKR1000) || defined(ARDUINO_SAMD_MKRWIFI1010) \
       || defined(ARDUINO_SAMD_NANO_33_IOT) || defined(ARDUINO_SAMD_MKRFox1200) || defined(ARDUINO_SAMD_MKRWAN1300) || defined(ARDUINO_SAMD_MKRWAN1310) \
@@ -43,7 +64,7 @@
     #undef ETHERNET_USE_SAMD
   #endif
   #define ETHERNET_USE_SAMD      true
-  #warning Using SAMD architecture from EthernetWebServer
+  #warning Using SAMD architecture from EthernetWebServer_SSL
 #endif
 
 #if ( defined(NRF52840_FEATHER) || defined(NRF52832_FEATHER) || defined(NRF52_SERIES) || defined(ARDUINO_NRF52_ADAFRUIT) || \
@@ -53,7 +74,7 @@
     #undef ETHERNET_USE_NRF528XX
   #endif
   #define ETHERNET_USE_NRF528XX      true
-  #warning Using nFR52 architecture from EthernetWebServer
+  #warning Using nFR52 architecture from EthernetWebServer_SSL
 #endif
 
 #if ( defined(ARDUINO_SAM_DUE) || defined(__SAM3X8E__) )
@@ -61,7 +82,7 @@
     #undef ETHERNET_USE_SAM_DUE
   #endif
   #define ETHERNET_USE_SAM_DUE      true
-  #warning Using SAM_DUE architecture from EthernetWebServer
+  #warning Using SAM_DUE architecture from EthernetWebServer_SSL
 #endif
 
 
@@ -109,6 +130,8 @@
 #ifndef PGM_VOID_P
   #define PGM_VOID_P const void *
 #endif
+
+//////////////////////////////////////////////////////
 
 // KH add SSL from v1.1.0
 //#if ( ETHERNET_USE_SAMD || ETHERNET_USE_NRF528XX || ETHERNET_USE_SAM_DUE )
@@ -166,6 +189,37 @@ enum HTTPAuthMethod
 #define CONTENT_LENGTH_UNKNOWN  ((size_t) -1)
 #define CONTENT_LENGTH_NOT_SET  ((size_t) -2)
 
+/////////////////////////////////////////////////////////////////////////
+
+#define RETURN_NEWLINE       "\r\n"
+
+#include <string>
+#include <Arduino.h>
+
+typedef std::string EWString;
+
+EWString fromString(const String& str)
+{
+  return str.c_str();
+}
+
+EWString fromString(const String&& str)
+{
+  return str.c_str();
+}
+
+String fromEWString(const EWString& str)
+{
+  return str.c_str();
+}
+
+String fromEWString(const EWString&& str)
+{
+  return str.c_str();
+}
+
+/////////////////////////////////////////////////////////////////////////
+
 class EthernetWebServer;
 
 typedef struct 
@@ -181,6 +235,10 @@ typedef struct
 } HTTPUpload;
 
 #include "detail/RequestHandler.h"
+
+#if (ESP32 || ESP8266)
+    #include "FS.h"
+#endif
 
 class EthernetWebServer
 {
@@ -235,17 +293,18 @@ class EthernetWebServer
     }
     #endif
 
-    String arg(String name);        // get request argument value by name
-    String arg(int i);              // get request argument value by number
-    String argName(int i);          // get request argument name by number
-    int args();                     // get arguments count
-    bool hasArg(String name);       // check if argument exists
+    String arg(const String& name);     // get request argument value by name
+    String arg(int i);                  // get request argument value by number
+    String argName(int i);              // get request argument name by number
+    
+    int args();                         // get arguments count
+    bool hasArg(const String& name);    // check if argument exists
     void collectHeaders(const char* headerKeys[], const size_t headerKeysCount); // set the request headers to collect
-    String header(String name);      // get request header value by name
-    String header(int i);              // get request header value by number
-    String headerName(int i);          // get request header name by number
-    int headers();                     // get header count
-    bool hasHeader(String name);       // check if header exists
+    String header(const String& name);  // get request header value by name
+    String header(int i);               // get request header value by number
+    String headerName(int i);           // get request header name by number
+    int headers();                      // get header count
+    bool hasHeader(const String& name); // check if header exists
 
     String hostHeader();            // get request host header if available or empty String if not
 
@@ -274,6 +333,7 @@ class EthernetWebServer
     
     static String urlDecode(const String& text);
 
+    #if !(ESP32 || ESP8266)
     template<typename T> size_t streamFile(T &file, const String& contentType) 
     {
       using namespace mime;
@@ -288,6 +348,27 @@ class EthernetWebServer
       
       return _currentClient.write(file);
     }
+    #else
+    void serveStatic(const char* uri, fs::FS& fs, const char* path, const char* cache_header = NULL ); // serve static pages from file system
+
+    // Handle a GET request by sending a response header and stream file content to response body
+      template<typename T>
+      size_t streamFile(T &file, const String& contentType) {
+        return streamFile(file, contentType, HTTP_GET);
+      }
+
+      // Implement GET and HEAD requests for files.
+      // Stream body on HTTP_GET but not on HTTP_HEAD requests.
+      template<typename T>
+      size_t streamFile(T &file, const String& contentType, HTTPMethod requestMethod) {
+        size_t contentLength = 0;
+        _streamFileCore(file.size(), file.name(), contentType);
+        if (requestMethod == HTTP_GET) {
+            contentLength = _customClientWrite(file);
+        }
+        return contentLength;
+      }
+    #endif
 
   protected:
     void _addRequestHandler(RequestHandler* handler);
@@ -301,8 +382,8 @@ class EthernetWebServer
     int  _parseArgumentsPrivate(const String& data, vl::Func<void(String&,String&,const String&,int,int,int,int)> handler);
     bool _parseForm(EthernetClient& client, const String& boundary, uint32_t len);
     #else
-    void _parseArguments(String data);    
-    bool _parseForm(EthernetClient& client, String boundary, uint32_t len);
+    void _parseArguments(const String& data);    
+    bool _parseForm(EthernetClient& client, const String& boundary, uint32_t len);
     #endif
       
     static String _responseCodeToString(int code);
@@ -310,10 +391,32 @@ class EthernetWebServer
     void _uploadWriteByte(uint8_t b);
     uint8_t _uploadReadByte(EthernetClient& client);
     void _prepareHeader(String& response, int code, const char* content_type, size_t contentLength);
+    void _prepareHeader(EWString& response, int code, const char* content_type, size_t contentLength);
     bool _collectHeader(const char* headerName, const char* headerValue);
-
-    struct RequestArgument {
     
+    #if (ESP32 || ESP8266)
+    void _streamFileCore(const size_t fileSize, const String & fileName, const String & contentType);
+
+    template<typename T>
+    size_t _customClientWrite(T &file) 
+    {
+      char buffer[256];
+      size_t contentLength = 0;
+      size_t bytesRead = 0;
+
+      // read up to sizeof(buffer) bytes
+      while ((bytesRead = file.readBytes(buffer, sizeof(buffer))) > 0)
+      {
+        _currentClient.write(buffer, bytesRead);
+        contentLength += bytesRead;
+      }
+
+      return contentLength;
+    }
+    #endif
+
+    struct RequestArgument 
+    {
       String key;
       String value;
     };

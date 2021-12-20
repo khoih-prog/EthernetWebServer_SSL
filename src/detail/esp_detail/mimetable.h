@@ -1,5 +1,6 @@
 /****************************************************************************************************************************
-  cdecoder.h - c source to a base64 decoding algorithm implementation
+  mimetable.h - Dead simple web-server.
+  For Ethernet shields
 
   EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
 
@@ -28,39 +29,56 @@
 
 #pragma once
 
-// Reintroduce to prevent duplication compile error if other lib/core already has LIB64
-// pragma once can't prevent that
-#ifndef BASE64_CDECODE_H
-#define BASE64_CDECODE_H
+#ifndef __ESP_MIMETABLE_H__
+#define __ESP_MIMETABLE_H__
 
-#define base64_decode_expected_len(n) ((n * 3) / 4)
+#if (ESP32 || ESP8266)
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "WString.h"
 
-typedef enum 
+namespace mime_esp
 {
-  step_a, step_b, step_c, step_d
-} base64_decodestep;
+  enum type
+  {
+    html,
+    htm,
+    txt,
+  #ifndef MIMETYPE_MINIMAL    // allow to compile with only the strict minimum of mime-types
+    css,
+    js,
+    json,
+    png,
+    gif,
+    jpg,
+    jpeg,
+    ico,
+    svg,
+    ttf,
+    otf,
+    woff,
+    woff2,
+    eot,
+    sfnt,
+    xml,
+    pdf,
+    zip,
+    appcache,
+  #endif // MIMETYPE_MINIMAL
+    gz,
+    none,
+    maxType
+  };
+  
+  struct Entry
+  {
+    const char * endsWith;
+    const char * mimeType;
+  };
+  
+  extern const Entry mimeTable[maxType];
+  
+  String getContentType(const String& path);
+}
 
-typedef struct 
-{
-  base64_decodestep step;
-  char plainchar;
-} base64_decodestate;
-
-void base64_init_decodestate(base64_decodestate* state_in);
-
-int base64_decode_value(char value_in);
-
-int base64_decode_block(const char* code_in, const int length_in, char* plaintext_out, base64_decodestate* state_in);
-
-int base64_decode_chars(const char* code_in, const int length_in, char* plaintext_out);
-
-#ifdef __cplusplus
-} // extern "C"
-#endif
-
-#endif /* BASE64_CDECODE_H */
-
+#endif    // #if (ESP32 || ESP8266)
+#endif    // #ifndef __ESP_MIMETABLE_H__

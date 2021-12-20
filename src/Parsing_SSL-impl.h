@@ -9,7 +9,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
   Licensed under MIT license
        
-  Version: 1.6.1
+  Version: 1.7.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -24,6 +24,7 @@
   1.5.0   K Hoang      15/05/2021 Add support to RP2040-based boards using Arduino-pico rp2040 core
   1.6.0   K Hoang      04/09/2021 Add support to QNEthernet Library for Teensy 4.1
   1.6.1   K Hoang      04/10/2021 Change option for PIO `lib_compat_mode` from default `soft` to `strict`. Update Packages Patches
+  1.7.0   K Hoang      19/12/2021 Reduce usage of Arduino String with std::string. Add support to Portenta H7 Ethernet
  *************************************************************************************************************************************/
 #pragma once
 
@@ -66,6 +67,8 @@ static bool readBytesWithTimeout(EthernetClient& client, size_t maxLength, Strin
 }
 
 #else
+
+#if !(ETHERNET_USE_PORTENTA_H7)
 
 static char* readBytesWithTimeout(EthernetClient& client, size_t maxLength, size_t& dataLength, int timeout_ms)
 {
@@ -115,7 +118,9 @@ static char* readBytesWithTimeout(EthernetClient& client, size_t maxLength, size
   return buf;
 }
 
-#endif
+#endif    // #if !(ETHERNET_USE_PORTENTA_H7)
+
+#endif    // #if USE_NEW_WEBSERVER_VERSION
 
 bool EthernetWebServer::_parseRequest(EthernetClient& client)
 {
@@ -234,8 +239,12 @@ bool EthernetWebServer::_parseRequest(EthernetClient& client)
     String headerName;
     String headerValue;
     
-    bool isForm     = false;
+#if USE_NEW_WEBSERVER_VERSION
     bool isEncoded  = false;
+#endif    
+    
+    bool isForm     = false;
+    
     uint32_t contentLength = 0;
 
     //parse headers
@@ -275,7 +284,9 @@ bool EthernetWebServer::_parseRequest(EthernetClient& client)
         else if (headerValue.startsWith("application/x-www-form-urlencoded"))
         {
           isForm = false;
+#if USE_NEW_WEBSERVER_VERSION          
           isEncoded = true;
+#endif
         }
         else if (headerValue.startsWith("multipart/"))
         {
@@ -585,9 +596,8 @@ uint8_t EthernetWebServer::_uploadReadByte(EthernetClient& client)
 
 #else
 
-void EthernetWebServer::_parseArguments(String data)
+void EthernetWebServer::_parseArguments(const String& data)
 {
-
   ET_LOGDEBUG1(F("args: "), data);
 
   if (_currentArgs)
@@ -991,8 +1001,8 @@ bool EthernetWebServer::_parseFormUploadAborted()
 #else
 
 
-bool EthernetWebServer::_parseForm(EthernetClient& client, String boundary, uint32_t len) {
-
+bool EthernetWebServer::_parseForm(EthernetClient& client, const String& boundary, uint32_t len) 
+{
   ET_LOGDEBUG1(F("Parse Form: Boundary: "), boundary);
   ET_LOGDEBUG1(F("Length: "), len);
 
