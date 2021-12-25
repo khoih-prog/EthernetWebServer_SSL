@@ -9,7 +9,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
   Licensed under MIT license
        
-  Version: 1.7.0
+  Version: 1.7.1
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -25,6 +25,7 @@
   1.6.0   K Hoang      04/09/2021 Add support to QNEthernet Library for Teensy 4.1
   1.6.1   K Hoang      04/10/2021 Change option for PIO `lib_compat_mode` from default `soft` to `strict`. Update Packages Patches
   1.7.0   K Hoang      19/12/2021 Reduce usage of Arduino String with std::string. Add support to Portenta H7 Ethernet
+  1.7.1   K Hoang      25/12/2021 Fix bug relating to String
  *************************************************************************************************************************************/
 
 #pragma once
@@ -458,8 +459,7 @@ void EthernetWebServer::_prepareHeader(String& response, int code, const char* c
   
   response = fromEWString(aResponse);
   
-  //MR & KH fix
-  _responseHeaders = *(new String());
+  _responseHeaders = String("");
 }
 
 void EthernetWebServer::_prepareHeader(EWString& response, int code, const char* content_type, size_t contentLength) 
@@ -501,8 +501,7 @@ void EthernetWebServer::_prepareHeader(EWString& response, int code, const char*
   response += fromString(_responseHeaders);
   response += RETURN_NEWLINE;
   
-  //MR & KH fix
-  _responseHeaders = *(new String()); 
+  _responseHeaders = String("");
 }
 
 void EthernetWebServer::send(int code, const char* content_type, const String& content)
@@ -910,8 +909,7 @@ void EthernetWebServer::_handleRequest()
   //_currentUri = String();
   ET_LOGDEBUG(F("_handleRequest: Done Clear _currentUri"));
 #else  
-  //MR & KH fix
-  _currentUri = *(new String());
+  _responseHeaders = String("");
 #endif 
 }
 
