@@ -9,6 +9,9 @@
   Licensed under MIT license
  *****************************************************************************************************************************/
 
+// Important: For ESP32, check https://github.com/khoih-prog/EthernetWebServer_SSL#7-for-fixing-esp32-compile-error
+// and replace cores/esp32/Server.h to avoid compile error
+
 #include "defines.h"
 
 char server[] = "arduino.cc";
