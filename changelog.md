@@ -13,6 +13,7 @@
 
 
 * [Changelog](#changelog)
+  * [Releases v1.7.2](#releases-v172)
   * [Releases v1.7.1](#releases-v171)
   * [Major Releases v1.7.0](#major-releases-v170)
   * [Releases v1.6.1](#releases-v161)
@@ -30,6 +31,11 @@
 ---
 
 ## Changelog
+
+### Releases v1.7.2
+
+1. Fix wrong http status header bug. Check [fix for wrong http status header #42](https://github.com/khoih-prog/EthernetWebServer/pull/42)
+2. Fix authenticate issue caused by libb64
 
 ### Releases v1.7.1
 
