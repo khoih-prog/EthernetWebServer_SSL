@@ -8,7 +8,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
   Licensed under MIT license
        
-  Version: 1.7.1
+  Version: 1.7.2
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -25,7 +25,8 @@
   1.6.1   K Hoang      04/10/2021 Change option for PIO `lib_compat_mode` from default `soft` to `strict`. Update Packages Patches
   1.7.0   K Hoang      19/12/2021 Reduce usage of Arduino String with std::string. Add support to Portenta H7 Ethernet
   1.7.1   K Hoang      25/12/2021 Fix bug relating to String
- *************************************************************************************************************************************/
+  1.7.2   K Hoang      27/12/2021 Fix wrong http status header bug and authenticate issue caused by libb64
+ *****************************************************************************************************************************/
  
 #include "cencode.h"
 
@@ -53,8 +54,8 @@ int base64_encode_block(const char* plaintext_in, int length_in, char* code_out,
   const char* plainchar = plaintext_in;
   const char* const plaintextend = plaintext_in + length_in;
   char* codechar = code_out;
-  char  result;
-  char  fragment;
+  char result;
+  char fragment;
 
   result = state_in->result;
 
@@ -63,7 +64,6 @@ int base64_encode_block(const char* plaintext_in, int length_in, char* code_out,
       while (1)
       {
       case step_A:
-
         if (plainchar == plaintextend)
         {
           state_in->result = result;
@@ -76,10 +76,7 @@ int base64_encode_block(const char* plaintext_in, int length_in, char* code_out,
         *codechar++ = base64_encode_value(result);
         result = (fragment & 0x003) << 4;
 
-        break;
-
       case step_B:
-
         if (plainchar == plaintextend)
         {
           state_in->result = result;
@@ -92,10 +89,7 @@ int base64_encode_block(const char* plaintext_in, int length_in, char* code_out,
         *codechar++ = base64_encode_value(result);
         result = (fragment & 0x00f) << 2;
 
-        break;
-
       case step_C:
-
         if (plainchar == plaintextend)
         {
           state_in->result = result;
@@ -116,8 +110,6 @@ int base64_encode_block(const char* plaintext_in, int length_in, char* code_out,
           *codechar++ = '\n';
           state_in->stepcount = 0;
         }
-
-        break;
       }
   }
 
@@ -155,5 +147,5 @@ int base64_encode_chars(const char* plaintext_in, int length_in, char* code_out)
   base64_init_encodestate(&_state);
   int len = base64_encode_block(plaintext_in, length_in, code_out, &_state);
 
-  return ( len + base64_encode_blockend((code_out + len), &_state) );
+  return len + base64_encode_blockend((code_out + len), &_state);
 }

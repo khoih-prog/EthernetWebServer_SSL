@@ -9,7 +9,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
   Licensed under MIT license
        
-  Version: 1.7.1
+  Version: 1.7.2
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -26,13 +26,14 @@
   1.6.1   K Hoang      04/10/2021 Change option for PIO `lib_compat_mode` from default `soft` to `strict`. Update Packages Patches
   1.7.0   K Hoang      19/12/2021 Reduce usage of Arduino String with std::string. Add support to Portenta H7 Ethernet
   1.7.1   K Hoang      25/12/2021 Fix bug relating to String
+  1.7.2   K Hoang      27/12/2021 Fix wrong http status header bug and authenticate issue caused by libb64
  *************************************************************************************************************************************/
 
 #pragma once
 
 #include <Arduino.h>
 #include <libb64/cencode.h>
-//#include "EthernetWebServer_SSL.h"
+#include "EthernetWebServer_SSL.h"
 #include "detail/RequestHandlersImpl.h"
 #include "detail/Debug.h"
 #include "detail/mimetable.h"
@@ -421,10 +422,12 @@ void EthernetWebServer::_prepareHeader(String& response, int code, const char* c
   EWString aResponse = fromString(response);
   
   aResponse = "HTTP/1." + fromString(String(_currentVersion)) + " ";
-  aResponse += code;
+  aResponse += fromString(String(code));
   aResponse += " ";
   aResponse += fromString(_responseCodeToString(code));
   aResponse += RETURN_NEWLINE;
+  
+  ET_LOGDEBUG1(F("_prepareHeader aResponse ="), fromEWString(aResponse));
 
  using namespace mime;
  
@@ -465,10 +468,12 @@ void EthernetWebServer::_prepareHeader(String& response, int code, const char* c
 void EthernetWebServer::_prepareHeader(EWString& response, int code, const char* content_type, size_t contentLength) 
 {
   response = "HTTP/1." + fromString(String(_currentVersion)) + " ";
-  response += code;
+  response += fromString(String(code));
   response += " ";
   response += fromString(_responseCodeToString(code));
   response += RETURN_NEWLINE;
+  
+  ET_LOGDEBUG1(F("_prepareHeader response ="), fromEWString(response));
 
  using namespace mime;
  
