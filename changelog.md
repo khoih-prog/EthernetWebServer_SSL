@@ -13,6 +13,7 @@
 
 
 * [Changelog](#changelog)
+  * [Releases v1.7.3](#releases-v173)
   * [Releases v1.7.2](#releases-v172)
   * [Releases v1.7.1](#releases-v171)
   * [Major Releases v1.7.0](#major-releases-v170)
@@ -31,6 +32,11 @@
 ---
 
 ## Changelog
+
+### Releases v1.7.3
+
+1. Fix libb64 compile error for ESP8266. Check [multiple definition of base64 error with ver. 1.8.3 #44](https://github.com/khoih-prog/EthernetWebServer/issues/44)
+2. Update `Packages' Patches`
 
 ### Releases v1.7.2
 
