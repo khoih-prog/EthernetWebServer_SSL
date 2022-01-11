@@ -8,7 +8,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
   Licensed under MIT license
        
-  Version: 1.7.2
+  Version: 1.7.3
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -26,7 +26,10 @@
   1.7.0   K Hoang      19/12/2021 Reduce usage of Arduino String with std::string. Add support to Portenta H7 Ethernet
   1.7.1   K Hoang      25/12/2021 Fix bug relating to String
   1.7.2   K Hoang      27/12/2021 Fix wrong http status header bug and authenticate issue caused by libb64
+  1.7.3   K Hoang      11/01/2022 Fix libb64 compile error for ESP8266
  *****************************************************************************************************************************/
+ 
+#if !(ESP32 || ESP8266)
  
 #include "cencode.h"
 
@@ -149,3 +152,5 @@ int base64_encode_chars(const char* plaintext_in, int length_in, char* code_out)
 
   return len + base64_encode_blockend((code_out + len), &_state);
 }
+
+#endif

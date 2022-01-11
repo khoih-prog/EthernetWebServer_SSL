@@ -9,7 +9,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
   Licensed under MIT license
        
-  Version: 1.7.2
+  Version: 1.7.3
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -27,17 +27,18 @@
   1.7.0   K Hoang      19/12/2021 Reduce usage of Arduino String with std::string. Add support to Portenta H7 Ethernet
   1.7.1   K Hoang      25/12/2021 Fix bug relating to String
   1.7.2   K Hoang      27/12/2021 Fix wrong http status header bug and authenticate issue caused by libb64
+  1.7.3   K Hoang      11/01/2022 Fix libb64 compile error for ESP8266
  *************************************************************************************************************************************/
 
 #pragma once
 
-#define ETHERNET_WEBSERVER_SSL_VERSION          "EthernetWebServer_SSL v1.7.2"
+#define ETHERNET_WEBSERVER_SSL_VERSION          "EthernetWebServer_SSL v1.7.3"
 
 #define ETHERNET_WEBSERVER_SSL_VERSION_MAJOR    1
 #define ETHERNET_WEBSERVER_SSL_VERSION_MINOR    7
-#define ETHERNET_WEBSERVER_SSL_VERSION_PATCH    2
+#define ETHERNET_WEBSERVER_SSL_VERSION_PATCH    3
 
-#define ETHERNET_WEBSERVER_SSL_VERSION_INT      1007002
+#define ETHERNET_WEBSERVER_SSL_VERSION_INT      1007003
 
 #define USE_NEW_WEBSERVER_VERSION           true
 
