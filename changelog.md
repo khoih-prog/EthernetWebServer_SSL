@@ -13,6 +13,7 @@
 
 
 * [Changelog](#changelog)
+  * [Releases v1.7.4](#releases-v174)
   * [Releases v1.7.3](#releases-v173)
   * [Releases v1.7.2](#releases-v172)
   * [Releases v1.7.1](#releases-v171)
@@ -32,6 +33,10 @@
 ---
 
 ## Changelog
+
+### Releases v1.7.4
+
+1. Fix libb64 `fallthrough` compile warning
 
 ### Releases v1.7.3
 
