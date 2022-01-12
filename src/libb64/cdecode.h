@@ -8,7 +8,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
   Licensed under MIT license
        
-  Version: 1.7.3
+  Version: 1.7.4
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -27,6 +27,7 @@
   1.7.1   K Hoang      25/12/2021 Fix bug relating to String
   1.7.2   K Hoang      27/12/2021 Fix wrong http status header bug and authenticate issue caused by libb64
   1.7.3   K Hoang      11/01/2022 Fix libb64 compile error for ESP8266
+  1.7.4   K Hoang      11/01/2022 Fix libb64 fallthrough compile warning
  *****************************************************************************************************************************/
 
 #pragma once
@@ -55,7 +56,7 @@ typedef struct
 
 void base64_init_decodestate(base64_decodestate* state_in);
 
-int base64_decode_value(char value_in);
+int base64_decode_value(int value_in);
 
 int base64_decode_block(const char* code_in, const int length_in, char* plaintext_out, base64_decodestate* state_in);
 
