@@ -13,6 +13,7 @@
 
 
 * [Changelog](#changelog)
+  * [Releases v1.7.5](#releases-v175)
   * [Releases v1.7.4](#releases-v174)
   * [Releases v1.7.3](#releases-v173)
   * [Releases v1.7.2](#releases-v172)
@@ -33,6 +34,11 @@
 ---
 
 ## Changelog
+
+### Releases v1.7.5
+
+1. Fix decoding error bug when using special `&` in data fields. Check [Decoding Error. two times called urlDecode in Parsing-impl.h. #17](https://github.com/khoih-prog/WiFiWebServer/issues/17)
+2. Update `Packages' Patches`
 
 ### Releases v1.7.4
 
