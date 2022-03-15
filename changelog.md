@@ -39,7 +39,7 @@
 ### Releases v1.7.6
 
 1. Fix bug when using `QNEthernet` staticIP. Check [QNEthernet and NativeEthernet staticIP not working with WS Server #39](https://github.com/khoih-prog/WebSockets2_Generic/issues/39)
-2. Simplify and add staticIP option to `NativeEthernet` examples
+2. Simplify and add staticIP option to `NativeEthernet` examples.
 3. Add support to SAMD21/SAMD51 boards using [Fab_SAM_Arduino core](https://github.com/qbolsee/ArduinoCore-fab-sam)
 4. Add `Packages' Patches` for [Fab_SAM_Arduino core](https://github.com/qbolsee/ArduinoCore-fab-sam)
 5. Update `Packages' Patches`

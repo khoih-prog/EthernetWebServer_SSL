@@ -266,7 +266,7 @@ This [**EthernetWebServer_SSL** library](https://github.com/khoih-prog/EthernetW
 ### Use Arduino Library Manager
 
 The best and easiest way is to use `Arduino Library Manager`. Search for `EthernetWebServer_SSL`, then select / install the latest version.
-You can also use this link [![arduino-library-badge](https://www.ardu-badge.com/badge/EthernetWebServer_SSL.svg?)](https://www.ardu-badge.com/EthernetWebServer_SSL) for more detailed instructions.
+You can also use this link [![arduino-library-badge](https://www.ardu-badge.com/badge/EthernetWebServer_SSL.svg?)](https://www.ardu-badge.com/EthernetWebServer_SSL) for more detailed instructions
 
 ### Manual Install
 
