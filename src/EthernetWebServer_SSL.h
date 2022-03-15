@@ -9,7 +9,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
   Licensed under MIT license
        
-  Version: 1.7.5
+  Version: 1.7.6
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -22,17 +22,18 @@
   1.7.3   K Hoang      11/01/2022 Fix libb64 compile error for ESP8266
   1.7.4   K Hoang      11/01/2022 Fix libb64 fallthrough compile warning
   1.7.5   K Hoang      02/03/2022 Fix decoding error bug
+  1.7.6   K Hoang      14/03/2022 Fix bug when using QNEthernet staticIP. Add staticIP option to NativeEthernet
  *************************************************************************************************************************************/
 
 #pragma once
 
-#define ETHERNET_WEBSERVER_SSL_VERSION          "EthernetWebServer_SSL v1.7.5"
+#define ETHERNET_WEBSERVER_SSL_VERSION          "EthernetWebServer_SSL v1.7.6"
 
 #define ETHERNET_WEBSERVER_SSL_VERSION_MAJOR    1
 #define ETHERNET_WEBSERVER_SSL_VERSION_MINOR    7
-#define ETHERNET_WEBSERVER_SSL_VERSION_PATCH    5
+#define ETHERNET_WEBSERVER_SSL_VERSION_PATCH    6
 
-#define ETHERNET_WEBSERVER_SSL_VERSION_INT      1007005
+#define ETHERNET_WEBSERVER_SSL_VERSION_INT      1007006
 
 #define USE_NEW_WEBSERVER_VERSION           true
 

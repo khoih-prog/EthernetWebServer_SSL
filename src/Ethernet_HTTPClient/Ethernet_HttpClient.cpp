@@ -9,7 +9,7 @@
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
   Licensed under MIT license
        
-  Version: 1.7.5
+  Version: 1.7.6
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -22,6 +22,7 @@
   1.7.3   K Hoang      11/01/2022 Fix libb64 compile error for ESP8266
   1.7.4   K Hoang      11/01/2022 Fix libb64 fallthrough compile warning
   1.7.5   K Hoang      02/03/2022 Fix decoding error bug
+  1.7.6   K Hoang      14/03/2022 Fix bug when using QNEthernet staticIP. Add staticIP option to NativeEthernet
  *************************************************************************************************************************************/
  
 // Class to simplify HTTP fetching on Arduino
