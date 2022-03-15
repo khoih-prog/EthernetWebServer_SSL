@@ -246,6 +246,9 @@ void setup()
 
 #endif
 
+  // give the Ethernet shield 2 seconds to initialize:
+  delay(2000);
+
 #if USE_PTR
 
   //EthernetSSLClient ethClientSSL(ethClient, TAs, (size_t)TAs_NUM);

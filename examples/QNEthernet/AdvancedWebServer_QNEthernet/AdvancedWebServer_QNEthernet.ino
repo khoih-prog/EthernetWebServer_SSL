@@ -215,6 +215,9 @@ void setup(void)
 
 #endif
 
+  // give the Ethernet shield 2 seconds to initialize:
+  delay(2000);
+
   server.on(F("/"), handleRoot);
   server.on(F("/test.svg"), drawGraph);
   server.on(F("/inline"), []()

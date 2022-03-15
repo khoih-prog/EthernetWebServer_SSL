@@ -182,6 +182,9 @@ void setup()
   }
 
 #endif
+
+  // give the Ethernet shield 2 seconds to initialize:
+  delay(5000);
 }
 
 #define MQTT_PUBLISH_INTERVAL_MS       5000L

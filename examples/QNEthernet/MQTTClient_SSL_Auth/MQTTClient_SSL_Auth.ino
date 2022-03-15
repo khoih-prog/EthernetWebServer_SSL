@@ -175,6 +175,9 @@ void setup()
   }
 
 #endif
+
+  // give the Ethernet shield 2 seconds to initialize:
+  delay(2000);
   
   // Note - the default maximum packet size is 256 bytes. If the
   // combined length of clientId, username and password exceed this use the

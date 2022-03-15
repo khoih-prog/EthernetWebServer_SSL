@@ -35,7 +35,7 @@ const char my_key[]   = "FIXME";
 
 SSLClientParameters mTLS = SSLClientParameters::fromPEM(my_cert, sizeof my_cert, my_key, sizeof my_key);
 
-#define USING_THINGSTREAM_IO      true
+#define USING_THINGSTREAM_IO      false   //true
 
 #if USING_THINGSTREAM_IO
 
@@ -222,6 +222,9 @@ void setup()
   }
 
 #endif
+
+  // give the Ethernet shield 2 seconds to initialize:
+  delay(2000);
 
   // Note - the default maximum packet size is 256 bytes. If the
   // combined length of clientId, username and password exceed this use the
