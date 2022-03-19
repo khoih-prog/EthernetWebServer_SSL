@@ -7,9 +7,8 @@
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
   
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
-  Licensed under MIT license
        
-  Version: 1.7.6
+  Version: 1.7.7
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -23,7 +22,8 @@
   1.7.4   K Hoang      11/01/2022 Fix libb64 fallthrough compile warning
   1.7.5   K Hoang      02/03/2022 Fix decoding error bug
   1.7.6   K Hoang      14/03/2022 Fix bug when using QNEthernet staticIP. Add staticIP option to NativeEthernet
- *************************************************************************************************************************************/
+  1.7.7   K Hoang      14/03/2022 Change licence from `MIT` to `GPLv3`
+ *****************************************************************************************************************************/
  
 // (c) Copyright Arduino. 2016
 // Released under Apache License, version 2.0
