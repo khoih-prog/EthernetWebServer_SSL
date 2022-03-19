@@ -5,7 +5,6 @@
 
   Based on and modified from ESP8266 https://github.com/esp8266/Arduino/releases
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
-  Licensed under MIT license
 
   GET client with HTTP basic authentication for ArduinoHttpClient library
   Connects to server once every five seconds, sends a GET request
