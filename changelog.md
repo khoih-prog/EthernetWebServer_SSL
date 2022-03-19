@@ -2,7 +2,6 @@
 
 [![arduino-library-badge](https://www.ardu-badge.com/badge/EthernetWebServer_SSL.svg?)](https://www.ardu-badge.com/EthernetWebServer_SSL)
 [![GitHub release](https://img.shields.io/github/release/khoih-prog/EthernetWebServer_SSL.svg)](https://github.com/khoih-prog/EthernetWebServer_SSL/releases)
-[![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/LICENSE)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](#Contributing)
 [![GitHub issues](https://img.shields.io/github/issues/khoih-prog/EthernetWebServer_SSL.svg)](http://github.com/khoih-prog/EthernetWebServer_SSL/issues)
 
@@ -35,6 +34,11 @@
 ---
 
 ## Changelog
+
+### Releases v1.7.7
+
+1. Change license from `MIT` to `GPLv3`. Check [Licensing of SSLClient #16](https://github.com/khoih-prog/EthernetWebServer_SSL/issues/16)
+
 
 ### Releases v1.7.6
 
