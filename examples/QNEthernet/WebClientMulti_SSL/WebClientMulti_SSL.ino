@@ -6,7 +6,6 @@
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
   
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
-  Licensed under MIT license
  *****************************************************************************************************************************/
 
 // This sketch connects to SSL websites (https://www.arduino.cc/asciilogo.txt) and (https://www.cloudflare.com/cdn-cgi/trace)

@@ -6,7 +6,6 @@
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
   
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
-  Licensed under MIT license
  *****************************************************************************************************************************/
 /*
    The Arduino board communicates with the shield using the SPI bus. This is on digital pins 11, 12, and 13 on the Uno

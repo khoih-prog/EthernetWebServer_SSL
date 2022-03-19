@@ -4,7 +4,6 @@
   EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
   
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
-  Licensed under MIT license
  *****************************************************************************************************************************/
 /*
    The Arduino board communicates with the shield using the SPI bus. This is on digital pins 11, 12, and 13 on the Uno

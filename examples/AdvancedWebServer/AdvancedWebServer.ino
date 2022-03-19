@@ -6,7 +6,6 @@
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
   
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
-  Licensed under MIT license
   
   Copyright (c) 2015, Majenko Technologies
   All rights reserved.
