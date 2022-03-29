@@ -8,7 +8,7 @@
   
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
        
-  Version: 1.7.7
+  Version: 1.7.8
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -23,6 +23,7 @@
   1.7.5   K Hoang      02/03/2022 Fix decoding error bug
   1.7.6   K Hoang      14/03/2022 Fix bug when using QNEthernet staticIP. Add staticIP option to NativeEthernet
   1.7.7   K Hoang      14/03/2022 Change licence from `MIT` to `GPLv3`
+  1.7.8   K Hoang      29/03/2022 Sync with `SSLClient` v1.6.11
  *****************************************************************************************************************************/
 
 // Library to simplify HTTP fetching on Arduino
