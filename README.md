@@ -109,8 +109,9 @@
     * [18. WebServer](examples/WebServer)
     * [19. **MQTTS_ThingStream**](examples/MQTTS_ThingStream).
     * [20. **MQTT_ThingStream**](examples/MQTT_ThingStream).
-    * [21. **AdvancedWebServer_NativeEthernet**](examples/AdvancedWebServer_NativeEthernet).
-    * [22. **WebClientMulti_SSL_NativeEthernet**](examples/WebClientMulti_SSL_NativeEthernet).
+    * [21. **AdvancedWebServer_NativeEthernet**](examples/AdvancedWebServer_NativeEthernet)
+    * [22. **WebClientMulti_SSL_NativeEthernet**](examples/WebClientMulti_SSL_NativeEthernet)
+    * [23. **AWS_IoT**](examples/AWS_IoT) **New**
   * [HTTP and WebSocket Client New Examples](#http-and-websocket-client-new-examples)
     * [ 1. BasicAuthGet](examples/HTTPClient/BasicAuthGet)
     * [ 2. CustomHeader](examples/HTTPClient/CustomHeader)
@@ -245,10 +246,11 @@ This [**EthernetWebServer_SSL** library](https://github.com/khoih-prog/EthernetW
  8. [`Adafruit nRF52 v1.3.0+`](https://github.com/adafruit/Adafruit_nRF52_Arduino) for nRF52 boards such as Adafruit NRF52840_FEATHER, NRF52832_FEATHER, NRF52840_FEATHER_SENSE, NRF52840_ITSYBITSY, NRF52840_CIRCUITPLAY, NRF52840_CLUE, NRF52840_METRO, NRF52840_PCA10056, PARTICLE_XENON, **NINA_B302_ublox**, etc. [![GitHub release](https://img.shields.io/github/release/adafruit/Adafruit_nRF52_Arduino.svg)](https://github.com/adafruit/Adafruit_nRF52_Arduino/releases/latest)
  9. [`ESP32 Core 2.0.2+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards. [![Latest release](https://img.shields.io/github/release/espressif/arduino-esp32.svg)](https://github.com/espressif/arduino-esp32/releases/latest/)
 10. [`ESP8266 Core 3.0.2+`](https://github.com/esp8266/Arduino) for ESP8266-based boards. [![Latest release](https://img.shields.io/github/release/esp8266/Arduino.svg)](https://github.com/esp8266/Arduino/releases/latest/). To use ESP8266 core 2.7.1+ for LittleFS.
-11. [`ArduinoCore-mbed mbed_rp2040, mbed_nano, mbed_portenta core 2.8.0+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino (Use Arduino Board Manager) **Portenta_H7, RP2040-based boards, such as Nano_RP2040_Connect, RASPBERRY_PI_PICO**. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
+11. [`ArduinoCore-mbed mbed_rp2040, mbed_nano, mbed_portenta core 3.0.0+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino (Use Arduino Board Manager) **Portenta_H7, RP2040-based boards, such as Nano_RP2040_Connect, RASPBERRY_PI_PICO**. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
 12. [`Earle Philhower's arduino-pico core v1.13.1+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
-13. [`Functional-VLPP library v1.0.2+`](https://github.com/khoih-prog/functional-vlpp) to use server's lambda function. To install. check [![arduino-library-badge](https://www.ardu-badge.com/badge/Functional-Vlpp.svg?)](https://www.ardu-badge.com/Functional-Vlpp)
-14. Depending on which Ethernet card you're using:
+13. [`ArduinoCore-fab-sam core v1.16.18-alpha2+`](https://github.com/qbolsee/ArduinoCore-fab-sam) for SAMD21/SAMD51-based boards. [![GitHub release](https://img.shields.io/github/release/qbolsee/ArduinoCore-fab-sam.svg)](https://github.com/qbolsee/ArduinoCore-fab-sam/releases/latest)
+14. [`Functional-VLPP library v1.0.2+`](https://github.com/khoih-prog/functional-vlpp) to use server's lambda function. To install. check [![arduino-library-badge](https://www.ardu-badge.com/badge/Functional-Vlpp.svg?)](https://www.ardu-badge.com/Functional-Vlpp)
+15. Depending on which Ethernet card you're using:
    - [`Ethernet library v2.0.0+`](https://github.com/arduino-libraries/Ethernet) for W5100, W5200 and W5500.  [![GitHub release](https://img.shields.io/github/release/arduino-libraries/Ethernet.svg)](https://github.com/arduino-libraries/Ethernet/releases/latest)
    - [`EthernetLarge library v2.0.0+`](https://github.com/OPEnSLab-OSU/EthernetLarge) for W5100, W5200 and W5500.
    - [`Ethernet2 library v1.0.4+`](https://github.com/khoih-prog/Ethernet2) for W5500. [![GitHub release](https://img.shields.io/github/release/adafruit/Ethernet2.svg)](https://github.com/adafruit/Ethernet2/releases/latest)
@@ -497,12 +499,12 @@ With core after v1.5.0, this step is not necessary anymore thanks to the PR [Add
 
 #### 9. For Portenta_H7 boards using Arduino IDE in Linux
 
-  **To be able to upload firmware to Portenta_H7 using Arduino IDE in Linux (Ubuntu, etc.)**, you have to copy the file [portenta_post_install.sh](Packages_Patches/arduino/hardware/mbed_portenta/2.8.0/portenta_post_install.sh) into mbed_portenta directory (~/.arduino15/packages/arduino/hardware/mbed_portenta/2.8.0/portenta_post_install.sh). 
+  **To be able to upload firmware to Portenta_H7 using Arduino IDE in Linux (Ubuntu, etc.)**, you have to copy the file [portenta_post_install.sh](Packages_Patches/arduino/hardware/mbed_portenta/3.0.0/portenta_post_install.sh) into mbed_portenta directory (~/.arduino15/packages/arduino/hardware/mbed_portenta/3.0.0/portenta_post_install.sh). 
   
   Then run the following command using `sudo`
   
 ```
-$ cd ~/.arduino15/packages/arduino/hardware/mbed_portenta/2.8.0
+$ cd ~/.arduino15/packages/arduino/hardware/mbed_portenta/3.0.0
 $ chmod 755 portenta_post_install.sh
 $ sudo ./portenta_post_install.sh
 ```
@@ -515,9 +517,9 @@ This will create the file `/etc/udev/rules.d/49-portenta_h7.rules` as follows:
 SUBSYSTEMS=="usb", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="035b", GROUP="plugdev", MODE="0666"
 ```
 
-Supposing the ArduinoCore-mbed core version is 2.8.0. Now only one file must be copied into the directory:
+Supposing the ArduinoCore-mbed core version is 3.0.0. Now only one file must be copied into the directory:
 
-- `~/.arduino15/packages/arduino/hardware/mbed_portenta/2.8.0/portenta_post_install.sh`
+- `~/.arduino15/packages/arduino/hardware/mbed_portenta/3.0.0/portenta_post_install.sh`
 
 Whenever a new version is installed, remember to copy this files into the new version directory. For example, new version is x.yy.zz
 
@@ -1422,8 +1424,9 @@ If for some unfortunate reason you need SSL 3.0 or SSL 2.0, you will need to mod
 18. [WebServer](examples/WebServer)
 19. [**MQTTS_ThingStream**](examples/MQTTS_ThingStream).
 20. [**MQTT_ThingStream**](examples/MQTT_ThingStream).
-21. [**AdvancedWebServer_NativeEthernet**](examples/AdvancedWebServer_NativeEthernet). New.
-22. [**WebClientMulti_SSL_NativeEthernet**](examples/WebClientMulti_SSL_NativeEthernet). New.
+21. [**AdvancedWebServer_NativeEthernet**](examples/AdvancedWebServer_NativeEthernet).
+22. [**WebClientMulti_SSL_NativeEthernet**](examples/WebClientMulti_SSL_NativeEthernet).
+23. [**AWS_IoT**](examples/AWS_IoT). **New**
 
 #### HTTP and WebSocket Client New Examples
 
@@ -1483,7 +1486,7 @@ The following are debug terminal output and screen shot when running example [Ad
 
 ```
 Starting AdvancedWebServer on NRF52840_FEATHER with ENC28J60 using EthernetENC Library
-EthernetWebServer_SSL v1.7.7
+EthernetWebServer_SSL v1.7.8
 [ETHERNET_WEBSERVER] =========================
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 25
@@ -1661,7 +1664,7 @@ The terminal output of **SAM DUE with W5x00 using EthernetLarge Library** runnin
 
 ```
 Start WebClientMulti_SSL on SAM DUE with W5x00 using EthernetLarge Library
-EthernetWebServer_SSL v1.7.7
+EthernetWebServer_SSL v1.7.8
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_LARGE ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 75
@@ -1800,7 +1803,7 @@ The terminal output of **SEEED_XIAO_M0 with W5x00 using Ethernet3 Library** runn
 
 ```
 Start WebClient_SSL on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library
-EthernetWebServer_SSL v1.7.7
+EthernetWebServer_SSL v1.7.8
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET3 ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 10
@@ -1906,7 +1909,7 @@ Received 3405 bytes in 0.2072 s, rate = 16.43 kbytes/second
 
 ```
 Start MQTTClient_SSL_Complex on SAM DUE with W5x00 using EthernetLarge Library
-EthernetWebServer_SSL v1.7.7
+EthernetWebServer_SSL v1.7.8
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_LARGE ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 75
@@ -1947,7 +1950,7 @@ The terminal output of **SEEED_XIAO_M0 with W5x00 using Ethernet3 Library** runn
 
 ```
 Start MQTTS_ThingStream on SEEED_XIAO_M0 with W5x00 using Ethernet3 Library
-EthernetWebServer_SSL v1.7.7
+EthernetWebServer_SSL v1.7.8
 [ETHERNET_WEBSERVER] Board : SEEED_XIAO_M0 , setCsPin: 1
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 10
@@ -1981,7 +1984,7 @@ The terminal output of **MBED RASPBERRY_PI_PICO with W5x00 using Ethernet Librar
 
 ```
 Start MQTTS_ThingStream on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet Library
-EthernetWebServer_SSL v1.7.7
+EthernetWebServer_SSL v1.7.8
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 3
@@ -2012,7 +2015,7 @@ The terminal output of **MBED RASPBERRY_PI_PICO with W5x00 using Ethernet Librar
 
 ```
 Start MQTTClient_SSL on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet Library
-EthernetWebServer_SSL v1.7.7
+EthernetWebServer_SSL v1.7.8
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 3
@@ -2058,7 +2061,7 @@ The following are debug terminal output and screen shot when running example [Ad
 
 ```
 Starting AdvancedWebServer on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet3 Library
-EthernetWebServer_SSL v1.7.7
+EthernetWebServer_SSL v1.7.8
 [EWS] =========== USE_ETHERNET3 ===========
 [EWS] Default SPI pinout:
 [EWS] MOSI: 3
@@ -2090,7 +2093,7 @@ The terminal output of **RASPBERRY_PI_PICO with W5x00 using Ethernet Library** r
 
 ```
 Start MQTTClient_SSL on RASPBERRY_PI_PICO with W5x00 using Ethernet Library
-EthernetWebServer_SSL v1.7.7
+EthernetWebServer_SSL v1.7.8
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 19
@@ -2129,7 +2132,7 @@ The following are debug terminal output and screen shot when running example [Ad
 
 ```
 Starting AdvancedWebServer on RASPBERRY_PI_PICO with W5x00 using Ethernet Library
-EthernetWebServer_SSL v1.7.7
+EthernetWebServer_SSL v1.7.8
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 19
@@ -2166,7 +2169,7 @@ The following are debug terminal output and screen shot when running example [Ad
 
 ```
 Starting AdvancedWebServer_QNEthernet on TEENSY 4.1 using QNEthernet
-EthernetWebServer_SSL v1.7.7
+EthernetWebServer_SSL v1.7.8
 [ETHERNET_WEBSERVER] =========== USE_QN_ETHERNET ===========
 Initialize Ethernet using static IP => IP Address = 192.168.2.222
 HTTP EthernetWebServer is @ IP : 192.168.2.222
@@ -2183,7 +2186,7 @@ The following are debug terminal output and screen shot when running example [MQ
 
 ```
 Starting MQTTClient_SSL on TEENSY 4.1 using QNEthernet
-EthernetWebServer_SSL v1.7.7
+EthernetWebServer_SSL v1.7.8
 [ETHERNET_WEBSERVER] =========== USE_QN_ETHERNET ===========
 Initialize Ethernet using static IP => IP Address = 192.168.2.222
 Attempting MQTTS connection to broker.emqx.io...connected
@@ -2213,7 +2216,7 @@ The following are debug terminal output and screen shot when running example [We
 
 ```
 Starting WebClientMulti_SSL on TEENSY 4.1 using QNEthernet
-EthernetWebServer_SSL v1.7.7
+EthernetWebServer_SSL v1.7.8
 [ETHERNET_WEBSERVER] =========== USE_QN_ETHERNET ===========
 Initialize Ethernet using static IP => IP Address = 192.168.2.222
 Connecting to www.arduino.cc...
@@ -2297,7 +2300,7 @@ The following are debug terminal output and screen shot when running example [Ad
 ```
 
 Starting AdvancedWebServer on PORTENTA_H7_M7 with Ethernet using Portenta_Ethernet Library
-EthernetWebServer_SSL v1.7.7
+EthernetWebServer_SSL v1.7.8
 [ETHERNET_WEBSERVER] ======== USE_PORTENTA_H7_ETHERNET ========
 Using mac index = 2
 Connected! IP address: 192.168.2.101
@@ -2372,6 +2375,7 @@ Submit issues to: [EthernetWebServer_SSL issues](https://github.com/khoih-prog/E
 22. Fix bug when using `QNEthernet` staticIP. 
 23. Add staticIP option to `NativeEthernet` examples
 24. Change licence from `MIT` to `GPLv3`
+25. Sync with [SSLClient v1.6.11](https://github.com/OPEnSLab-OSU/SSLClient/releases/tag/v1.6.11)
 
 
 ---
@@ -2382,11 +2386,12 @@ Submit issues to: [EthernetWebServer_SSL issues](https://github.com/khoih-prog/E
 Many thanks for everyone for bug reporting, new feature suggesting, testing and contributing to the development of this library.
 
 1. Based on and modified from the good [Ivan Grokhotkov's ESP8266WebServer](https://github.com/esp8266/Arduino/tree/master/libraries/ESP8266WebServer) and [ESP32 WebServer](https://github.com/espressif/arduino-esp32/tree/master/libraries/WebServer) libraries.
-2. [OPEnSLab-OSU](https://github.com/PEnSLab-OSU) for [OPEnSLab-OSU's SSLClient](https://github.com/OPEnSLab-OSU/SSLClient)
+2. [OPEnSLab-OSU](https://github.com/OPEnSLab-OSU) for [OPEnSLab-OSU's SSLClient](https://github.com/OPEnSLab-OSU/SSLClient)
 3. Thanks to good work of [Miguel Alexandre Wisintainer](https://github.com/tcpipchip) for initiating, inspriring, working with, developing, debugging and testing. Without that, support to nRF52, especially **U-Blox B302 running as nRF52840 and U-Blox B112 running as nRF52832**, has never been started and finished. Also see [ESP32-based U-BLOX NINA W102 running ENC28J60](https://u-blox-ethernet-ninaw.blogspot.com/).
 4. [Adrian McEwen](https://github.com/amcewen) for [HttpClient Library](https://github.com/amcewen/HttpClient) on which the [ArduinoHttpClient Library](https://github.com/arduino-libraries/ArduinoHttpClient) and this [EthernetWebServer library](https://github.com/khoih-prog/EthernetWebServer) are relied.
 5. Thanks to [jimmie11](https://github.com/jimmie11) to report and suggest a fix in [Compile Error on Teensy 4.1 #14](https://github.com/khoih-prog/EthernetWebServer/issues/14) leading to the new version v1.3.0 to provide support to **Teensy 4.1** using [**NativeEthernet Library**](https://github.com/vjmuzik/NativeEthernet)
 6. Thanks to [Shahram](https://github.com/Nourbakhsh-Rad) to report issue [multiple definition of base64 error with ver. 1.8.3 #44](https://github.com/khoih-prog/EthernetWebServer/issues/44) which was fixed in v1.7.3
+7. Thanks to [Marcel Stör](https://github.com/marcelstoer) to report issue [Pull in OPEnSLab-OSU's SSLClient v1.6.11 #17](https://github.com/khoih-prog/EthernetWebServer_SSL/issues/17) which was fixed in v1.7.8
 
 <table>
   <tr>
@@ -2396,6 +2401,7 @@ Many thanks for everyone for bug reporting, new feature suggesting, testing and 
     <td align="center"><a href="https://github.com/tcpipchip"><img src="https://github.com/tcpipchip.png" width="100px;" alt="tcpipchip"/><br /><sub><b>Miguel Wisintainer</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/jimmie11"><img src="https://github.com/jimmie11.png" width="100px;" alt="jimmie11"/><br /><sub><b>jimmie11</b></sub></a><br /></td>
     <td align="center"><a href="https://github.com/Nourbakhsh-Rad"><img src="https://github.com/Nourbakhsh-Rad.png" width="100px;" alt="Nourbakhsh-Rad"/><br /><sub><b>Shahram</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/marcelstoer"><img src="https://github.com/marcelstoer.png" width="100px;" alt="marcelstoer"/><br /><sub><b>Marcel Stör</b></sub></a><br /></td>
   </tr>
 </table>
 

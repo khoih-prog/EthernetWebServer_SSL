@@ -35,6 +35,13 @@
 
 ## Changelog
 
+### Releases v1.7.8
+
+1. Sync with [SSLClient v1.6.11](https://github.com/OPEnSLab-OSU/SSLClient/releases/tag/v1.6.11). Check [Pull in OPEnSLab-OSU's SSLClient v1.6.11 #17](https://github.com/khoih-prog/EthernetWebServer_SSL/issues/17)
+2. Add example [AWS_IoT](examples/AWS_IoT)
+3. Change default SS pin for RP2040 using [ArduinoCore-mbed core](https://github.com/arduino/ArduinoCore-mbed) to 17 from 5 to be the same as [arduino-pico core](https://github.com/earlephilhower/arduino-pico)
+4. Update `Packages' Patches`
+
 ### Releases v1.7.7
 
 1. Change license from `MIT` to `GPLv3`. Check [Licensing of SSLClient #16](https://github.com/khoih-prog/EthernetWebServer_SSL/issues/16)
