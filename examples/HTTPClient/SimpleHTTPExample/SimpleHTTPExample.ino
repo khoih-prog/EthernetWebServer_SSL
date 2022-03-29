@@ -159,7 +159,7 @@ void setup()
   // ETHERNET_USE_RPIPICO, use default SS = 5 or 17
   #ifndef USE_THIS_SS_PIN
     #if defined(ARDUINO_ARCH_MBED)
-      #define USE_THIS_SS_PIN   5     // For Arduino Mbed core
+      #define USE_THIS_SS_PIN   17     // For Arduino Mbed core
     #else  
       #define USE_THIS_SS_PIN   17    // For E.Philhower core
     #endif

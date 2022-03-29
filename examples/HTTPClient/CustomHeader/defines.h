@@ -272,7 +272,7 @@
     // For RPI Pico using Arduino Mbed RP2040 core
     // SCK: GPIO2,  MOSI: GPIO3, MISO: GPIO4, SS/CS: GPIO5
     
-    #define USE_THIS_SS_PIN       5
+    #define USE_THIS_SS_PIN       17
 
     #if defined(BOARD_NAME)
       #undef BOARD_NAME
