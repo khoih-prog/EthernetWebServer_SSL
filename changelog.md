@@ -12,6 +12,8 @@
 
 
 * [Changelog](#changelog)
+  * [Releases v1.7.8](#releases-v178)
+  * [Releases v1.7.7](#releases-v177)
   * [Releases v1.7.6](#releases-v176)
   * [Releases v1.7.5](#releases-v175)
   * [Releases v1.7.4](#releases-v174)
