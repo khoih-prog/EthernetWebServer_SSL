@@ -35,8 +35,6 @@ SSLClientParameters mTLS = SSLClientParameters::fromPEM(my_cert, sizeof my_cert,
 
 const char* mqttServer = "broker.emqx.io";        // Broker address
 
-//IPAddress mqttServer(172, 16, 0, 2);
-
 void callback(char* topic, byte* payload, unsigned int length) 
 {
   Serial.print("Message arrived [");
@@ -69,12 +67,9 @@ void reconnect()
       Serial.println("connected");
       // Once connected, publish an announcement...
       client.publish("outTopic", "hello world");
-      // This is a workaround to address https://github.com/OPEnSLab-OSU/SSLClient/issues/9
-      ethClientSSL.flush();
+
       // ... and resubscribe
       client.subscribe("inTopic");
-      // This is a workaround to address https://github.com/OPEnSLab-OSU/SSLClient/issues/9
-      ethClientSSL.flush();
     } 
     else 
     {

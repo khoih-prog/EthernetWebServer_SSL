@@ -1,88 +1,74 @@
 /****************************************************************************************************************************
-  MQTT_ThingStream.ino - Dead simple MQTT Client for Ethernet shields
+  AWS IoT.ino - Dead simple SSL MQTT Client for Ethernet shields
 
-  EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer
+  EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
+
+  Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
   
-  Based on and modified from ESP8266 https://github.com/esp8266/Arduino/releases
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
  *****************************************************************************************************************************/
-/*
-  Basic MQTT example (without SSL!)
-  This sketch demonstrates the basic capabilities of the library.
-  It connects to an MQTT server then:
-  - publishes {Hello from MQTTClient_SSL on NUCLEO_F767ZI} to the topic [STM32_Pub]
-  - subscribes to the topic [STM32_Sub], printing out any messages
-    it receives. NB - it assumes the received payloads are strings not binary
-  It will reconnect to the server if the connection is lost using a blocking
-  reconnect function. See the 'mqtt_reconnect_nonblocking' example for how to
-  achieve the same result without blocking the main loop.
 
-  You will need to populate "certificates.h" with your trust anchors
-  (see https://github.com/OPEnSLab-OSU/SSLClient/blob/master/TrustAnchors.md)
-  and my_cert/my_key with your certificate/private key pair
-  (see https://github.com/OPEnSLab-OSU/SSLClient#mtls).
+/*
+  Connect to AWS IOT using SSLClient and Wiz850io Ethernet Mdoule
+   AWS_Root_CA.h is the trust anchor created using the Root CA from:
+   https://www.amazontrust.com/repository/AmazonRootCA1.pem
+   You can re-create it again using the python file present
+   in SSLClient/tools/pycert_bearssl/pycert_bearssl.py
+   python pycert_bearssl.py convert --no-search <certificate PEM file>
+   refer: https://github.com/OPEnSLab-OSU/SSLClient/issues/17#issuecomment-700143405
+
+  created 10 October 2020
+  by Ram Rohit Gannavarapu
 */
 
 #include "defines.h"
 
 #include <PubSubClient.h>
 
-const char my_cert[]  = "FIXME";
-const char my_key[]   = "FIXME";
+#include "AWS_Root_CA.h" // This file is created using AmazonRootCA1.pem from https://www.amazontrust.com/repository/AmazonRootCA1.pem
 
-#define USING_THINGSTREAM_IO      true
+#define THING_NAME          "<Thing_Name>"
+#define MQTT_PACKET_SIZE    1024
 
-#if USING_THINGSTREAM_IO
+void MQTTPublish(const char *topic, char *payload);
+void updateThing();
 
-const char *MQTT_PREFIX_TOPIC   = "esp32-sniffer/";
-const char *MQTT_ANNOUNCE_TOPIC = "/status";
-const char *MQTT_CONTROL_TOPIC  = "/control";
-const char *MQTT_BLE_TOPIC      = "/ble";
+const char my_cert[] =
+  "-----BEGIN CERTIFICATE-----\n" \
+  "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n" \
+  "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n" \
+  "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n" \
+  "-----END CERTIFICATE-----\n";
 
+const char my_key[] =
+  "-----BEGIN RSA PRIVATE KEY-----\n" \
+  "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n" \
+  "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n" \
+  "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n" \
+  "-----END RSA PRIVATE KEY-----\n";
 
-// GOT FROM ThingsStream!
-const char *MQTT_SERVER     = "mqtt.thingstream.io";
-const char *MQTT_USER       = "MQTT_USER";
-const char *MQTT_PASS       = "MQTT_PASS";
-const char *MQTT_CLIENT_ID  = "MQTT_CLIENT_ID";
+SSLClientParameters mTLS = SSLClientParameters::fromPEM(my_cert, sizeof my_cert, my_key, sizeof my_key);
 
-String topic    = MQTT_PREFIX_TOPIC + String("12345678") + MQTT_BLE_TOPIC;
-String subTopic = MQTT_PREFIX_TOPIC + String("12345678") + MQTT_BLE_TOPIC;
+const char* mqttServer = "xxxxxxxxxxxx-ats.iot.us-east-1.amazonaws.com";
+const char publishShadowUpdate[] = "$aws/things/" THING_NAME "/shadow/update";
+char publishPayload[MQTT_PACKET_SIZE];
 
-#else
-
-const char* MQTT_SERVER = "broker.emqx.io";        // Broker address
-
-const char*  ID         = "MQTTClient_SSL-Client";  // Name of our device, must be unique
-String      topic       = "STM32_Pub";              // Topic to subcribe to
-String      subTopic    = "STM32_Sub";              // Topic to subcribe to
-
-#endif
-
-void mqtt_receive_callback(char* topic, byte* payload, unsigned int length);
-
-const int   MQTT_PORT           = 1883; //if you use SSL //1883 no SSL
-
-unsigned long lastMsg = 0;
-
-// Initialize the SSL client library
-// Arguments: EthernetClient, our trust anchors
-
-
-EthernetClient    ethClient;
-
-PubSubClient client(MQTT_SERVER, MQTT_PORT, mqtt_receive_callback, ethClient);
-
-/*
-   Called whenever a payload is received from a subscribed MQTT topic
-*/
-void mqtt_receive_callback(char* topic, byte* payload, unsigned int length) 
+char *subscribeTopic[5] =
 {
-  Serial.print("MQTT Message receive [");
+  "$aws/things/" THING_NAME "/shadow/update/accepted",
+  "$aws/things/" THING_NAME "/shadow/update/rejected",
+  "$aws/things/" THING_NAME "/shadow/update/delta",
+  "$aws/things/" THING_NAME "/shadow/get/accepted",
+  "$aws/things/" THING_NAME "/shadow/get/rejected"
+};
+
+void callback(char* topic, byte* payload, unsigned int length)
+{
+  Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
   
-  for (unsigned int i = 0; i < length; i++) 
+  for (int i = 0; i < length; i++)
   {
     Serial.print((char)payload[i]);
   }
@@ -90,51 +76,54 @@ void mqtt_receive_callback(char* topic, byte* payload, unsigned int length)
   Serial.println();
 }
 
-void reconnect() 
+
+EthernetClient ethClient;
+EthernetSSLClient ethClientSSL(ethClient, TAs, (size_t)TAs_NUM, 1);
+PubSubClient mqtt(mqttServer, 8883, callback, ethClientSSL);
+
+void reconnect()
 {
-  // Loop until we're reconnected
-  while (!client.connected()) 
+  while (!mqtt.connected())
   {
-    Serial.print("Attempting MQTT connection to ");
-    Serial.println(MQTT_SERVER);
-
-    // Attempt to connect
-
-#if USING_THINGSTREAM_IO
-    int connect_status = client.connect(MQTT_CLIENT_ID, MQTT_USER, MQTT_PASS, topic.c_str(), 2, false, "");
-#else
-    int connect_status = client.connect(ID);
-#endif
-
-    if (connect_status)                                
+    Serial.print("Attempting MQTT connection...");
+    
+    if (mqtt.connect("arduinoClient"))
     {
-      Serial.println("...connected");
+      Serial.println("connected");
       
-      // Once connected, publish an announcement...
-      String data = "Hello from MQTTClient_SSL on " + String(BOARD_NAME);
-
-      client.publish(topic.c_str(), data.c_str());
-
-      Serial.println("Published connection message successfully!");
-     
-      Serial.print("Subcribed to: ");
-      Serial.println(subTopic);
+      for (int i = 0; i < 5; i++)
+      {
+        //Serial.println(subscribeTopic[i]);
+        mqtt.subscribe(subscribeTopic[i]);
+      }
       
-      // ... and resubscribe
-      client.subscribe(subTopic.c_str());
-      // for loopback testing
-      client.subscribe(topic.c_str());
-    } 
-    else 
+      Serial.println("Started updateThing ");
+      updateThing();
+      Serial.println("Done updateThing ");
+    }
+    else
     {
       Serial.print("failed, rc=");
-      Serial.print(client.state());
+      Serial.print(mqtt.state());
       Serial.println(" try again in 5 seconds");
-      
-      // Wait 5 seconds before retrying
       delay(5000);
     }
   }
+}
+
+void updateThing()
+{
+  strcpy(publishPayload, "{\"state\": {\"reported\": {\"powerState\":\"ON\"}}}");
+  MQTTPublish(publishShadowUpdate, publishPayload);
+}
+
+void MQTTPublish(const char *topic, char *payload)
+{
+  mqtt.publish(topic, payload);
+  Serial.print("Published [");
+  Serial.print(topic);
+  Serial.print("] ");
+  Serial.println(payload);
 }
 
 void setup()
@@ -143,8 +132,8 @@ void setup()
   Serial.begin(115200);
   while (!Serial);
 
-  Serial.print("\nStart MQTT_ThingStream on " + String(BOARD_NAME));
-  Serial.println(" with " + String(SHIELD_TYPE));
+  Serial.print("\nStart AWS_IoT on "); Serial.print(BOARD_NAME);
+  Serial.print(" with "); Serial.println(SHIELD_TYPE);
   Serial.println(ETHERNET_WEBSERVER_SSL_VERSION);
 
 #if USE_ETHERNET_WRAPPER
@@ -168,7 +157,7 @@ void setup()
 #elif USE_ETHERNET_ESP8266
   ET_LOGWARN(F("=========== USE_ETHERNET_ESP8266 ==========="));
 #elif USE_ETHERNET_ENC
-  ET_LOGWARN(F("=========== USE_ETHERNET_ENC ==========="));  
+  ET_LOGWARN(F("=========== USE_ETHERNET_ENC ==========="));
 #else
   ET_LOGWARN(F("========================="));
 #endif
@@ -390,47 +379,14 @@ void setup()
 
   Serial.print(F("Connected! IP address: "));
   Serial.println(Ethernet.localIP());
-
-
-  // Note - the default maximum packet size is 256 bytes. If the
-  // combined length of clientId, username and password exceed this use the
-  // following to increase the buffer size:
-  //client.setBufferSize(256);
-  
-  Serial.println("***************************************");
-  Serial.println(topic);
-  Serial.println("***************************************");
 }
 
-#define MQTT_PUBLISH_INTERVAL_MS      5000L
-
-String data         = "Hello from MQTT_ThingStream on " + String(BOARD_NAME) + " with " + String(SHIELD_TYPE);
-const char *pubData = data.c_str();
-
-void loop() 
+void loop()
 {
-  static unsigned long now;
-  
-  if (!client.connected()) 
+  if (!mqtt.connected())
   {
     reconnect();
   }
 
-  // Sending Data
-  now = millis();
-  
-  if (now - lastMsg > MQTT_PUBLISH_INTERVAL_MS)
-  {
-    lastMsg = now;
-
-    if (!client.publish(topic.c_str(), pubData))
-    {
-      Serial.println("Message failed to send.");
-    }
-
-    Serial.print("MQTT Message Send : " + topic + " => ");
-    Serial.println(data);
-  }
-  
-  client.loop();
+  mqtt.loop();
 }

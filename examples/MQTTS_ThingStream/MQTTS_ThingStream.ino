@@ -126,14 +126,10 @@ void reconnect()
       Serial.print("Subcribed to: ");
       Serial.println(subTopic);
       
-      // This is a workaround to address https://github.com/OPEnSLab-OSU/SSLClient/issues/9
-      //ethClientSSL.flush();
       // ... and resubscribe
       client.subscribe(subTopic.c_str());
       // for loopback testing
       client.subscribe(topic.c_str());
-      // This is a workaround to address https://github.com/OPEnSLab-OSU/SSLClient/issues/9
-      //ethClientSSL.flush();
     } 
     else 
     {

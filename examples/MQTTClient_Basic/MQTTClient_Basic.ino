@@ -27,9 +27,7 @@
 #include <PubSubClient.h>
 
 // Update these with values suitable for your network.
-//const char* mqttServer = "broker.example";        // Broker address
-//const char* mqttServer = "broker.emqx.io";        // Broker address
-const char* mqttServer = "broker.shiftr.io";        // Broker address
+const char* mqttServer = "broker.emqx.io";        // Broker address
 
 const char *ID        = "MQTTClient_SSL-Client";  // Name of our device, must be unique
 const char *TOPIC     = "MQTT_Pub";               // Topic to subcribe to
@@ -76,14 +74,10 @@ void reconnect()
       //Serial.print("Subcribed to: ");
       //Serial.println(subTopic);
       
-      // This is a workaround to address https://github.com/OPEnSLab-OSU/SSLClient/issues/9
-      //ethClientSSL.flush();
       // ... and resubscribe
       client.subscribe(subTopic);
       // for loopback testing
       client.subscribe(TOPIC);
-      // This is a workaround to address https://github.com/OPEnSLab-OSU/SSLClient/issues/9
-      //ethClientSSL.flush();
     }
     else
     {

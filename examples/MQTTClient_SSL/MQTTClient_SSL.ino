@@ -35,8 +35,6 @@ const char my_key[]   = "FIXME";
 
 SSLClientParameters mTLS = SSLClientParameters::fromPEM(my_cert, sizeof my_cert, my_key, sizeof my_key);
 
-//const char* mqttServer = "broker.example";      // Broker address
-
 const char* mqttServer = "broker.emqx.io";        // Broker address
 
 const char *ID        = "MQTTClient_SSL-Client";  // Name of our device, must be unique
@@ -109,14 +107,10 @@ void reconnect()
       //Serial.print("Subcribed to: ");
       //Serial.println(subTopic);
       
-      // This is a workaround to address https://github.com/OPEnSLab-OSU/SSLClient/issues/9
-      //ethClientSSL->flush();
       // ... and resubscribe
       client->subscribe(subTopic);
       // for loopback testing
       client->subscribe(TOPIC);
-      // This is a workaround to address https://github.com/OPEnSLab-OSU/SSLClient/issues/9
-      //ethClientSSL->flush();
     }
     else
     {
@@ -152,14 +146,10 @@ void reconnect()
       //Serial.print("Subcribed to: ");
       //Serial.println(subTopic);
       
-      // This is a workaround to address https://github.com/OPEnSLab-OSU/SSLClient/issues/9
-      //ethClientSSL.flush();
       // ... and resubscribe
       client.subscribe(subTopic);
       // for loopback testing
       client.subscribe(TOPIC);
-      // This is a workaround to address https://github.com/OPEnSLab-OSU/SSLClient/issues/9
-      //ethClientSSL.flush();
     }
     else
     {
