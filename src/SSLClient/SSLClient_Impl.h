@@ -121,11 +121,24 @@ size_t EthernetSSLClient::write(const uint8_t *buf, size_t size)
   // check if the socket is still open and such
   if (!m_soft_connected(func_name) || !buf || !size)
     return 0;
+    
+  // wait until bearssl is ready to send
+  if (m_run_until(BR_SSL_SENDAPP) < 0) 
+  {
+	  m_error("Failed while waiting for the engine to enter BR_SSL_SENDAPP", func_name);
+	  return 0;
+  }  
 
   // add to the bearssl io buffer, simply appending whatever we want to write
   size_t alen;
   unsigned char *br_buf = br_ssl_engine_sendapp_buf(&m_sslctx.eng, &alen);
   size_t cur_idx = 0;
+  
+  if (alen == 0) 
+  {
+    m_error("BearSSL returned zero length buffer for sending, did an internal error occur?", func_name);
+    return 0;
+  }
 
   // while there are still elements to write
   while (cur_idx < size)
@@ -387,6 +400,12 @@ void EthernetSSLClient::setMutualAuthParams(const SSLClientParameters& params)
                                   params.getRSAKey(),
                                   &br_rsa_i15_pkcs1_sign);
   }
+}
+
+/* see SSLClient.h */
+void EthernetSSLClient::setVerificationTime(uint32_t days, uint32_t seconds) 
+{
+  br_x509_minimal_set_time(&m_x509ctx, days, seconds);
 }
 
 bool EthernetSSLClient::m_soft_connected(const char* func_name) 
