@@ -20,8 +20,10 @@
 
 #pragma once
 
+#ifndef SSL_CLIENT_IMPL_H
+#define SSL_CLIENT_IMPL_H
+
 #include "detail/Debug.h"
-//#include "SSLClient/SSLClient.h"
 
 /* see SSLClient.h */
 EthernetSSLClient::EthernetSSLClient(   Client& client,
@@ -1096,3 +1098,5 @@ void EthernetSSLClient::m_print_br_state(const unsigned state, const DebugLevel 
       Serial.println("   RECVAPP");
   }
 }
+
+#endif  // SSL_CLIENT_IMPL_H

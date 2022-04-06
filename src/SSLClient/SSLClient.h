@@ -20,6 +20,9 @@
 
 #pragma once
 
+#ifndef SSL_CLIENT_H
+#define SSL_CLIENT_H
+
 #include "Client.h"
 #include "SSLClient/SSLSession.h"
 #include "SSLClient/SSLClientParameters.h"
@@ -526,4 +529,4 @@ class EthernetSSLClient : public Client
     unsigned m_br_last_state;
 };
 
-#include "SSLClient/SSLClient_Impl.h"
+#endif  // SSL_CLIENT_H
