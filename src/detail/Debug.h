@@ -8,7 +8,7 @@
   
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
        
-  Version: 1.7.8
+  Version: 1.8.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -24,9 +24,13 @@
   1.7.6   K Hoang      14/03/2022 Fix bug when using QNEthernet staticIP. Add staticIP option to NativeEthernet
   1.7.7   K Hoang      14/03/2022 Change licence from `MIT` to `GPLv3`
   1.7.8   K Hoang      29/03/2022 Sync with `SSLClient` v1.6.11
+  1.8.0   K Hoang      05/04/2022 Use Ethernet_Generic library as default. Support SPI2 for ESP32
  *****************************************************************************************************************************/
 
 #pragma once
+
+#ifndef ETHERNET_WEBSERVER_DEBUG_H
+#define ETHERNET_WEBSERVER_DEBUG_H
 
 #include <stdio.h>
 
@@ -95,4 +99,8 @@ const char EWS_LINE[]  = "========================================\n";
 #define ET_LOGDEBUG1(x,y)      if(_ETHERNET_WEBSERVER_LOGLEVEL_>3) { EWS_PRINT_MARK; EWS_PRINT(x); EWS_PRINT_SP; EWS_PRINTLN(y); }
 #define ET_LOGDEBUG2(x,y,z)    if(_ETHERNET_WEBSERVER_LOGLEVEL_>3) { EWS_PRINT_MARK; EWS_PRINT(x); EWS_PRINT_SP; EWS_PRINT(y); EWS_PRINT_SP; EWS_PRINTLN(z); }
 #define ET_LOGDEBUG3(x,y,z,w)  if(_ETHERNET_WEBSERVER_LOGLEVEL_>3) { EWS_PRINT_MARK; EWS_PRINT(x); EWS_PRINT_SP; EWS_PRINT(y); EWS_PRINT_SP; EWS_PRINT(z); EWS_PRINT_SP; EWS_PRINTLN(w); }
+
+///////////////////////////////////////
+
+#endif  // ETHERNET_WEBSERVER_DEBUG_H
 

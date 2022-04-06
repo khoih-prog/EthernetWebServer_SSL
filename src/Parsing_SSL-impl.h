@@ -8,7 +8,7 @@
   
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
        
-  Version: 1.7.8
+  Version: 1.8.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -24,12 +24,16 @@
   1.7.6   K Hoang      14/03/2022 Fix bug when using QNEthernet staticIP. Add staticIP option to NativeEthernet
   1.7.7   K Hoang      14/03/2022 Change licence from `MIT` to `GPLv3`
   1.7.8   K Hoang      29/03/2022 Sync with `SSLClient` v1.6.11
+  1.8.0   K Hoang      05/04/2022 Use Ethernet_Generic library as default. Support SPI2 for ESP32
  *****************************************************************************************************************************/
  
 #pragma once
 
+#ifndef ETHERNET_WEBSERVER_SSL_PARSING_IMPL_H
+#define ETHERNET_WEBSERVER_SSL_PARSING_IMPL_H
+
 #include <Arduino.h>
-#include "EthernetWebServer_SSL.h"
+#include "EthernetWebServer_SSL.hpp"
 
 #ifndef WEBSERVER_MAX_POST_ARGS
 #define WEBSERVER_MAX_POST_ARGS 32
@@ -37,6 +41,8 @@
 
 // KH
 #if USE_NEW_WEBSERVER_VERSION
+
+/////////////////////////////////////////////////////////////////////////
 
 static bool readBytesWithTimeout(EthernetClient& client, size_t maxLength, String& data, int timeout_ms)
 {
@@ -66,7 +72,11 @@ static bool readBytesWithTimeout(EthernetClient& client, size_t maxLength, Strin
   return data.length() == maxLength;
 }
 
+/////////////////////////////////////////////////////////////////////////
+
 #else
+
+/////////////////////////////////////////////////////////////////////////
 
 #if !(ETHERNET_USE_PORTENTA_H7)
 
@@ -118,9 +128,13 @@ static char* readBytesWithTimeout(EthernetClient& client, size_t maxLength, size
   return buf;
 }
 
+/////////////////////////////////////////////////////////////////////////
+
 #endif    // #if !(ETHERNET_USE_PORTENTA_H7)
 
 #endif    // #if USE_NEW_WEBSERVER_VERSION
+
+/////////////////////////////////////////////////////////////////////////
 
 bool EthernetWebServer::_parseRequest(EthernetClient& client)
 {
@@ -466,6 +480,8 @@ bool EthernetWebServer::_parseRequest(EthernetClient& client)
 #endif
 }
 
+/////////////////////////////////////////////////////////////////////////
+
 bool EthernetWebServer::_collectHeader(const char* headerName, const char* headerValue)
 {
   for (int i = 0; i < _headerKeysCount; i++)
@@ -481,7 +497,11 @@ bool EthernetWebServer::_collectHeader(const char* headerName, const char* heade
   return false;
 }
 
+/////////////////////////////////////////////////////////////////////////
+
 #if USE_NEW_WEBSERVER_VERSION
+
+/////////////////////////////////////////////////////////////////////////
 
 struct storeArgHandler
 {
@@ -494,6 +514,8 @@ struct storeArgHandler
   }
 };
 
+/////////////////////////////////////////////////////////////////////////
+
 struct nullArgHandler
 {
   void operator() (String& key, String& value, const String& data, int equal_index, int pos, int key_end_pos, int next_index)
@@ -502,6 +524,8 @@ struct nullArgHandler
     // do nothing
   }
 };
+
+/////////////////////////////////////////////////////////////////////////
 
 void EthernetWebServer::_parseArguments(const String& data)
 {
@@ -516,9 +540,10 @@ void EthernetWebServer::_parseArguments(const String& data)
   (void)_parseArgumentsPrivate(data, storeArgHandler());
 }
 
+/////////////////////////////////////////////////////////////////////////
+
 int EthernetWebServer::_parseArgumentsPrivate(const String& data, vl::Func<void(String&, String&, const String&, int, int, int, int)> handler)
 {
-
   ET_LOGDEBUG1(F("args: "), data);
 
   size_t pos    = 0;
@@ -565,6 +590,8 @@ int EthernetWebServer::_parseArgumentsPrivate(const String& data, vl::Func<void(
   return arg_total;
 }
 
+/////////////////////////////////////////////////////////////////////////
+
 void EthernetWebServer::_uploadWriteByte(uint8_t b)
 {
   if (_currentUpload->currentSize == HTTP_UPLOAD_BUFLEN)
@@ -578,6 +605,8 @@ void EthernetWebServer::_uploadWriteByte(uint8_t b)
 
   _currentUpload->buf[_currentUpload->currentSize++] = b;
 }
+
+/////////////////////////////////////////////////////////////////////////
 
 uint8_t EthernetWebServer::_uploadReadByte(EthernetClient& client)
 {
@@ -594,7 +623,11 @@ uint8_t EthernetWebServer::_uploadReadByte(EthernetClient& client)
   return (uint8_t)res;
 }
 
+/////////////////////////////////////////////////////////////////////////
+
 #else
+
+/////////////////////////////////////////////////////////////////////////
 
 void EthernetWebServer::_parseArguments(const String& data)
 {
@@ -676,6 +709,8 @@ void EthernetWebServer::_parseArguments(const String& data)
   ET_LOGDEBUG1(F("args count: "), _currentArgCount);
 }
 
+/////////////////////////////////////////////////////////////////////////
+
 void EthernetWebServer::_uploadWriteByte(uint8_t b)
 {
   if (_currentUpload.currentSize == HTTP_UPLOAD_BUFLEN)
@@ -689,6 +724,8 @@ void EthernetWebServer::_uploadWriteByte(uint8_t b)
 
   _currentUpload.buf[_currentUpload.currentSize++] = b;
 }
+
+/////////////////////////////////////////////////////////////////////////
 
 uint8_t EthernetWebServer::_uploadReadByte(EthernetClient& client)
 {
@@ -705,9 +742,15 @@ uint8_t EthernetWebServer::_uploadReadByte(EthernetClient& client)
   return (uint8_t)res;
 }
 
+/////////////////////////////////////////////////////////////////////////
+
 #endif
 
+/////////////////////////////////////////////////////////////////////////
+
 #if USE_NEW_WEBSERVER_VERSION
+
+/////////////////////////////////////////////////////////////////////////
 
 bool EthernetWebServer::_parseForm(EthernetClient& client, const String& boundary, uint32_t len)
 {
@@ -988,6 +1031,8 @@ readfile:
   return false;
 }
 
+/////////////////////////////////////////////////////////////////////////
+
 bool EthernetWebServer::_parseFormUploadAborted()
 {
   _currentUpload->status = UPLOAD_FILE_ABORTED;
@@ -998,8 +1043,11 @@ bool EthernetWebServer::_parseFormUploadAborted()
   return false;
 }
 
+/////////////////////////////////////////////////////////////////////////
+
 #else
 
+/////////////////////////////////////////////////////////////////////////
 
 bool EthernetWebServer::_parseForm(EthernetClient& client, const String& boundary, uint32_t len) 
 {
@@ -1272,7 +1320,11 @@ bool EthernetWebServer::_parseFormUploadAborted()
   return false;
 }
 
+/////////////////////////////////////////////////////////////////////////
+
 #endif
+
+/////////////////////////////////////////////////////////////////////////
 
 String EthernetWebServer::urlDecode(const String& text)
 {
@@ -1311,3 +1363,6 @@ String EthernetWebServer::urlDecode(const String& text)
   return decoded;
 }
 
+/////////////////////////////////////////////////////////////////////////
+
+#endif  // ETHERNET_WEBSERVER_SSL_PARSING_IMPL_H
