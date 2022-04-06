@@ -681,14 +681,6 @@ Look in file [**adc_common.c**](https://github.com/espressif/esp-idf/blob/master
 
 #### 1. How to select which built-in Ethernet or shield to use
 
-The easiest way is to use 
-
-```cpp
-#define USE_ETHERNET_WRAPPER    true
-```
-
-then select **one and only one** Ethernet library to use as follows:
-
 - Standard W5x00 Ethernet_Generic library is used by default, in the sketch, just be sure to comment out or leave these #defines to be false :
 
 ```cpp
