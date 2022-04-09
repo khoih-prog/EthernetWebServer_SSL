@@ -12,6 +12,7 @@
 
 
 * [Changelog](#changelog)
+  * [Releases v1.8.1](#releases-v181)
   * [Releases v1.8.0](#releases-v180)
   * [Releases v1.7.8](#releases-v178)
   * [Releases v1.7.7](#releases-v177)
@@ -37,6 +38,12 @@
 ---
 
 ## Changelog
+
+### Releases v1.8.1
+
+1. Add support to SPI1 for RP2040 using [arduino-pico core](https://github.com/earlephilhower/arduino-pico)
+2. Rewrite all the examples to support new features
+3. Update `Packages' Patches`
 
 ### Releases v1.8.0
 
