@@ -51,17 +51,8 @@ void httpRequest()
   }
 }
 
-void setup()
+void initEthernet()
 {
-  Serial.begin(115200);
-  while (!Serial);
-
-  delay(200);
-
-  Serial.print("\nStarting WebClientRepeating_ESP on " + String(ARDUINO_BOARD));
-  Serial.println(" with " + String(SHIELD_TYPE));
-  Serial.println(ETHERNET_WEBSERVER_SSL_VERSION);
-
 #if USE_ETHERNET_GENERIC
   ET_LOGWARN(F("=========== USE_ETHERNET_GENERIC ==========="));  
 #elif USE_ETHERNET_ESP8266
@@ -188,7 +179,22 @@ void setup()
   Serial.println(index);
 
   Serial.print(F("Connected! IP address: "));
-  Serial.println(Ethernet.localIP());
+  Serial.println(Ethernet.localIP());  
+}
+
+void setup()
+{
+  Serial.begin(115200);
+  while (!Serial);
+
+  delay(200);
+
+  Serial.print("\nStarting WebClientRepeating_ESP on " + String(ARDUINO_BOARD));
+  Serial.println(" with " + String(SHIELD_TYPE));
+  Serial.println(ETHERNET_WEBSERVER_SSL_VERSION);
+
+  initEthernet();
+  
   Serial.println();
   Serial.println(F("Starting connection to server..."));
 }

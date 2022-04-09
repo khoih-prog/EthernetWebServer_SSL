@@ -9,10 +9,15 @@
 
 #pragma once
 
+#ifndef defines_h
+#define defines_h
+
 #define DEBUG_ETHERNET_WEBSERVER_PORT       Serial
 
 // Debug Level from 0 to 4
 #define _ETHERNET_WEBSERVER_LOGLEVEL_       3
+
+#define USING_SPI2                          false   //true
 
 #if ( defined(ARDUINO_PORTENTA_H7_M7) || defined(ARDUINO_PORTENTA_H7_M4) )
 
@@ -30,7 +35,7 @@
 
   #define ETHERNET_USE_PORTENTA_H7  true
   #define USE_ETHERNET_PORTENTA_H7  true
-   
+  
 #endif
 
 #if    ( defined(ARDUINO_SAMD_ZERO) || defined(ARDUINO_SAMD_MKR1000) || defined(ARDUINO_SAMD_MKRWIFI1010) \
@@ -42,7 +47,7 @@
     #undef ETHERNET_USE_SAMD
   #endif
   #define ETHERNET_USE_SAMD      true
-  #endif
+#endif
 
 #if ( defined(NRF52840_FEATHER) || defined(NRF52832_FEATHER) || defined(NRF52_SERIES) || defined(ARDUINO_NRF52_ADAFRUIT) || \
         defined(NRF52840_FEATHER_SENSE) || defined(NRF52840_ITSYBITSY) || defined(NRF52840_CIRCUITPLAY) || defined(NRF52840_CLUE) || \
@@ -253,13 +258,13 @@
   #warning Use ESP8266 architecture
   #include <ESP8266mDNS.h>
   #define ETHERNET_USE_ESP8266
-  #define BOARD_TYPE      "ESP8266"
+  #define BOARD_TYPE      ARDUINO_BOARD
 
 #elif ( defined(ESP32) )
   // For ESP32
   #warning Use ESP32 architecture
   #define ETHERNET_USE_ESP32
-  #define BOARD_TYPE      "ESP32"
+  #define BOARD_TYPE      ARDUINO_BOARD
   
   #define W5500_RST_PORT   21
 
@@ -288,35 +293,30 @@
     
   #else
     // For RPI Pico using E. Philhower RP2040 core
-    // SCK: GPIO18,  MOSI: GPIO19, MISO: GPIO16, SS/CS: GPIO17
-    #define USE_THIS_SS_PIN       17
+    #if (USING_SPI2)
+      // SCK: GPIO14,  MOSI: GPIO15, MISO: GPIO12, SS/CS: GPIO13 for SPI1
+      #define USE_THIS_SS_PIN       13
+    #else
+      // SCK: GPIO18,  MOSI: GPIO19, MISO: GPIO16, SS/CS: GPIO17 for SPI0
+      #define USE_THIS_SS_PIN       17
+    #endif
 
   #endif
-    
+   
   #define SS_PIN_DEFAULT        USE_THIS_SS_PIN
 
   // For RPI Pico
-  #warning Use RPI-Pico RP2040 architecture  
+  #warning Use RPI-Pico RP2040 architecture
 
-#elif (__AVR__)
+#else
   // For Mega
   // Default pin 10 to SS/CS
   #define USE_THIS_SS_PIN       10
-  #define BOARD_TYPE            "AVR"
 
-  #error Not supporting AVR Mega, Nano, UNO, etc. yet.
-  // Currently not OK. See https://github.com/mike-matera/ArduinoSTL/issues/56
-  // Hopefully will be fixed in Arduino IDE 1.8.14
-  #include "ArduinoSTL.h"                                   // https://github.com/mike-matera/ArduinoSTL
-
-#else
-
-  // Default pin 10 to SS/CS
-  #define USE_THIS_SS_PIN       10
-  #define BOARD_TYPE            "Unknown"
-
-  //#error Not supporting yet.
+  // Reduce size for Mega
+  #define SENDCONTENT_P_BUFFER_SZ     512
   
+  #define BOARD_TYPE            "AVR Mega"
 #endif
 
 #ifndef BOARD_NAME
@@ -345,7 +345,9 @@
   #define USE_ETHERNET_ESP8266  false 
   #define USE_ETHERNET_ENC      false
   #define USE_CUSTOM_ETHERNET   false
-   
+  
+  ////////////////////////////
+  
   #if ( USE_ETHERNET_GENERIC || USE_ETHERNET_ESP8266 || USE_ETHERNET_ENC || \
         USE_NATIVE_ETHERNET || USE_ETHERNET_PORTENTA_H7 )
     #ifdef USE_CUSTOM_ETHERNET
@@ -390,7 +392,11 @@
       #endif
 
     #else
-      #define SHIELD_TYPE           "W5x00 using Ethernet_Generic Library"  
+      #if USING_SPI2
+        #define SHIELD_TYPE           "W5x00 using Ethernet_Generic Library on SPI1"
+      #else
+        #define SHIELD_TYPE           "W5x00 using Ethernet_Generic Library on SPI0/SPI"
+      #endif 
     #endif
 
     #define ETHERNET_LARGE_BUFFERS
@@ -426,6 +432,8 @@
   // Ethernet_Shield_W5200, EtherCard, EtherSia not supported
   // Select just 1 of the following #include if uncomment #define USE_CUSTOM_ETHERNET
   // Otherwise, standard Ethernet library will be used for W5x00
+  
+  ////////////////////////////
   
 #elif USE_UIP_ETHERNET
     #include "UIPEthernet.h"
@@ -471,3 +479,5 @@ IPAddress ip(192, 168, 2, 222);
 
 // Google DNS Server IP
 IPAddress myDns(8, 8, 8, 8);
+
+#endif    //defines_h

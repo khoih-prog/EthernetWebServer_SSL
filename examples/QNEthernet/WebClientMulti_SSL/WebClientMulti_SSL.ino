@@ -89,20 +89,8 @@ void connectSSL()
   beginMicros = micros();
 }
 
-void setup()
+void initEthernet()
 {
-  // Open serial communications and wait for port to open:
-  Serial.begin(115200);
-  while (!Serial);
-
-  Serial.print("\nStarting WebClientMulti_SSL on "); Serial.print(BOARD_NAME);
-  Serial.print(" " ); Serial.println(SHIELD_TYPE);
-  Serial.println(ETHERNET_WEBSERVER_SSL_VERSION);
-  
-  // Enable mutual TLS with SSLClient
-  //ethClientSSL.setMutualAuthParams(mTLS);
-  
-
 #if USE_NATIVE_ETHERNET
   ET_LOGWARN(F("======== USE_NATIVE_ETHERNET ========"));
 #elif USE_QN_ETHERNET
@@ -127,6 +115,9 @@ void setup()
 
   Serial.print(F("Connected! IP address: "));
   Serial.println(Ethernet.localIP());
+
+  // give the Ethernet shield 2 seconds to initialize:
+  delay(2000);
 
 #else
 
@@ -156,6 +147,11 @@ void setup()
       delay(1);
     }
   }
+
+  if (!Ethernet.waitForLink(5000))
+  {
+    Serial.println(F("Failed to wait for Link"));
+  }
   else
   {
     Serial.print("IP Address = ");
@@ -163,9 +159,23 @@ void setup()
   }
 
 #endif
+}
 
-  // give the Ethernet shield a second to initialize:
-  delay(2000);
+void setup()
+{
+  // Open serial communications and wait for port to open:
+  Serial.begin(115200);
+  while (!Serial);
+
+  Serial.print("\nStarting WebClientMulti_SSL on "); Serial.print(BOARD_NAME);
+  Serial.print(" " ); Serial.println(SHIELD_TYPE);
+  Serial.println(ETHERNET_WEBSERVER_SSL_VERSION);
+  
+  // Enable mutual TLS with SSLClient
+  //ethClientSSL.setMutualAuthParams(mTLS);
+  
+
+  initEthernet();
 
   // connect!
   connectSSL();

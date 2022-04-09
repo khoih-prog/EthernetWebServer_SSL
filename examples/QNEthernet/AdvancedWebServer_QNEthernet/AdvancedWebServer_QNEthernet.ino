@@ -144,15 +144,8 @@ void drawGraph()
   }
 }
 
-void setup(void)
+void initEthernet()
 {
-  Serial.begin(115200);
-  while (!Serial);
-
-  Serial.print("\nStarting AdvancedWebServer_QNEthernet on "); Serial.print(BOARD_NAME);
-  Serial.print(" " ); Serial.println(SHIELD_TYPE);
-  Serial.println(ETHERNET_WEBSERVER_SSL_VERSION);
-
 #if USE_NATIVE_ETHERNET
   ET_LOGWARN(F("======== USE_NATIVE_ETHERNET ========"));
 #elif USE_QN_ETHERNET
@@ -177,6 +170,9 @@ void setup(void)
 
   Serial.print(F("Connected! IP address: "));
   Serial.println(Ethernet.localIP());
+
+  // give the Ethernet shield 2 seconds to initialize:
+  delay(2000);
 
 #else
 
@@ -206,6 +202,11 @@ void setup(void)
       delay(1);
     }
   }
+
+  if (!Ethernet.waitForLink(5000))
+  {
+    Serial.println(F("Failed to wait for Link"));
+  }
   else
   {
     Serial.print("IP Address = ");
@@ -213,9 +214,18 @@ void setup(void)
   }
 
 #endif
+}
 
-  // give the Ethernet shield 2 seconds to initialize:
-  delay(2000);
+void setup(void)
+{
+  Serial.begin(115200);
+  while (!Serial);
+
+  Serial.print("\nStarting AdvancedWebServer_QNEthernet on "); Serial.print(BOARD_NAME);
+  Serial.print(" " ); Serial.println(SHIELD_TYPE);
+  Serial.println(ETHERNET_WEBSERVER_SSL_VERSION);
+
+  initEthernet();
 
   server.on(F("/"), handleRoot);
   server.on(F("/test.svg"), drawGraph);

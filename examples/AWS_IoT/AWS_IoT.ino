@@ -126,16 +126,8 @@ void MQTTPublish(const char *topic, char *payload)
   Serial.println(payload);
 }
 
-void setup()
+void initEthernet()
 {
-  // Open serial communications and wait for port to open:
-  Serial.begin(115200);
-  while (!Serial);
-
-  Serial.print("\nStart AWS_IoT on "); Serial.print(BOARD_NAME);
-  Serial.print(" with "); Serial.println(SHIELD_TYPE);
-  Serial.println(ETHERNET_WEBSERVER_SSL_VERSION);
-
 #if USE_ETHERNET_PORTENTA_H7
   ET_LOGWARN(F("======== USE_PORTENTA_H7_ETHERNET ========"));
 #elif USE_NATIVE_ETHERNET
@@ -151,12 +143,24 @@ void setup()
 #endif
 
 #if !(USE_NATIVE_ETHERNET || USE_ETHERNET_PORTENTA_H7)
+
+#if (USING_SPI2)
+  #if defined(CUR_PIN_MISO)
+    ET_LOGWARN(F("Default SPI pinout:"));
+    ET_LOGWARN1(F("MOSI:"), CUR_PIN_MOSI);
+    ET_LOGWARN1(F("MISO:"), CUR_PIN_MISO);
+    ET_LOGWARN1(F("SCK:"),  CUR_PIN_SCK);
+    ET_LOGWARN1(F("SS:"),   CUR_PIN_SS);
+    ET_LOGWARN(F("========================="));
+  #endif
+#else
   ET_LOGWARN(F("Default SPI pinout:"));
   ET_LOGWARN1(F("MOSI:"), MOSI);
   ET_LOGWARN1(F("MISO:"), MISO);
   ET_LOGWARN1(F("SCK:"),  SCK);
   ET_LOGWARN1(F("SS:"),   SS);
   ET_LOGWARN(F("========================="));
+#endif
 
 #if defined(ESP8266)
   // For ESP8266, change for other boards if necessary
@@ -284,35 +288,33 @@ void setup()
   Ethernet.begin(mac[index]);
 
 #if !(USE_NATIVE_ETHERNET || USE_ETHERNET_PORTENTA_H7)
+  ET_LOGWARN(F("========================="));
+  
   #if defined( ESP32 )
     // Just info to know how to connect correctly
     // To change for other SPI
-    Serial.println("=========================");
-    Serial.println("Currently Used SPI pinout:");
-    Serial.print("MOSI:");
-    Serial.println(PIN_MOSI);
-    Serial.print("MISO:");
-    Serial.println(PIN_MISO);
-    Serial.print("SCK:");
-    Serial.println(PIN_SCK);
-    Serial.print("SS:");
-    Serial.println(USE_THIS_SS_PIN);
-    Serial.println(F("========================="));
+    ET_LOGWARN(F("Currently Used SPI pinout:"));
+    ET_LOGWARN1(F("MOSI:"), PIN_MOSI);
+    ET_LOGWARN1(F("MISO:"), PIN_MISO);
+    ET_LOGWARN1(F("SCK:"),  PIN_SCK);
+    ET_LOGWARN1(F("SS:"),   PIN_SS);
   #else
-    // Just info to know how to connect correctly
-    Serial.println("=========================");
-    Serial.println("Currently Used SPI pinout:");
-    Serial.print("MOSI:");
-    Serial.println(MOSI);
-    Serial.print("MISO:");
-    Serial.println(MISO);
-    Serial.print("SCK:");
-    Serial.println(SCK);
-    Serial.print("SS:");
-    Serial.println(SS);
+    #if defined(CUR_PIN_MISO)
+      ET_LOGWARN(F("Currently Used SPI pinout:"));
+      ET_LOGWARN1(F("MOSI:"), CUR_PIN_MOSI);
+      ET_LOGWARN1(F("MISO:"), CUR_PIN_MISO);
+      ET_LOGWARN1(F("SCK:"),  CUR_PIN_SCK);
+      ET_LOGWARN1(F("SS:"),   CUR_PIN_SS);
+    #else
+      ET_LOGWARN(F("Currently Used SPI pinout:"));
+      ET_LOGWARN1(F("MOSI:"), MOSI);
+      ET_LOGWARN1(F("MISO:"), MISO);
+      ET_LOGWARN1(F("SCK:"),  SCK);
+      ET_LOGWARN1(F("SS:"),   SS);
+    #endif
   #endif
   
-  Serial.println(F("========================="));
+  ET_LOGWARN(F("========================="));
 
 #elif (USE_ETHERNET_PORTENTA_H7)
   if (Ethernet.hardwareStatus() == EthernetNoHardware) 
@@ -336,6 +338,19 @@ void setup()
 
   Serial.print(F("Connected! IP address: "));
   Serial.println(Ethernet.localIP());
+}
+
+void setup()
+{
+  // Open serial communications and wait for port to open:
+  Serial.begin(115200);
+  while (!Serial);
+
+  Serial.print("\nStart AWS_IoT on "); Serial.print(BOARD_NAME);
+  Serial.print(" with "); Serial.println(SHIELD_TYPE);
+  Serial.println(ETHERNET_WEBSERVER_SSL_VERSION);
+
+  initEthernet();
 }
 
 void loop()
