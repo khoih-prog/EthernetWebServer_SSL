@@ -8,7 +8,7 @@
   
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
        
-  Version: 1.8.0
+  Version: 1.8.1
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -25,6 +25,7 @@
   1.7.7   K Hoang      14/03/2022 Change licence from `MIT` to `GPLv3`
   1.7.8   K Hoang      29/03/2022 Sync with `SSLClient` v1.6.11
   1.8.0   K Hoang      05/04/2022 Use Ethernet_Generic library as default. Support SPI2 for ESP32
+  1.8.1   K Hoang      09/04/2022 Add support to SPI1 for RP2040 using arduino-pico core
  *****************************************************************************************************************************/
 
 #pragma once
@@ -32,13 +33,13 @@
 #ifndef ETHERNET_WEBSERVER_SSL_H
 #define ETHERNET_WEBSERVER_SSL_H
 
-#define ETHERNET_WEBSERVER_SSL_VERSION          "EthernetWebServer_SSL v1.8.0"
+#define ETHERNET_WEBSERVER_SSL_VERSION          "EthernetWebServer_SSL v1.8.1"
 
 #define ETHERNET_WEBSERVER_SSL_VERSION_MAJOR    1
 #define ETHERNET_WEBSERVER_SSL_VERSION_MINOR    8
-#define ETHERNET_WEBSERVER_SSL_VERSION_PATCH    0
+#define ETHERNET_WEBSERVER_SSL_VERSION_PATCH    1
 
-#define ETHERNET_WEBSERVER_SSL_VERSION_INT      1008000
+#define ETHERNET_WEBSERVER_SSL_VERSION_INT      1008001
 
 /////////////////////////////////////////////////////////////////////////
 
@@ -53,18 +54,27 @@
   #endif
   #define USE_NEW_WEBSERVER_VERSION   false
   
-  #warning Use mbed-portenta architecture for PORTENTA_H7 from EthernetWebServer_SSL
+  #if (_ETHERNET_WEBSERVER_LOGLEVEL_ > 2)
+    #warning Use mbed-portenta architecture for PORTENTA_H7 from EthernetWebServer_SSL
+  #endif
 #endif
 /////////////////////////////////////////////////////////////////////////
 
 #if USE_UIP_ETHERNET
-  #warning Using UIPEthernet library from EthernetWebServer
+  #if (_ETHERNET_WEBSERVER_LOGLEVEL_ > 2)
+    #warning Using UIPEthernet library from EthernetWebServer
+  #endif
 #elif USE_CUSTOM_ETHERNET
-  #warning Using Custom Ethernet library from EthernetWebServer. You must include a library or error.
+  #if (_ETHERNET_WEBSERVER_LOGLEVEL_ > 2)
+    #warning Using Custom Ethernet library from EthernetWebServer. You must include a library or error
+  #endif
 #elif !( ETHERNET_USE_PORTENTA_H7 || USE_ETHERNET_ESP8266 || USE_ETHERNET_ENC || \
          USE_NATIVE_ETHERNET || USE_QN_ETHERNET)
   #include <Ethernet_Generic.h>
-  #warning Using Ethernet_Generic library from EthernetWebServer
+  
+  #if (_ETHERNET_WEBSERVER_LOGLEVEL_ > 2)
+    #warning Using Ethernet_Generic library from EthernetWebServer
+  #endif
 #endif
 
 /////////////////////////////////////////////////////////////////////////

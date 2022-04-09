@@ -8,7 +8,7 @@
   
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
        
-  Version: 1.8.0
+  Version: 1.8.1
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -25,6 +25,7 @@
   1.7.7   K Hoang      14/03/2022 Change licence from `MIT` to `GPLv3`
   1.7.8   K Hoang      29/03/2022 Sync with `SSLClient` v1.6.11
   1.8.0   K Hoang      05/04/2022 Use Ethernet_Generic library as default. Support SPI2 for ESP32
+  1.8.1   K Hoang      09/04/2022 Add support to SPI1 for RP2040 using arduino-pico core
  *****************************************************************************************************************************/
 
 #pragma once
@@ -49,7 +50,9 @@
   #endif
   #define USE_NEW_WEBSERVER_VERSION   false
   
-  #warning Use mbed-portenta architecture for PORTENTA_H7 from EthernetWebServer_SSL
+  #if (_ETHERNET_WEBSERVER_LOGLEVEL_ > 2)
+    #warning Use mbed-portenta architecture for PORTENTA_H7 from EthernetWebServer_SSL
+  #endif
 #endif
 
 /////////////////////////////////////////////////////////////////////////
@@ -63,7 +66,10 @@
     #undef ETHERNET_USE_SAMD
   #endif
   #define ETHERNET_USE_SAMD      true
-  #warning Using SAMD architecture from EthernetWebServer_SSL
+  
+  #if (_ETHERNET_WEBSERVER_LOGLEVEL_ > 2)
+    #warning Using SAMD architecture from EthernetWebServer_SSL
+  #endif
 #endif
 
 /////////////////////////////////////////////////////////////////////////
@@ -75,7 +81,10 @@
     #undef ETHERNET_USE_NRF528XX
   #endif
   #define ETHERNET_USE_NRF528XX      true
-  #warning Using nFR52 architecture from EthernetWebServer_SSL
+  
+  #if (_ETHERNET_WEBSERVER_LOGLEVEL_ > 2)
+    #warning Using nFR52 architecture from EthernetWebServer_SSL
+  #endif
 #endif
 
 /////////////////////////////////////////////////////////////////////////
@@ -85,7 +94,10 @@
     #undef ETHERNET_USE_SAM_DUE
   #endif
   #define ETHERNET_USE_SAM_DUE      true
-  #warning Using SAM_DUE architecture from EthernetWebServer_SSL
+  
+  #if (_ETHERNET_WEBSERVER_LOGLEVEL_ > 2)
+    #warning Using SAM_DUE architecture from EthernetWebServer_SSL
+  #endif
 #endif
 
 /////////////////////////////////////////////////////////////////////////
@@ -116,12 +128,18 @@
 // Permit redefinition of SENDCONTENT_P_BUFFER_SZ in sketch, default is 4K, minimum is 256 bytes
 #ifndef SENDCONTENT_P_BUFFER_SZ
   #define SENDCONTENT_P_BUFFER_SZ     4096
-  #warning SENDCONTENT_P_BUFFER_SZ using default 4 Kbytes
+  
+  #if (_ETHERNET_WEBSERVER_LOGLEVEL_ > 2)
+    #warning SENDCONTENT_P_BUFFER_SZ using default 4 Kbytes
+  #endif
 #else
   #if (SENDCONTENT_P_BUFFER_SZ < 256)
     #undef SENDCONTENT_P_BUFFER_SZ
     #define SENDCONTENT_P_BUFFER_SZ   256
-    #warning SENDCONTENT_P_BUFFER_SZ reset to min 256 bytes
+    
+    #if (_ETHERNET_WEBSERVER_LOGLEVEL_ > 2)
+      #warning SENDCONTENT_P_BUFFER_SZ reset to min 256 bytes
+    #endif
   #endif
 #endif
 
