@@ -15,7 +15,7 @@
 #define DEBUG_ETHERNET_WEBSERVER_PORT       Serial
 
 // Debug Level from 0 to 4
-#define _ETHERNET_WEBSERVER_LOGLEVEL_       3
+#define _ETHERNET_WEBSERVER_LOGLEVEL_       2
 
 #define USING_SPI2                          false   //true
 
