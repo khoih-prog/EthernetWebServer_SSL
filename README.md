@@ -252,11 +252,11 @@ This [**EthernetWebServer_SSL** library](https://github.com/khoih-prog/EthernetW
  9. [`ESP32 Core 2.0.2+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards. [![Latest release](https://img.shields.io/github/release/espressif/arduino-esp32.svg)](https://github.com/espressif/arduino-esp32/releases/latest/)
 10. [`ESP8266 Core 3.0.2+`](https://github.com/esp8266/Arduino) for ESP8266-based boards. [![Latest release](https://img.shields.io/github/release/esp8266/Arduino.svg)](https://github.com/esp8266/Arduino/releases/latest/). To use ESP8266 core 2.7.1+ for LittleFS.
 11. [`ArduinoCore-mbed mbed_rp2040, mbed_nano, mbed_portenta core 3.0.1+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino (Use Arduino Board Manager) **Portenta_H7, RP2040-based boards, such as Nano_RP2040_Connect, RASPBERRY_PI_PICO**. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
-12. [`Earle Philhower's arduino-pico core v1.13.1+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
+12. [`Earle Philhower's arduino-pico core v1.13.3+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
 13. [`ArduinoCore-fab-sam core v1.16.18-alpha2+`](https://github.com/qbolsee/ArduinoCore-fab-sam) for SAMD21/SAMD51-based boards. [![GitHub release](https://img.shields.io/github/release/qbolsee/ArduinoCore-fab-sam.svg)](https://github.com/qbolsee/ArduinoCore-fab-sam/releases/latest)
 14. [`Functional-VLPP library v1.0.2+`](https://github.com/khoih-prog/functional-vlpp) to use server's lambda function. To install. check [![arduino-library-badge](https://www.ardu-badge.com/badge/Functional-Vlpp.svg?)](https://www.ardu-badge.com/Functional-Vlpp)
 15. Depending on which Ethernet card you're using:
-   - [`Ethernet_Generic library v2.0.1+`](https://github.com/khoih-prog/Ethernet_Generic) for W5100, W5200 and W5500/WIZ550io/WIZ850io/USR-ES1 with Wiznet W5500 chip.  [![GitHub release](https://img.shields.io/github/release/khoih-prog/Ethernet_Generic.svg)](https://github.com/khoih-prog/Ethernet_Generic/releases/latest)
+   - [`Ethernet_Generic library v2.1.0+`](https://github.com/khoih-prog/Ethernet_Generic) for W5100, W5200 and W5500/WIZ550io/WIZ850io/USR-ES1 with Wiznet W5500 chip.  [![GitHub release](https://img.shields.io/github/release/khoih-prog/Ethernet_Generic.svg)](https://github.com/khoih-prog/Ethernet_Generic/releases/latest)
    - [`EthernetENC library v2.0.2+`](https://github.com/jandrassy/EthernetENC) for ENC28J60. [![GitHub release](https://img.shields.io/github/release/jandrassy/EthernetENC.svg)](https://github.com/jandrassy/EthernetENC/releases/latest). **New and Better**
    - [`UIPEthernet library v2.0.11+`](https://github.com/UIPEthernet/UIPEthernet) for ENC28J60. [![GitHub release](https://img.shields.io/github/release/UIPEthernet/UIPEthernet.svg)](https://github.com/UIPEthernet/UIPEthernet/releases/latest)
    - [`NativeEthernet Library version stable111+`](https://github.com/vjmuzik/NativeEthernet) for Teensy 4.1 built-in Ethernet.
@@ -1502,7 +1502,7 @@ The following are debug terminal output and screen shot when running example [Ad
 
 ```
 Starting AdvancedWebServer on NRF52840_FEATHER with ENC28J60 using EthernetENC Library
-EthernetWebServer_SSL v1.8.1
+EthernetWebServer_SSL v1.8.2
 [ETHERNET_WEBSERVER] =========================
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 25
@@ -1680,7 +1680,7 @@ The terminal output of **SAM DUE with W5x00 using Ethernet_Generic Library** run
 
 ```
 Start WebClientMulti_SSL on SAM DUE with W5x00 using Ethernet_Generic Library
-EthernetWebServer_SSL v1.8.1
+EthernetWebServer_SSL v1.8.2
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 75
@@ -1699,30 +1699,26 @@ SS:10
 Using mac index = 5
 Connected! IP address: 192.168.2.81
 Connecting to www.arduino.cc...
-Took: 2399
+Took: 1222
 HTTP/1.1 200 OK
-Date: Tue, 10 Nov 2020 09:37:58 GMT
+Date: Wed, 27 Apr 2022 18:34:22 GMT
 Content-Type: text/plain
 Transfer-Encoding: chunked
 Connection: close
-Set-Cookie: __cfduid=d3528e024daf847cc558d2ba3205ee3d01605001078; expires=Thu, 10-Dec-20 09:37:58 GMT; path=/; domain=.arduino.cc; HttpOnly; SameSite=Lax
-Last-Modified: Wed, 02 Oct 2013 13:46:47 GMT
+Last-Modified: Thu, 24 Feb 2022 11:33:35 GMT
 Vary: Accept-Encoding
-Access-Control-Allow-Origin: https://www.arduino.cc
-Access-Control-Allow-Credentials: true
-Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
-Access-Control-Allow-Headers: Accept,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Mx-ReqToken,X-Requested-With
 Strict-Transport-Security: max-age=500; includeSubDomains
-X-Frame-Options: SAMEORIGIN
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 CF-Cache-Status: DYNAMIC
-cf-request-id: 06531dfd840000b65f100a1000000001
 Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+Set-Cookie: __cf_bm=pRwGTPfsPCIyCUu_TvMY3.s0xRBEZqgCZcH1tSmtCO4-1651084462-0-AUc4eNeo19uPnZGnhQPWmMCJHWoU5Ki+uqJea1FlKDWs4Qqm7cvF2gFK0eyELQUJYjYYSSVQCdmiNZOPjRs7Bso=; path=/; expires=Wed, 27-Apr-22 19:04:22 GMT; domain=.arduino.cc; HttpOnly; Secure; SameSite=None
 Server: cloudflare
-CF-RAY: 5efecc42682cb65f-YWG
+CF-RAY: 7029a6e1cb043ff1-YYZ
+alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
 
-8d7
+90e
+Please use http://arduino.tips/asciilogo.txt via HTTP
 
            `:;;;,`                      .:;;:.           
         .;;;;;;;;;;;`                :;;;;;;;;;;:     TM 
@@ -1816,7 +1812,7 @@ The terminal output of **SEEED_XIAO_M0 with W5x00 using Ethernet_Generic Library
 
 ```
 Start WebClient_SSL on SEEED_XIAO_M0 with W5x00 using Ethernet_Generic Library
-EthernetWebServer_SSL v1.8.1
+EthernetWebServer_SSL v1.8.2
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 10
@@ -1835,33 +1831,24 @@ SPI_CS:1
 =========================
 Using mac index = 1
 Connected! IP address: 192.168.2.102
-Connecting to : www.arduino.cc, port : 443
-Connected to www.arduino.cc
-Took: 3551
-HTTP/1.1 200 OK
-Date: Tue, 10 Nov 2020 07:59:21 GMT
-Content-Type: text/plain
-Transfer-Encoding: chunked
-Connection: close
-Set-Cookie: __cfduid=dd7e2b24e26b05eb2d2e5793ac594c3611604995161; expires=Thu, 10-Dec-20 07:59:21 GMT; path=/; domain=.arduino.cc; HttpOnly; SameSite=Lax
-Last-Modified: Wed, 02 Oct 2013 13:46:47 GMT
-Vary: Accept-Encoding
-Access-Control-Allow-Origin: https://www.arduino.cc
-Access-Control-Allow-Credentials: true
-Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
-Access-Control-Allow-Headers: Accept,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Mx-ReqToken,X-Requested-With
-Strict-Transport-Security: max-age=500; includeSubDomains
-X-Frame-Options: SAMEORIGIN
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-CF-Cache-Status: DYNAMIC
-cf-request-id: 0652c3b5b60000f99d7e918000000001
-Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-Server: cloudflare
-CF-RAY: 5efe3bcf881af99d-YYZ
-alt-svc: h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400
 
-8d7
+Connecting...
+HTTP/1.1 200 OK
+Date: Wed, 27 Apr 2022 18:37:01 GMT
+Content-Type: text/plain
+Content-Length: 2263
+Connection: close
+x-amz-id-2: 568nXCDMowTNrM6k5jKBG53CvGK2JCqofEeXLMMqUGTLnj4fPneu14BLZx6xNCyLxz2ATHm9Bwg=
+x-amz-request-id: QRHDGQWJB85M0R53
+Last-Modified: Wed, 23 Feb 2022 14:56:42 GMT
+ETag: "667cf48afcc12c38c8c1637947a04224"
+CF-Cache-Status: DYNAMIC
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=%2BLovqbqUX87X5WYjI7qwL7kLRcg6wzOHav%2FQOgegcDRwWQ1Lu0pEbgQfN0pKllA%2FRm2%2BTKa%2FhB6I%2Be4od1lqAiDcQQOoeyQ9f3v60wSPcx4wwfjp%2F%2FzgfcilcEfsMUw%3D"}],"group":"cf-nel","max_age":604800}
+NEL: {"success_fraction":0,"report_to":"cf-nel","max_age":604800}
+Server: cloudflare
+CF-RAY: 7029aac5ac2b54bb-YYZ
+alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+
 
            `:;;;,`                      .:;;:.           
         .;;;;;;;;;;;`                :;;;;;;;;;;:     TM 
@@ -1901,8 +1888,8 @@ alt-svc: h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400
    ;: ;;  ;;;;;:  ;;  ;; .;;  ;;   ,;,   ;;`;;;, ;;  ;;` 
   ,;;;;;  ;;`;;   ;;  ;; .;;  ;;   ,;,   ;; ;;;, ;;  ;;  
   ;;  ,;, ;; .;;  ;;;;;:  ;;;;;: ,;;;;;: ;;  ;;, ;;;;;;  
-  ;;   ;; ;;  ;;` ;;;;.   `;;;:  ,;;;;;, ;;  ;;,  ;;;;   
-
+  ;;   ;; ;;  ;;` ;;;;.   `;;;:  ,;;;;;, ;;  ;;,  ;;;;  
+  
 0
 
 (EthernetSSLClient)(SSL_WARN)(connected): Socket was dropped unexpectedly (this can be an alternative to closing the connection)
@@ -1920,7 +1907,7 @@ Received 3405 bytes in 0.2072 s, rate = 16.43 kbytes/second
 
 ```
 Start MQTTClient_SSL_Complex on SAM DUE with W5x00 using Ethernet_Generic Library
-EthernetWebServer_SSL v1.8.1
+EthernetWebServer_SSL v1.8.2
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 75
@@ -1958,7 +1945,7 @@ The terminal output of **SEEED_XIAO_M0 with W5x00 using Ethernet_Generic Library
 
 ```
 Start MQTTS_ThingStream on SEEED_XIAO_M0 with W5x00 using Ethernet_Generic Library
-EthernetWebServer_SSL v1.8.1
+EthernetWebServer_SSL v1.8.2
 [ETHERNET_WEBSERVER] Board : SEEED_XIAO_M0 , setCsPin: 1
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 10
@@ -1990,7 +1977,7 @@ The terminal output of **MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generi
 
 ```
 Start MQTTS_ThingStream on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library
-EthernetWebServer_SSL v1.8.1
+EthernetWebServer_SSL v1.8.2
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 3
@@ -2021,7 +2008,7 @@ The terminal output of **MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generi
 
 ```
 Start MQTTClient_SSL on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library
-EthernetWebServer_SSL v1.8.1
+EthernetWebServer_SSL v1.8.2
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 3
@@ -2067,7 +2054,7 @@ The following are debug terminal output and screen shot when running example [Ad
 
 ```
 Starting AdvancedWebServer on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library
-EthernetWebServer_SSL v1.8.1
+EthernetWebServer_SSL v1.8.2
 [EWS] =========== USE_ETHERNET_GENERIC ===========
 [EWS] Default SPI pinout:
 [EWS] MOSI: 3
@@ -2099,7 +2086,7 @@ The terminal output of **RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Lib
 
 ```
 Start MQTTClient_SSL on RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library
-EthernetWebServer_SSL v1.8.1
+EthernetWebServer_SSL v1.8.2
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 19
@@ -2138,7 +2125,7 @@ The following are debug terminal output and screen shot when running example [Ad
 
 ```
 Starting AdvancedWebServer on RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library
-EthernetWebServer_SSL v1.8.1
+EthernetWebServer_SSL v1.8.2
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 19
@@ -2175,7 +2162,7 @@ The following are debug terminal output and screen shot when running example [Ad
 
 ```
 Starting AdvancedWebServer_QNEthernet on TEENSY 4.1 using QNEthernet
-EthernetWebServer_SSL v1.8.1
+EthernetWebServer_SSL v1.8.2
 [ETHERNET_WEBSERVER] =========== USE_QN_ETHERNET ===========
 Initialize Ethernet using static IP => IP Address = 192.168.2.222
 HTTP EthernetWebServer is @ IP : 192.168.2.222
@@ -2192,7 +2179,7 @@ The following are debug terminal output and screen shot when running example [MQ
 
 ```
 Starting MQTTClient_SSL on TEENSY 4.1 using QNEthernet
-EthernetWebServer_SSL v1.8.1
+EthernetWebServer_SSL v1.8.2
 [ETHERNET_WEBSERVER] =========== USE_QN_ETHERNET ===========
 Initialize Ethernet using static IP => IP Address = 192.168.2.222
 Attempting MQTTS connection to broker.emqx.io...connected
@@ -2222,28 +2209,27 @@ The following are debug terminal output and screen shot when running example [We
 
 ```
 Starting WebClientMulti_SSL on TEENSY 4.1 using QNEthernet
-EthernetWebServer_SSL v1.8.1
+EthernetWebServer_SSL v1.8.2
 [ETHERNET_WEBSERVER] =========== USE_QN_ETHERNET ===========
 Initialize Ethernet using static IP => IP Address = 192.168.2.222
-Connecting to www.arduino.cc...
-Took: 162
-HTTP/1.1 200 OK
-Date: Sat, 04 Sep 2021 14:45:12 GMT
-Content-Type: text/plain
-Transfer-Encoding: chunked
-Connection: close
-Last-Modified: Wed, 02 Oct 2013 13:46:47 GMT
-Vary: Accept-Encoding
-Strict-Transport-Security: max-age=500; includeSubDomains
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-CF-Cache-Status: DYNAMIC
-Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-Server: cloudflare
-CF-RAY: 6898000faee0f999-YYZ
-alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400, h3-28=":443"; ma=86400, h3-27=":443"; ma=86400
 
-8d7
+Connecting...
+HTTP/1.1 200 OK
+Date: Wed, 27 Apr 2022 18:37:01 GMT
+Content-Type: text/plain
+Content-Length: 2263
+Connection: close
+x-amz-id-2: 568nXCDMowTNrM6k5jKBG53CvGK2JCqofEeXLMMqUGTLnj4fPneu14BLZx6xNCyLxz2ATHm9Bwg=
+x-amz-request-id: QRHDGQWJB85M0R53
+Last-Modified: Wed, 23 Feb 2022 14:56:42 GMT
+ETag: "667cf48afcc12c38c8c1637947a04224"
+CF-Cache-Status: DYNAMIC
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=%2BLovqbqUX87X5WYjI7qwL7kLRcg6wzOHav%2FQOgegcDRwWQ1Lu0pEbgQfN0pKllA%2FRm2%2BTKa%2FhB6I%2Be4od1lqAiDcQQOoeyQ9f3v60wSPcx4wwfjp%2F%2FzgfcilcEfsMUw%3D"}],"group":"cf-nel","max_age":604800}
+NEL: {"success_fraction":0,"report_to":"cf-nel","max_age":604800}
+Server: cloudflare
+CF-RAY: 7029aac5ac2b54bb-YYZ
+alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+
 
            `:;;;,`                      .:;;:.           
         .;;;;;;;;;;;`                :;;;;;;;;;;:     TM 
@@ -2283,7 +2269,7 @@ alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400, h3-28=":443"; ma=86400, h3
    ;: ;;  ;;;;;:  ;;  ;; .;;  ;;   ,;,   ;;`;;;, ;;  ;;` 
   ,;;;;;  ;;`;;   ;;  ;; .;;  ;;   ,;,   ;; ;;;, ;;  ;;  
   ;;  ,;, ;; .;;  ;;;;;:  ;;;;;: ,;;;;;: ;;  ;;, ;;;;;;  
-  ;;   ;; ;;  ;;` ;;;;.   `;;;:  ,;;;;;, ;;  ;;,  ;;;;   
+  ;;   ;; ;;  ;;` ;;;;.   `;;;:  ,;;;;;, ;;  ;;,  ;;;;  
 
 0
 
@@ -2306,7 +2292,7 @@ The following are debug terminal output and screen shot when running example [Ad
 ```
 
 Starting AdvancedWebServer on PORTENTA_H7_M7 with Ethernet using Portenta_Ethernet Library
-EthernetWebServer_SSL v1.8.1
+EthernetWebServer_SSL v1.8.2
 [ETHERNET_WEBSERVER] ======== USE_PORTENTA_H7_ETHERNET ========
 Using mac index = 2
 Connected! IP address: 192.168.2.101
@@ -2329,7 +2315,7 @@ The following are debug terminal output and screen shot when running example [Ad
 
 ```
 Starting AdvancedWebServer on RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library on SPI1
-EthernetWebServer_SSL v1.8.1
+EthernetWebServer_SSL v1.8.2
 [EWS] =========== USE_ETHERNET_GENERIC ===========
 [EWS] Default SPI pinout:
 [EWS] MOSI: 15
@@ -2423,6 +2409,8 @@ Submit issues to: [EthernetWebServer_SSL issues](https://github.com/khoih-prog/E
 27. Support **SPI2 for ESP32**
 28. Rewrite library and add example [multiFileProject](examples/multiFileProject) to demo for multiple-file project to fix `multiple-definitions` linker error
 29. Add support to SPI1 for RP2040 using [arduino-pico core](https://github.com/earlephilhower/arduino-pico)
+30. Change from `arduino.cc` to `arduino.tips` in examples
+
 
 ---
 ---
