@@ -12,6 +12,7 @@
 
 
 * [Changelog](#changelog)
+  * [Releases v1.9.0](#releases-v190)
   * [Releases v1.8.2](#releases-v182)
   * [Releases v1.8.1](#releases-v181)
   * [Releases v1.8.0](#releases-v180)
@@ -39,6 +40,13 @@
 ---
 
 ## Changelog
+
+### Releases v1.9.0
+
+1. Add support to SPI1, SPI2 for Teensy using W5x00 with [Ethernet_Generic library](https://github.com/khoih-prog/Ethernet_Generic)
+2. Add support to custom SPI for Mbed RP2040, Portenta-H7, etc. using W5x00 with [Ethernet_Generic library](https://github.com/khoih-prog/Ethernet_Generic)
+3. Add examples [AdvancedWebServer_Teensy4x_SPI1](examples/AdvancedWebServer_Teensy4x_SPI1) to demo new feature
+4. Add examples [AdvancedWebServer_RP2040_SPI1](examples/AdvancedWebServer_RP2040_SPI1) to demo new feature
 
 ### Releases v1.8.2
 

@@ -65,6 +65,7 @@
   * [5. How to adjust sendContent_P() and send_P() buffer size](#5-how-to-adjust-sendcontent_p-and-send_p-buffer-size)
   * [6. How to use SPI2 for ESP32 using W5x00 and Ethernet_Generic Library](#6-How-to-use-SPI2-for-ESP32-using-W5x00-and-Ethernet_Generic-Library)
   * [7. How to use SPI1 for RP2040 using W5x00 and Ethernet_Generic Library](#7-How-to-use-SPI1-for-RP2040-using-W5x00-and-Ethernet_Generic-Library)
+  * [8. How to use SPI1/SPI2 for Teensy 4.x using W5x00 and Ethernet_Generic Library](#8-How-to-use-SPI1SPI2-for-Teensy-4x-using-W5x00-and-Ethernet_Generic-Library)
 * [WebServer and non TLS/SSL WebClient Usage](#webserver-and-non-tlsssl-webclient-usage)
   * [Init the CS/SS pin if use EthernetWrapper](#init-the-csss-pin-if-use-ethernetwrapper) 
   * [Class Constructor](#class-constructor)
@@ -138,6 +139,9 @@
     * [ 5. **MQTTS_ThingStream**](examples/QNEthernet/MQTTS_ThingStream)
     * [ 6. WebClientMulti_SSL](examples/QNEthernet/WebClientMulti_SSL)
     * [ 7. WebClient_SSL](examples/QNEthernet/WebClient_SSL)
+  * [New Examples for SPI1/SPI2](#New-Examples-for-SPI1SPI2)
+    * [ 1. **AdvancedWebServer_RP2040_SPI1**](examples/AdvancedWebServer_RP2040_SPI1) **New**
+    * [ 2. **AdvancedWebServer_Teensy4x_SPI1**](examples/AdvancedWebServer_Teensy4x_SPI1) **New** 
 * [Example AdvancedWebServer](#example-advancedwebserver)
   * [1. File AdvancedWebServer.ino](#1-file-advancedwebserverino)
   * [2. File defines.h](#2-file-definesh) 
@@ -158,6 +162,8 @@
   * [14. WebClientMulti_SSL on Teensy 4.1 using QNEthernet Library](#14-webclientmulti_ssl-on-teensy-41-using-qnethernet-library)
   * [15. AdvancedWebServer on PORTENTA_H7_M7 using Portenta_Ethernet Library](#15-AdvancedWebServer-on-PORTENTA_H7_M7-using-Portenta_Ethernet-Library)
   * [16. AdvancedWebServer on RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library on SPI1](#16-AdvancedWebServer-on-RASPBERRY_PI_PICO-with-W5x00-using-Ethernet_Generic-Library-on-SPI1)
+  * [17. AdvancedWebServer_RP2040_SPI1 on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library on SPI1](#17-AdvancedWebServer_RP2040_SPI1-on-MBED-RASPBERRY_PI_PICO-with-W5x00-using-Ethernet_Generic-Library-on-SPI1)
+  * [18. AdvancedWebServer_Teensy4x_SPI1 on TEENSY 4.1 with W5x00 using Ethernet_Generic Library on SPI1](#18-AdvancedWebServer_Teensy4x_SPI1-on-TEENSY-41-with-W5x00-using-Ethernet_Generic-Library-on-SPI1)
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
@@ -217,11 +223,11 @@ This [**EthernetWebServer_SSL** library](https://github.com/khoih-prog/EthernetW
   - Adafruit SAMD51 (M4): Metro M4, Grand Central M4, ItsyBitsy M4, Feather M4 Express, Trellis M4, Metro M4 AirLift Lite, MONSTER M4SK Express, Hallowing M4, etc.
   - Seeeduino: WIO Terminal, Grove UI Wireless
   
- 5. **Teensy (4.1, 4.0, 3.6, 3.5, 3,2, 3.1, 3.0, LC)**
+ 5. **Teensy (4.1, 4.0, 3.6, 3.5, 3,2, 3.1, 3.0, LC) with SPI, SPI1, SPI2**
  6. **AVR Mega1280, 2560, ADK.**. SSL WebClient not supported yet. Check [Trivial sketch won't compile using Arduino 1.8.13](https://github.com/mike-matera/ArduinoSTL/issues/56)
  7. ESP32
  8. ESP8266. SSL WebClient not supported yet. Check [HTTPS GET request - ESP8266 - ENC28j60](https://github.com/OPEnSLab-OSU/SSLClient/issues/5)
- 9. RP2040-based boards, such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, using [**Arduino-mbed RP2040** core](https://github.com/arduino/ArduinoCore-mbed) or [**Earle Philhower's arduino-pico** core](https://github.com/earlephilhower/arduino-pico).
+ 9. RP2040-based boards, such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, using [**Arduino-mbed RP2040** core](https://github.com/arduino/ArduinoCore-mbed) or [**Earle Philhower's arduino-pico** core](https://github.com/earlephilhower/arduino-pico) with **SPI, SPI1**.
  
  10. **Portenta_H7**
 
@@ -249,19 +255,20 @@ This [**EthernetWebServer_SSL** library](https://github.com/khoih-prog/EthernetW
  6. [`Adafruit SAMD core 1.7.10+`](https://github.com/adafruit/ArduinoCore-samd) for SAMD ARM Cortex-M0+ and M4 boards (Nano 33 IoT, etc.). [![GitHub release](https://img.shields.io/github/release/adafruit/ArduinoCore-samd.svg)](https://github.com/adafruit/ArduinoCore-samd/releases/latest)
  7. [`Seeeduino SAMD core 1.8.2+`](https://github.com/Seeed-Studio/ArduinoCore-samd) for SAMD21/SAMD51 boards (XIAO M0, Wio Terminal, etc.). [![Latest release](https://img.shields.io/github/release/Seeed-Studio/ArduinoCore-samd.svg)](https://github.com/Seeed-Studio/ArduinoCore-samd/releases/latest/)
  8. [`Adafruit nRF52 v1.3.0+`](https://github.com/adafruit/Adafruit_nRF52_Arduino) for nRF52 boards such as Adafruit NRF52840_FEATHER, NRF52832_FEATHER, NRF52840_FEATHER_SENSE, NRF52840_ITSYBITSY, NRF52840_CIRCUITPLAY, NRF52840_CLUE, NRF52840_METRO, NRF52840_PCA10056, PARTICLE_XENON, **NINA_B302_ublox**, etc. [![GitHub release](https://img.shields.io/github/release/adafruit/Adafruit_nRF52_Arduino.svg)](https://github.com/adafruit/Adafruit_nRF52_Arduino/releases/latest)
- 9. [`ESP32 Core 2.0.2+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards. [![Latest release](https://img.shields.io/github/release/espressif/arduino-esp32.svg)](https://github.com/espressif/arduino-esp32/releases/latest/)
+ 9. [`ESP32 Core 2.0.3+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards. [![Latest release](https://img.shields.io/github/release/espressif/arduino-esp32.svg)](https://github.com/espressif/arduino-esp32/releases/latest/)
 10. [`ESP8266 Core 3.0.2+`](https://github.com/esp8266/Arduino) for ESP8266-based boards. [![Latest release](https://img.shields.io/github/release/esp8266/Arduino.svg)](https://github.com/esp8266/Arduino/releases/latest/). To use ESP8266 core 2.7.1+ for LittleFS.
 11. [`ArduinoCore-mbed mbed_rp2040, mbed_nano, mbed_portenta core 3.0.1+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino (Use Arduino Board Manager) **Portenta_H7, RP2040-based boards, such as Nano_RP2040_Connect, RASPBERRY_PI_PICO**. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
-12. [`Earle Philhower's arduino-pico core v1.13.3+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
+12. [`Earle Philhower's arduino-pico core v2.0.0+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
 13. [`ArduinoCore-fab-sam core v1.16.18-alpha2+`](https://github.com/qbolsee/ArduinoCore-fab-sam) for SAMD21/SAMD51-based boards. [![GitHub release](https://img.shields.io/github/release/qbolsee/ArduinoCore-fab-sam.svg)](https://github.com/qbolsee/ArduinoCore-fab-sam/releases/latest)
 14. [`Functional-VLPP library v1.0.2+`](https://github.com/khoih-prog/functional-vlpp) to use server's lambda function. To install. check [![arduino-library-badge](https://www.ardu-badge.com/badge/Functional-Vlpp.svg?)](https://www.ardu-badge.com/Functional-Vlpp)
 15. Depending on which Ethernet card you're using:
-   - [`Ethernet_Generic library v2.1.0+`](https://github.com/khoih-prog/Ethernet_Generic) for W5100, W5200 and W5500/WIZ550io/WIZ850io/USR-ES1 with Wiznet W5500 chip.  [![GitHub release](https://img.shields.io/github/release/khoih-prog/Ethernet_Generic.svg)](https://github.com/khoih-prog/Ethernet_Generic/releases/latest)
+   - [`Ethernet_Generic library v2.3.0+`](https://github.com/khoih-prog/Ethernet_Generic) for W5100, W5200 and W5500/WIZ550io/WIZ850io/USR-ES1 with Wiznet W5500 chip.  [![GitHub release](https://img.shields.io/github/release/khoih-prog/Ethernet_Generic.svg)](https://github.com/khoih-prog/Ethernet_Generic/releases/latest)
    - [`EthernetENC library v2.0.2+`](https://github.com/jandrassy/EthernetENC) for ENC28J60. [![GitHub release](https://img.shields.io/github/release/jandrassy/EthernetENC.svg)](https://github.com/jandrassy/EthernetENC/releases/latest). **New and Better**
    - [`UIPEthernet library v2.0.11+`](https://github.com/UIPEthernet/UIPEthernet) for ENC28J60. [![GitHub release](https://img.shields.io/github/release/UIPEthernet/UIPEthernet.svg)](https://github.com/UIPEthernet/UIPEthernet/releases/latest)
    - [`NativeEthernet Library version stable111+`](https://github.com/vjmuzik/NativeEthernet) for Teensy 4.1 built-in Ethernet.
    - [`QNEthernet Library version v0.14.0+`](https://github.com/ssilverman/QNEthernet) for Teensy 4.1 built-in Ethernet. **New**
 
+---
 ---
 
 ## Installation
@@ -393,13 +400,13 @@ Whenever the above-mentioned compiler error issue is fixed with the new Arduino 
 
 #### 5. For Adafruit SAMD boards
  
- ***To be able to compile, run and automatically detect and display BOARD_NAME on Adafruit SAMD (Itsy-Bitsy M4, etc) boards***, you have to copy the whole [Adafruit SAMD Packages_Patches](Packages_Patches/adafruit/hardware/samd/1.7.9) directory into Adafruit samd directory (~/.arduino15/packages/adafruit/hardware/samd/1.7.9). 
+ ***To be able to compile, run and automatically detect and display BOARD_NAME on Adafruit SAMD (Itsy-Bitsy M4, etc) boards***, you have to copy the whole [Adafruit SAMD Packages_Patches](Packages_Patches/adafruit/hardware/samd/1.7.10) directory into Adafruit samd directory (~/.arduino15/packages/adafruit/hardware/samd/1.7.10). 
 
-Supposing the Adafruit SAMD core version is 1.7.9. This file must be copied into the directory:
+Supposing the Adafruit SAMD core version is 1.7.10. This file must be copied into the directory:
 
-- `~/.arduino15/packages/adafruit/hardware/samd/1.7.9/platform.txt`
-- `~/.arduino15/packages/adafruit/hardware/samd/1.7.9/cores/arduino/Print.h`
-- `~/.arduino15/packages/adafruit/hardware/samd/1.7.9/cores/arduino/Print.cpp`
+- `~/.arduino15/packages/adafruit/hardware/samd/1.7.10/platform.txt`
+- `~/.arduino15/packages/adafruit/hardware/samd/1.7.10/cores/arduino/Print.h`
+- `~/.arduino15/packages/adafruit/hardware/samd/1.7.10/cores/arduino/Print.cpp`
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz
 This file must be copied into the directory:
@@ -501,12 +508,12 @@ With core after v1.5.0, this step is not necessary anymore thanks to the PR [Add
 
 #### 9. For Portenta_H7 boards using Arduino IDE in Linux
 
-  **To be able to upload firmware to Portenta_H7 using Arduino IDE in Linux (Ubuntu, etc.)**, you have to copy the file [portenta_post_install.sh](Packages_Patches/arduino/hardware/mbed_portenta/3.0.0/portenta_post_install.sh) into mbed_portenta directory (~/.arduino15/packages/arduino/hardware/mbed_portenta/3.0.0/portenta_post_install.sh). 
+  **To be able to upload firmware to Portenta_H7 using Arduino IDE in Linux (Ubuntu, etc.)**, you have to copy the file [portenta_post_install.sh](Packages_Patches/arduino/hardware/mbed_portenta/3.0.1/portenta_post_install.sh) into mbed_portenta directory (~/.arduino15/packages/arduino/hardware/mbed_portenta/3.0.1/portenta_post_install.sh). 
   
   Then run the following command using `sudo`
   
 ```
-$ cd ~/.arduino15/packages/arduino/hardware/mbed_portenta/3.0.0
+$ cd ~/.arduino15/packages/arduino/hardware/mbed_portenta/3.0.1
 $ chmod 755 portenta_post_install.sh
 $ sudo ./portenta_post_install.sh
 ```
@@ -519,9 +526,9 @@ This will create the file `/etc/udev/rules.d/49-portenta_h7.rules` as follows:
 SUBSYSTEMS=="usb", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="035b", GROUP="plugdev", MODE="0666"
 ```
 
-Supposing the ArduinoCore-mbed core version is 3.0.0. Now only one file must be copied into the directory:
+Supposing the ArduinoCore-mbed core version is 3.0.1. Now only one file must be copied into the directory:
 
-- `~/.arduino15/packages/arduino/hardware/mbed_portenta/3.0.0/portenta_post_install.sh`
+- `~/.arduino15/packages/arduino/hardware/mbed_portenta/3.0.1/portenta_post_install.sh`
 
 Whenever a new version is installed, remember to copy this files into the new version directory. For example, new version is x.yy.zz
 
@@ -700,6 +707,14 @@ Look in file [**adc_common.c**](https://github.com/espressif/esp-idf/blob/master
 
 #### 1. How to select which built-in Ethernet or shield to use
 
+The easiest way is to use 
+
+```cpp
+#define USE_ETHERNET_WRAPPER    true
+```
+
+then select **one and only one** Ethernet library to use as follows:
+
 - Standard W5x00 Ethernet_Generic library is used by default, in the sketch, just be sure to comment out or leave these #defines to be false :
 
 ```cpp
@@ -874,13 +889,7 @@ For example, EthernetLarge library
 
 The default CS/SS pin is GPIO4(D2) for ESP8266, GPIO22 for ESP32, 10 for all other boards.
 
-If the default pin is not corect, the easiest way is to change is to use 
-
-```cpp
-#define USE_ETHERNET_WRAPPER    true
-```
-
-then select the CS/SS pin (e.g. 22) to use as follows:
+If the default pin is not correct, the easiest way is to select the CS/SS pin (e.g. 22) to use as follows:
 
 ```cpp
 // To override the default CS/SS pin. Don't use unless you know exactly which pin to use
@@ -957,7 +966,7 @@ SS:    5
 
 ### 7. How to use SPI1 for RP2040 using W5x00 and Ethernet_Generic Library
 
-- For **Ethernet_Generic** library only, to use `SPI1` for RP2040 using [arduino-pico core](https://github.com/earlephilhower/arduino-pico)
+- For **Ethernet_Generic** library only, to use `SPI1` for RP2040 using [arduino-pico core](https://github.com/earlephilhower/arduino-pico) or [ArduinoCore-mbed](https://github.com/arduino/ArduinoCore-mbed)
 
 ```
 #define USING_SPI2                          true
@@ -970,6 +979,62 @@ MOSI:  15
 MISO:  12
 SCK:   14
 SS:    13
+```
+
+### 8. How to use SPI1/SPI2 for Teensy 4.x using W5x00 and Ethernet_Generic Library
+
+- For **Ethernet_Generic** library only, to use `SPI1/SPI2` for Teensy 4.x
+
+```
+#include <SPI.h>
+
+  // For RPI Pico using Mbed RP2040 core
+#if (USING_SPI2)
+  #define USING_CUSTOM_SPI          true
+
+  // Teensy4.1
+  // SCK1: 27,  MOSI1: 26, MISO1:  1, SS1/CS1:  0 for SPI1
+  // SCK2: 45,  MOSI2: 43, MISO2: 32, SS2/CS2: 44 for SPI2
+  // Teensy4.0, in the back, untested
+  // SCK1: 27,  MOSI1: 26, MISO1: 1, SS1/CS1: 0 for SPI1
+  #define CUR_PIN_MISO              1
+  #define CUR_PIN_MOSI              26
+  #define CUR_PIN_SCK               27
+  #define CUR_PIN_SS                0
+
+  #define SPI_NEW_INITIALIZED       true
+
+  // SPI1
+  SPIClass SPI_New((uintptr_t)&IMXRT_LPSPI3_S, (uintptr_t)&SPIClass::spiclass_lpspi3_hardware);
+  // SPI2
+  //SPIClass SPI_New((uintptr_t)&IMXRT_LPSPI1_S, (uintptr_t)&SPIClass::spiclass_lpspi1_hardware);
+  
+  #warning Using USE_THIS_SS_PIN = CUR_PIN_SS = 38
+
+  #if defined(USE_THIS_SS_PIN)
+    #undef USE_THIS_SS_PIN
+  #endif   
+  #define USE_THIS_SS_PIN       CUR_PIN_SS
+
+#endif  
+```
+
+Pin to use for `SPI1`
+
+```
+MOSI:  26
+MISO:   1
+SCK:   27
+SS:     0
+```
+
+Pin to use for `SPI2`
+
+```
+MOSI:  43
+MISO:  32
+SCK:   45
+SS:    44
 ```
 
 
@@ -1471,6 +1536,12 @@ If for some unfortunate reason you need SSL 3.0 or SSL 2.0, you will need to mod
  6. [WebClientMulti_SSL](examples/QNEthernet/WebClientMulti_SSL)
  7. [WebClient_SSL](examples/QNEthernet/WebClient_SSL)
 
+#### New Examples for SPI1/SPI2
+
+ 1. [**AdvancedWebServer_RP2040_SPI1**](examples/AdvancedWebServer_RP2040_SPI1) **New** 
+ 2. [**AdvancedWebServer_Teensy4x_SPI1**](examples/AdvancedWebServer_Teensy4x_SPI1) **New** 
+  
+  
 ---
 ---
 
@@ -1502,7 +1573,7 @@ The following are debug terminal output and screen shot when running example [Ad
 
 ```
 Starting AdvancedWebServer on NRF52840_FEATHER with ENC28J60 using EthernetENC Library
-EthernetWebServer_SSL v1.8.2
+EthernetWebServer_SSL v1.9.0
 [ETHERNET_WEBSERVER] =========================
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 25
@@ -1680,7 +1751,7 @@ The terminal output of **SAM DUE with W5x00 using Ethernet_Generic Library** run
 
 ```
 Start WebClientMulti_SSL on SAM DUE with W5x00 using Ethernet_Generic Library
-EthernetWebServer_SSL v1.8.2
+EthernetWebServer_SSL v1.9.0
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 75
@@ -1812,7 +1883,7 @@ The terminal output of **SEEED_XIAO_M0 with W5x00 using Ethernet_Generic Library
 
 ```
 Start WebClient_SSL on SEEED_XIAO_M0 with W5x00 using Ethernet_Generic Library
-EthernetWebServer_SSL v1.8.2
+EthernetWebServer_SSL v1.9.0
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 10
@@ -1907,7 +1978,7 @@ Received 3405 bytes in 0.2072 s, rate = 16.43 kbytes/second
 
 ```
 Start MQTTClient_SSL_Complex on SAM DUE with W5x00 using Ethernet_Generic Library
-EthernetWebServer_SSL v1.8.2
+EthernetWebServer_SSL v1.9.0
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 75
@@ -1945,7 +2016,7 @@ The terminal output of **SEEED_XIAO_M0 with W5x00 using Ethernet_Generic Library
 
 ```
 Start MQTTS_ThingStream on SEEED_XIAO_M0 with W5x00 using Ethernet_Generic Library
-EthernetWebServer_SSL v1.8.2
+EthernetWebServer_SSL v1.9.0
 [ETHERNET_WEBSERVER] Board : SEEED_XIAO_M0 , setCsPin: 1
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 10
@@ -1977,7 +2048,7 @@ The terminal output of **MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generi
 
 ```
 Start MQTTS_ThingStream on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library
-EthernetWebServer_SSL v1.8.2
+EthernetWebServer_SSL v1.9.0
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 3
@@ -2008,7 +2079,7 @@ The terminal output of **MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generi
 
 ```
 Start MQTTClient_SSL on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library
-EthernetWebServer_SSL v1.8.2
+EthernetWebServer_SSL v1.9.0
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 3
@@ -2054,7 +2125,7 @@ The following are debug terminal output and screen shot when running example [Ad
 
 ```
 Starting AdvancedWebServer on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library
-EthernetWebServer_SSL v1.8.2
+EthernetWebServer_SSL v1.9.0
 [EWS] =========== USE_ETHERNET_GENERIC ===========
 [EWS] Default SPI pinout:
 [EWS] MOSI: 3
@@ -2086,7 +2157,7 @@ The terminal output of **RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Lib
 
 ```
 Start MQTTClient_SSL on RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library
-EthernetWebServer_SSL v1.8.2
+EthernetWebServer_SSL v1.9.0
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 19
@@ -2125,7 +2196,7 @@ The following are debug terminal output and screen shot when running example [Ad
 
 ```
 Starting AdvancedWebServer on RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library
-EthernetWebServer_SSL v1.8.2
+EthernetWebServer_SSL v1.9.0
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
 [ETHERNET_WEBSERVER] Default SPI pinout:
 [ETHERNET_WEBSERVER] MOSI: 19
@@ -2162,7 +2233,7 @@ The following are debug terminal output and screen shot when running example [Ad
 
 ```
 Starting AdvancedWebServer_QNEthernet on TEENSY 4.1 using QNEthernet
-EthernetWebServer_SSL v1.8.2
+EthernetWebServer_SSL v1.9.0
 [ETHERNET_WEBSERVER] =========== USE_QN_ETHERNET ===========
 Initialize Ethernet using static IP => IP Address = 192.168.2.222
 HTTP EthernetWebServer is @ IP : 192.168.2.222
@@ -2179,7 +2250,7 @@ The following are debug terminal output and screen shot when running example [MQ
 
 ```
 Starting MQTTClient_SSL on TEENSY 4.1 using QNEthernet
-EthernetWebServer_SSL v1.8.2
+EthernetWebServer_SSL v1.9.0
 [ETHERNET_WEBSERVER] =========== USE_QN_ETHERNET ===========
 Initialize Ethernet using static IP => IP Address = 192.168.2.222
 Attempting MQTTS connection to broker.emqx.io...connected
@@ -2209,7 +2280,7 @@ The following are debug terminal output and screen shot when running example [We
 
 ```
 Starting WebClientMulti_SSL on TEENSY 4.1 using QNEthernet
-EthernetWebServer_SSL v1.8.2
+EthernetWebServer_SSL v1.9.0
 [ETHERNET_WEBSERVER] =========== USE_QN_ETHERNET ===========
 Initialize Ethernet using static IP => IP Address = 192.168.2.222
 
@@ -2292,7 +2363,7 @@ The following are debug terminal output and screen shot when running example [Ad
 ```
 
 Starting AdvancedWebServer on PORTENTA_H7_M7 with Ethernet using Portenta_Ethernet Library
-EthernetWebServer_SSL v1.8.2
+EthernetWebServer_SSL v1.9.0
 [ETHERNET_WEBSERVER] ======== USE_PORTENTA_H7_ETHERNET ========
 Using mac index = 2
 Connected! IP address: 192.168.2.101
@@ -2315,7 +2386,7 @@ The following are debug terminal output and screen shot when running example [Ad
 
 ```
 Starting AdvancedWebServer on RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library on SPI1
-EthernetWebServer_SSL v1.8.2
+EthernetWebServer_SSL v1.9.0
 [EWS] =========== USE_ETHERNET_GENERIC ===========
 [EWS] Default SPI pinout:
 [EWS] MOSI: 15
@@ -2337,6 +2408,82 @@ HTTP EthernetWebServer is @ IP : 192.168.2.104
 .[EWS] String Len = 0, extend to 2048
 ......... ..
 ```
+
+
+---
+
+#### 17. AdvancedWebServer_RP2040_SPI1 on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library on SPI1
+
+The following are debug terminal output and screen shot when running example [AdvancedWebServer_RP2040_SPI1](examples/AdvancedWebServer_RP2040_SPI1) on **MBED RASPBERRY_PI_PICO** with W5500 using Ethernet_Generic Library on `SPI1` and [ArduinoCore-mbed](https://github.com/arduino/ArduinoCore-mbed)
+
+<p align="center">
+    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/pics/AdvancedWebServer_Mbed_RPi_Pico_SPI1.png">
+</p>
+
+
+```
+Starting AdvancedWebServer_RP2040_SPI1 on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library with Large Buffer
+EthernetWebServer_SSL v1.9.0
+[EWS] =========== USE_ETHERNET_GENERIC ===========
+[EWS] Default SPI pinout:
+[EWS] MOSI: 15
+[EWS] MISO: 12
+[EWS] SCK: 14
+[EWS] SS: 13
+[EWS] =========================
+[EWS] RPIPICO setCsPin: 13
+[EWS] =========================
+[EWS] Currently Used SPI pinout:
+[EWS] MOSI: 15
+[EWS] MISO: 12
+[EWS] SCK: 14
+[EWS] SS: 13
+[EWS] =========================
+Using mac index = 18
+Connected! IP address: 192.168.2.85
+HTTP EthernetWebServer is @ IP : 192.168.2.85
+.
+```
+
+---
+
+#### 18. AdvancedWebServer_Teensy4x_SPI1 on TEENSY 4.1 with W5x00 using Ethernet_Generic Library on SPI1
+
+The following are debug terminal output and screen shot when running example [AdvancedWebServer_Teensy4x_SPI1](examples/AdvancedWebServer_Teensy4x_SPI1) on **Teensy 4.1** with W5500 using Ethernet_Generic Library on SPI1
+
+<p align="center">
+    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/pics/AdvancedWebServer_Teensy41_SPI1.png">
+</p>
+
+<p align="center">
+    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/pics/Teensy41_pinout.png">
+</p>
+
+```
+Starting AdvancedWebServer_Teensy4x_SPI1 on TEENSY 4.1 with W5x00 using Ethernet_Generic Library with Large Buffer
+EthernetWebServer_SSL v1.9.0
+[EWS] =========== USE_ETHERNET_GENERIC ===========
+[EWS] Default SPI pinout:
+[EWS] MOSI: 26
+[EWS] MISO: 1
+[EWS] SCK: 27
+[EWS] SS: 0
+[EWS] =========================
+[EWS] Board : TEENSY 4.1 , setCsPin: 0
+[EWS] =========================
+[EWS] Currently Used SPI pinout:
+[EWS] MOSI: 26
+[EWS] MISO: 1
+[EWS] SCK: 27
+[EWS] SS: 0
+[EWS] =========================
+Using mac index = 10
+Connected! IP address: 192.168.2.95
+HTTP EthernetWebServer is @ IP : 192.168.2.95
+.[EWS] String Len = 0, extend to 2048
+.....
+```
+
 
 
 ---
@@ -2410,6 +2557,9 @@ Submit issues to: [EthernetWebServer_SSL issues](https://github.com/khoih-prog/E
 28. Rewrite library and add example [multiFileProject](examples/multiFileProject) to demo for multiple-file project to fix `multiple-definitions` linker error
 29. Add support to SPI1 for RP2040 using [arduino-pico core](https://github.com/earlephilhower/arduino-pico)
 30. Change from `arduino.cc` to `arduino.tips` in examples
+31. Add support to SPI1, SPI2 for Teensy using W5x00 with [Ethernet_Generic library](https://github.com/khoih-prog/Ethernet_Generic)
+32. Add support to custom SPI for Mbed RP2040, Portenta-H7, etc. using W5x00 with [Ethernet_Generic library](https://github.com/khoih-prog/Ethernet_Generic)
+33. Add examples [AdvancedWebServer_Teensy4x_SPI1](examples/AdvancedWebServer_Teensy4x_SPI1) and [AdvancedWebServer_RP2040_SPI1](examples/AdvancedWebServer_RP2040_SPI1) to demo new features
 
 
 ---
