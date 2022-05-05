@@ -8,7 +8,7 @@
   
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
        
-  Version: 1.8.2
+  Version: 1.9.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -27,6 +27,7 @@
   1.8.0   K Hoang      05/04/2022 Use Ethernet_Generic library as default. Support SPI2 for ESP32
   1.8.1   K Hoang      09/04/2022 Add support to SPI1 for RP2040 using arduino-pico core
   1.8.2   K Hoang      27/04/2022 Change from `arduino.cc` to `arduino.tips` in examples
+  1.9.0   K Hoang      05/05/2022 Add support to custom SPI for Teensy, Mbed RP2040, Portenta_H7, etc.
  *****************************************************************************************************************************/
 
 #pragma once
@@ -34,13 +35,13 @@
 #ifndef ETHERNET_WEBSERVER_SSL_H
 #define ETHERNET_WEBSERVER_SSL_H
 
-#define ETHERNET_WEBSERVER_SSL_VERSION          "EthernetWebServer_SSL v1.8.2"
+#define ETHERNET_WEBSERVER_SSL_VERSION          "EthernetWebServer_SSL v1.9.0"
 
 #define ETHERNET_WEBSERVER_SSL_VERSION_MAJOR    1
-#define ETHERNET_WEBSERVER_SSL_VERSION_MINOR    8
-#define ETHERNET_WEBSERVER_SSL_VERSION_PATCH    2
+#define ETHERNET_WEBSERVER_SSL_VERSION_MINOR    9
+#define ETHERNET_WEBSERVER_SSL_VERSION_PATCH    0
 
-#define ETHERNET_WEBSERVER_SSL_VERSION_INT      1008002
+#define ETHERNET_WEBSERVER_SSL_VERSION_INT      1009000
 
 /////////////////////////////////////////////////////////////////////////
 
