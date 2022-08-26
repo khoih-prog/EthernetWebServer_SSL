@@ -9,8 +9,8 @@
 
 // To demo how to include files in multi-file Projects
 
-#define ETHERNET_WEBSERVER_SSL_VERSION_MIN_TARGET      "EthernetWebServer_SSL v1.8.1"
-#define ETHERNET_WEBSERVER_SSL_VERSION_MIN             1008001
+#define ETHERNET_WEBSERVER_SSL_VERSION_MIN_TARGET      "EthernetWebServer_SSL v1.9.1"
+#define ETHERNET_WEBSERVER_SSL_VERSION_MIN             1009001
 
 #include "multiFileProject.h"
 
