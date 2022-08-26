@@ -12,6 +12,7 @@
 
 
 * [Changelog](#changelog)
+  * [Releases v1.9.1](#releases-v191)
   * [Releases v1.9.0](#releases-v190)
   * [Releases v1.8.2](#releases-v182)
   * [Releases v1.8.1](#releases-v181)
@@ -40,6 +41,11 @@
 ---
 
 ## Changelog
+
+### Releases v1.9.1
+
+1. Auto-select SPI(s) `SS/CS` pins according to board package if available
+2. Update `Packages' Patches`
 
 ### Releases v1.9.0
 
