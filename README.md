@@ -2659,7 +2659,9 @@ Submit issues to: [EthernetWebServer_SSL issues](https://github.com/khoih-prog/E
 34. Auto-select SPI(s) `SS/CS` pins according to board package if available
 35. Slow SPI clock for old W5100 shield or SAMD Zero
 36. Use correct Debug Terminal `Serial` for so-called **SAMD21 Zero** boards from Arduino as well as Adafruit
-
+37. Add support to Seeeduino nRF52840-based boards such as **SEEED_XIAO_NRF52840 and SEEED_XIAO_NRF52840_SENSE**, etc. using Seeed `mbed` or `nRF52` core
+38. Add astyle using `allman` style. Restyle the library
+39. Update `Packages' Patches` to add Seeeduino `nRF52` core
 
 ---
 ---
