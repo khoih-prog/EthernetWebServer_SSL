@@ -1,10 +1,10 @@
 /****************************************************************************************************************************
   WebClientMulti_SSL.ino - Dead simple SSL WebClient for Ethernet shields
-  
+
   EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
 
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
-  
+
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
  *****************************************************************************************************************************/
 
@@ -121,16 +121,16 @@ void initEthernet()
 
 #else
 
-  #if USING_DHCP
-    // Start the Ethernet connection, using DHCP
-    Serial.print("Initialize Ethernet using DHCP => ");
-    Ethernet.begin();
-  #else   
-    // Start the Ethernet connection, using static IP
-    Serial.print("Initialize Ethernet using static IP => ");
-    Ethernet.begin(myIP, myNetmask, myGW);
-    Ethernet.setDNSServerIP(mydnsServer);
-  #endif
+#if USING_DHCP
+  // Start the Ethernet connection, using DHCP
+  Serial.print("Initialize Ethernet using DHCP => ");
+  Ethernet.begin();
+#else
+  // Start the Ethernet connection, using static IP
+  Serial.print("Initialize Ethernet using static IP => ");
+  Ethernet.begin(myIP, myNetmask, myGW);
+  Ethernet.setDNSServerIP(mydnsServer);
+#endif
 
   if (!Ethernet.waitForLocalIP(5000))
   {
@@ -165,15 +165,18 @@ void setup()
 {
   // Open serial communications and wait for port to open:
   Serial.begin(115200);
+
   while (!Serial);
 
-  Serial.print("\nStarting WebClientMulti_SSL on "); Serial.print(BOARD_NAME);
-  Serial.print(" " ); Serial.println(SHIELD_TYPE);
+  Serial.print("\nStarting WebClientMulti_SSL on ");
+  Serial.print(BOARD_NAME);
+  Serial.print(" " );
+  Serial.println(SHIELD_TYPE);
   Serial.println(ETHERNET_WEBSERVER_SSL_VERSION);
-  
+
   // Enable mutual TLS with SSLClient
   //ethClientSSL.setMutualAuthParams(mTLS);
-  
+
 
   initEthernet();
 

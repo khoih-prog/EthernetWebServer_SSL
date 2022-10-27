@@ -4,7 +4,7 @@
   EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
 
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
-  
+
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
  *****************************************************************************************************************************/
 
@@ -77,7 +77,7 @@ void reconnect()
     if (client.connect(ID))
     {
       Serial.println("...connected");
-      
+
       // Once connected, publish an announcement...
       String data = "Hello from MQTTClient_SSL_Complex on " + String(BOARD_NAME);
 
@@ -86,7 +86,7 @@ void reconnect()
       //Serial.println("Published connection message successfully!");
       //Serial.print("Subcribed to: ");
       //Serial.println(subTopic);
-      
+
       // ... and resubscribe
       client.subscribe(subTopic);
       // for loopback testing
@@ -136,16 +136,16 @@ void initEthernet()
 
 #else
 
-  #if USING_DHCP
-    // Start the Ethernet connection, using DHCP
-    Serial.print("Initialize Ethernet using DHCP => ");
-    Ethernet.begin();
-  #else   
-    // Start the Ethernet connection, using static IP
-    Serial.print("Initialize Ethernet using static IP => ");
-    Ethernet.begin(myIP, myNetmask, myGW);
-    Ethernet.setDNSServerIP(mydnsServer);
-  #endif
+#if USING_DHCP
+  // Start the Ethernet connection, using DHCP
+  Serial.print("Initialize Ethernet using DHCP => ");
+  Ethernet.begin();
+#else
+  // Start the Ethernet connection, using static IP
+  Serial.print("Initialize Ethernet using static IP => ");
+  Ethernet.begin(myIP, myNetmask, myGW);
+  Ethernet.setDNSServerIP(mydnsServer);
+#endif
 
   if (!Ethernet.waitForLocalIP(5000))
   {
@@ -180,10 +180,13 @@ void setup()
 {
   // Open serial communications and wait for port to open:
   Serial.begin(115200);
+
   while (!Serial);
 
-  Serial.print("\nStarting MQTTClient_SSL_Complex on "); Serial.print(BOARD_NAME);
-  Serial.print(" " ); Serial.println(SHIELD_TYPE);
+  Serial.print("\nStarting MQTTClient_SSL_Complex on ");
+  Serial.print(BOARD_NAME);
+  Serial.print(" " );
+  Serial.println(SHIELD_TYPE);
   Serial.println(ETHERNET_WEBSERVER_SSL_VERSION);
   // Enable mutual TLS with SSLClient
   //ethClientSSL.setMutualAuthParams(mTLS);
@@ -196,7 +199,7 @@ void setup()
 void loop()
 {
   static unsigned long now;
-  
+
   if (!client.connected())
   {
     reconnect();
@@ -219,6 +222,6 @@ void loop()
     Serial.print("Message Send : " + String(TOPIC) + " => ");
     Serial.println(data);
   }
-  
+
   client.loop();
 }

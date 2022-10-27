@@ -3,7 +3,7 @@
   EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
 
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
-  
+
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
  ***************************************************************************************************************************************/
 
@@ -18,13 +18,13 @@
 #define _ETHERNET_WEBSERVER_LOGLEVEL_       3
 
 #if ( defined(CORE_TEENSY) && defined(__IMXRT1062__) )
- 
+
   #define USE_NATIVE_ETHERNET     true
   #define BOARD_NAME              "TEENSY 4.1"
-  
+
   #warning Using NativeEthernet lib for Teensy 4.1. Must also use Teensy Packages Patch or error
   #define SHIELD_TYPE             "NativeEthernet Library"
-  
+
 #else
   #error For Teensy 4.1 and NativeEthernet only
 #endif
@@ -33,7 +33,7 @@
 #include <EthernetWebServer_SSL.h>
 
 #ifndef SHIELD_TYPE
-  #define SHIELD_TYPE     "Unknown Ethernet shield/library" 
+  #define SHIELD_TYPE     "Unknown Ethernet shield/library"
 #endif
 
 // Enter a MAC address and IP address for your controller below.

@@ -1,29 +1,29 @@
 /****************************************************************************************************************************
   AdvancedWebServer_NativeEthernet.h - Dead simple web-server for Ethernet shields
-  
+
   EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
 
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
-  
+
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
-  
+
   Copyright (c) 2015, Majenko Technologies
   All rights reserved.
-  
+
   Redistribution and use in source and binary forms, with or without modification,
   are permitted provided that the following conditions are met:
-  
+
   Redistributions of source code must retain the above copyright notice, this
   list of conditions and the following disclaimer.
-  
+
   Redistributions in binary form must reproduce the above copyright notice, this
   list of conditions and the following disclaimer in the documentation and/or
   other materials provided with the distribution.
-  
+
   Neither the name of Majenko Technologies nor the names of its
   contributors may be used to endorse or promote products derived from
   this software without specific prior written permission.
-  
+
   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
   ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -50,7 +50,7 @@ int reqCount = 0;                // number of requests received
 void handleRoot()
 {
 #define BUFFER_SIZE     512
-  
+
   char temp[BUFFER_SIZE];
   int sec = millis() / 1000;
   int min = sec / 60;
@@ -80,7 +80,7 @@ body { background-color: #cccccc; font-family: Arial, Helvetica, Sans-Serif; Col
 void handleNotFound()
 {
   String message = F("File Not Found\n\n");
-  
+
   message += F("URI: ");
   message += server.uri();
   message += F("\nMethod: ");
@@ -88,12 +88,12 @@ void handleNotFound()
   message += F("\nArguments: ");
   message += server.args();
   message += F("\n");
-  
+
   for (uint8_t i = 0; i < server.args(); i++)
   {
     message += " " + server.argName(i) + ": " + server.arg(i) + "\n";
   }
-  
+
   server.send(404, F("text/plain"), message);
 }
 
@@ -115,7 +115,7 @@ void drawGraph()
            "<g stroke=\"blue\">\n");
 
   char temp[70];
-  
+
   int y = rand() % 130;
 
   for (int x = 10; x < 300; x += 10)
@@ -125,7 +125,7 @@ void drawGraph()
     out += temp;
     y = y2;
   }
-  
+
   out += F("</g>\n</svg>\n");
 
   ET_LOGDEBUG1(F("String Len = "), out.length());
@@ -135,7 +135,7 @@ void drawGraph()
     ET_LOGERROR3(F("String Len > "), previousStrLen, F(", extend to"), out.length() + 48);
 
     previousStrLen = out.length() + 48;
-    
+
     out.reserve(previousStrLen);
   }
   else
@@ -147,6 +147,7 @@ void drawGraph()
 void setup(void)
 {
   Serial.begin(115200);
+
   while (!Serial);
 
   Serial.print("\nStarting AdvancedWebServer_NativeEthernet on " + String(BOARD_NAME));
@@ -159,19 +160,19 @@ void setup(void)
 
   Serial.print(F("Using mac index = "));
   Serial.println(index);
-  
+
 #if USING_STATIC_IP
   // Static IP
   //Ethernet.begin(mac, ip, gateway, subnet);
   Ethernet.begin(mac[index], ip);
-  
+
   delay(2000);
 #else
   // DHCP
   Ethernet.begin(mac[index]);
 
   delay(1000);
-#endif  
+#endif
 
   Serial.print(F("EthernetWebServer started @ IP address: "));
   Serial.println(Ethernet.localIP());

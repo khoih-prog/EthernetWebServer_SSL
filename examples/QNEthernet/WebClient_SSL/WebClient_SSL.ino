@@ -1,16 +1,16 @@
 /****************************************************************************************************************************
   WebClient_SSL.ino - Dead simple SSL WebClient for Ethernet shields
-  
+
   EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
 
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
-  
+
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
  *****************************************************************************************************************************/
 
 // This sample sketch connects to SSL website (https://www.arduino.cc/asciilogo.txt)
 // Generate trust_achors.h at https://openslab-osu.github.io/bearssl-certificate-utility/
-  
+
 #include "defines.h"
 
 // You must have SSL Certificates here
@@ -71,16 +71,16 @@ void initEthernet()
 
 #else
 
-  #if USING_DHCP
-    // Start the Ethernet connection, using DHCP
-    Serial.print("Initialize Ethernet using DHCP => ");
-    Ethernet.begin();
-  #else   
-    // Start the Ethernet connection, using static IP
-    Serial.print("Initialize Ethernet using static IP => ");
-    Ethernet.begin(myIP, myNetmask, myGW);
-    Ethernet.setDNSServerIP(mydnsServer);
-  #endif
+#if USING_DHCP
+  // Start the Ethernet connection, using DHCP
+  Serial.print("Initialize Ethernet using DHCP => ");
+  Ethernet.begin();
+#else
+  // Start the Ethernet connection, using static IP
+  Serial.print("Initialize Ethernet using static IP => ");
+  Ethernet.begin(myIP, myNetmask, myGW);
+  Ethernet.setDNSServerIP(mydnsServer);
+#endif
 
   if (!Ethernet.waitForLocalIP(5000))
   {
@@ -115,12 +115,15 @@ void setup()
 {
   // Open serial communications and wait for port to open:
   Serial.begin(115200);
+
   while (!Serial);
 
-  Serial.print("\nStarting WebClient_SSL on "); Serial.print(BOARD_NAME);
-  Serial.print(" " ); Serial.println(SHIELD_TYPE);
+  Serial.print("\nStarting WebClient_SSL on ");
+  Serial.print(BOARD_NAME);
+  Serial.print(" " );
+  Serial.println(SHIELD_TYPE);
   Serial.println(ETHERNET_WEBSERVER_SSL_VERSION);
-  
+
   // Enable mutual TLS with SSLClient
   //ethClientSSL.setMutualAuthParams(mTLS);
 
@@ -141,11 +144,11 @@ void setup()
     Serial.print("Connected to ");
 
 #if ( USE_ETHERNET || USE_ETHERNET_LARGE || USE_ETHERNET_ENC || USE_UIP_ETHERNET )
-    Serial.println(client.remoteIP());  
-#else    
-    Serial.println(server_host); 
+    Serial.println(client.remoteIP());
+#else
+    Serial.println(server_host);
 #endif
-    
+
     Serial.print("Took: ");
     Serial.println(time);
 
@@ -165,24 +168,24 @@ void setup()
 
   beginMicros = micros();
 
-  
+
 #if 1
   // For testing only to use micros() instead of analogRead()
   uint8_t rng_seeds[16];
   // take the bottom 8 bits of the analog read
-  
+
   // KH mod to use micro()
   Serial.println("Using micros()");
-  
+
   for (uint8_t i = 0; i < sizeof rng_seeds; i++)
   {
     rng_seeds[i] = static_cast<uint8_t>((uint16_t) micros() * (uint16_t) (micros() >> 8));
     Serial.print(rng_seeds[i], HEX);
     Serial.print(" ");
   }
-  
+
   Serial.println("\nUsing analogRead()");
-  
+
   for (uint8_t i = 0; i < sizeof rng_seeds; i++)
   {
     rng_seeds[i] = static_cast<uint8_t>(analogRead(rand_pin));

@@ -1,10 +1,10 @@
 /****************************************************************************************************************************
   WebClientMulti_SSL_NativeEthernet.ino - Dead simple SSL WebClient for Ethernet shields
-  
+
   EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
 
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
-  
+
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
  *****************************************************************************************************************************/
 
@@ -93,6 +93,7 @@ void setup()
 {
   // Open serial communications and wait for port to open:
   Serial.begin(115200);
+
   while (!Serial);
 
   Serial.print("\nStart WebClientMulti_SSL_NativeEthernet on " + String(BOARD_NAME));
@@ -105,12 +106,12 @@ void setup()
 
   Serial.print(F("Using mac index = "));
   Serial.println(index);
-  
+
 #if USING_STATIC_IP
   // Static IP
   //Ethernet.begin(mac, ip, gateway, subnet);
   Ethernet.begin(mac[index], ip);
-  
+
   // give the Ethernet shield 5 seconds to initialize:
   delay(5000);
 #else
@@ -118,7 +119,7 @@ void setup()
   Ethernet.begin(mac[index]);
 
   delay(2000);
-#endif  
+#endif
 
   Serial.print(F("EthernetWebServer started @ IP address: "));
   Serial.println(Ethernet.localIP());

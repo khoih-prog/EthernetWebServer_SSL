@@ -3,7 +3,7 @@
   EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
 
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
-  
+
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
   Licensed under MIT license
  ***************************************************************************************************************************************/
@@ -27,7 +27,7 @@
 #if ( defined(CORE_TEENSY) )
   // Default pin 10 to SS/CS
   #define USE_THIS_SS_PIN       10
-  
+
   #if defined(__IMXRT1062__)
     // For Teensy 4.1/4.0
     #if defined(ARDUINO_TEENSY41)
@@ -63,7 +63,7 @@
 
   #include <SPI.h>
 
-    // For RPI Pico using Mbed RP2040 core
+  // For RPI Pico using Mbed RP2040 core
   #if (USING_SPI2)
     #define USING_CUSTOM_SPI          true
 
@@ -83,15 +83,15 @@
     SPIClass SPI_New((uintptr_t)&IMXRT_LPSPI3_S, (uintptr_t)&SPIClass::spiclass_lpspi3_hardware);
     // SPI2
     //SPIClass SPI_New((uintptr_t)&IMXRT_LPSPI1_S, (uintptr_t)&SPIClass::spiclass_lpspi1_hardware);
-    
+
     #warning Using USE_THIS_SS_PIN = CUR_PIN_SS = 38
 
     #if defined(USE_THIS_SS_PIN)
       #undef USE_THIS_SS_PIN
-    #endif   
+    #endif
     #define USE_THIS_SS_PIN       CUR_PIN_SS
 
-  #endif  
+  #endif
 
 #endif
 

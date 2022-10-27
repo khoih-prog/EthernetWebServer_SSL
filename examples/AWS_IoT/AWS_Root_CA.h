@@ -63,7 +63,8 @@ static const br_x509_trust_anchor TAs[] =
     BR_X509_TA_CA,
     {
       BR_KEYTYPE_RSA,
-      { .rsa =
+      {
+        .rsa =
         {
           (unsigned char *)TA_RSA_N0, sizeof TA_RSA_N0,
           (unsigned char *)TA_RSA_E0, sizeof TA_RSA_E0,

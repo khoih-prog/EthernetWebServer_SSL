@@ -3,7 +3,7 @@
   EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
 
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
-  
+
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
   Licensed under MIT license
  ***************************************************************************************************************************************/
@@ -24,13 +24,13 @@
 #define USE_ETHERNET_ENC      false
 #define USE_CUSTOM_ETHERNET   false
 
-#if ( defined(ARDUINO_ARCH_RP2040) || defined(ARDUINO_RASPBERRY_PI_PICO) || defined(ARDUINO_ADAFRUIT_FEATHER_RP2040) || defined(ARDUINO_GENERIC_RP2040) ) 
+#if ( defined(ARDUINO_ARCH_RP2040) || defined(ARDUINO_RASPBERRY_PI_PICO) || defined(ARDUINO_ADAFRUIT_FEATHER_RP2040) || defined(ARDUINO_GENERIC_RP2040) )
   #if defined(ETHERNET_USE_RPIPICO)
     #undef ETHERNET_USE_RPIPICO
   #endif
   #define ETHERNET_USE_RPIPICO      true
 #else
-  #error Only RP2040 supported  
+  #error Only RP2040 supported
 #endif
 
 #include <SPI.h>
@@ -41,7 +41,7 @@
     #undef BOARD_NAME
   #endif
 
-  #if defined(ARDUINO_RASPBERRY_PI_PICO) 
+  #if defined(ARDUINO_RASPBERRY_PI_PICO)
     #define BOARD_NAME      "MBED RASPBERRY_PI_PICO"
   #elif defined(ARDUINO_ADAFRUIT_FEATHER_RP2040)
     #define BOARD_NAME      "MBED ADAFRUIT_FEATHER_RP2040"
@@ -54,7 +54,7 @@
   // For RPI Pico using Mbed RP2040 core
   #if (USING_SPI2)
     #define USING_CUSTOM_SPI          true
-    
+
     // SCK: GPIO14,  MOSI: GPIO15, MISO: GPIO12, SS/CS: GPIO13 for SPI1
     #define CUR_PIN_MISO              12
     #define CUR_PIN_MOSI              15
@@ -70,14 +70,14 @@
     // Be careful, Mbed SPI ctor is so weird, reversing the order => MISO, MOSI, SCK
     //arduino::MbedSPI::MbedSPI(int miso, int mosi, int sck)
     SPIClass SPI_New(CUR_PIN_MISO, CUR_PIN_MOSI, CUR_PIN_SCK);
-    
+
     //#warning Using USE_THIS_SS_PIN = CUR_PIN_SS = 13
 
     #if defined(USE_THIS_SS_PIN)
       #undef USE_THIS_SS_PIN
-    #endif   
+    #endif
     #define USE_THIS_SS_PIN       CUR_PIN_SS    //13
-     
+
   #else
     // SCK: GPIO18,  MOSI: GPIO19, MISO: GPIO16, SS/CS: GPIO17 for SPI0
     #define USE_THIS_SS_PIN       PIN_SPI_SS    //17
@@ -107,7 +107,7 @@
 #define ETHERNET_LARGE_BUFFERS
 
 //////////////////////////////////////////////////////////
-   
+
 #include "Ethernet_Generic.h"
 
 #if defined(ETHERNET_LARGE_BUFFERS)
