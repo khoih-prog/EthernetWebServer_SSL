@@ -1,6 +1,6 @@
 {
   "name": "EthernetWebServer_SSL",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "keywords": "WebServer, Ethernet, Ethernet2, Ethernet3, EthernetLarge, EtnernetENC, UIPEthernet, NativeEthernet, QNEthernet, Portenta-H7, Teensy, SAMD21, SAMD51, SAM DUE, nRF52, ESP32, ESP8266, rpi-pico, rp2040, W5x00, W5500, ENC28J60, Ethernet shield, SSL, TLS, HTTP-Client, WebSocket-Client, server, client, websocket",
   "description": "Simple TLS/SSL Ethernet WebServer, HTTP Client and WebSocket Client library for for AVR, Portenta_H7, Teensy, SAM DUE, SAMD21, SAMD51, STM32F/L/H/G/WB/MP1, nRF52 and RASPBERRY_PI_PICO boards using Ethernet shields W5100, W5200, W5500, ENC28J60 or Teensy 4.1 NativeEthernet/QNEthernet. It now supports Ethernet TLS/SSL Client. The WebServer supports HTTP/HTTPS GET and POST requests, provides argument parsing, handles one client at a time. It now provides HTTP Client and WebSocket Client. It supports Arduino boards (SAM DUE, Atmel SAM3X8E ARM Cortex-M3, SAMD21, SAMD51, ESP8266, ESP32, Adafruit nRF52, Teensy and RASPBERRY_PI_PICO boards) using Wiznet W5x00, ENC28J60 network shields or Teensy 4.1 built-in NativeEthernet/QNEthernet. Ethernet_Generic library is used as default for W5x00 with custom SPI",
   "authors":
@@ -27,12 +27,14 @@
     {
       "owner": "khoih-prog",
       "name": "Functional-Vlpp",
-      "version": "^1.0.2"
+      "version": "^1.0.2",
+      "platforms": ["*"]
     },
     {
       "owner": "khoih-prog",
       "name": "Ethernet_Generic",
-      "version": "^2.5.2"
+      "version": "^2.6.2",
+      "platforms": ["*"]
     },
     {
       "owner": "ssilverman",

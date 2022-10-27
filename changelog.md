@@ -12,6 +12,7 @@
 
 
 * [Changelog](#changelog)
+  * [Releases v1.9.3](#releases-v193)
   * [Releases v1.9.2](#releases-v192)
   * [Releases v1.9.1](#releases-v191)
   * [Releases v1.9.0](#releases-v190)
@@ -42,6 +43,14 @@
 ---
 
 ## Changelog
+
+### Releases v1.9.3
+
+1. Add support to Seeeduino nRF52840-based boards such as **Seeed XIAO_NRF52840 and XIAO_NRF52840_SENSE**, etc. using Seeed `mbed` or `nRF52` core
+2. Add astyle using `allman` style. Restyle the library
+3. Display warning only when `_ETHERNET_WEBSERVER_LOGLEVEL_` > 3
+4. Update examples
+5. Update `Packages' Patches` to add Seeeduino `nRF52` core
 
 ### Releases v1.9.2
 
