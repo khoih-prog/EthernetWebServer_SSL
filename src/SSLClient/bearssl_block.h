@@ -392,7 +392,7 @@ extern "C" {
 */
 typedef struct br_block_cbcenc_class_ br_block_cbcenc_class;
 
-struct br_block_cbcenc_class_ 
+struct br_block_cbcenc_class_
 {
   /**
      \brief Size (in bytes) of the context structure appropriate
@@ -450,7 +450,7 @@ struct br_block_cbcenc_class_
 */
 typedef struct br_block_cbcdec_class_ br_block_cbcdec_class;
 
-struct br_block_cbcdec_class_ 
+struct br_block_cbcdec_class_
 {
   /**
      \brief Size (in bytes) of the context structure appropriate
@@ -509,7 +509,7 @@ struct br_block_cbcdec_class_
 */
 typedef struct br_block_ctr_class_ br_block_ctr_class;
 
-struct br_block_ctr_class_ 
+struct br_block_ctr_class_
 {
   /**
      \brief Size (in bytes) of the context structure appropriate
@@ -578,7 +578,7 @@ struct br_block_ctr_class_
 */
 typedef struct br_block_ctrcbc_class_ br_block_ctrcbc_class;
 
-struct br_block_ctrcbc_class_ 
+struct br_block_ctrcbc_class_
 {
   /**
      \brief Size (in bytes) of the context structure appropriate
@@ -714,7 +714,7 @@ struct br_block_ctrcbc_class_
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_cbcenc_class *vtable;
@@ -730,7 +730,7 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_cbcdec_class *vtable;
@@ -747,7 +747,7 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_ctr_class *vtable;
@@ -764,7 +764,7 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_ctrcbc_class *vtable;
@@ -938,7 +938,7 @@ void br_aes_big_ctrcbc_mac(const br_aes_big_ctrcbc_keys *ctx,
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_cbcenc_class *vtable;
@@ -954,7 +954,7 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_cbcdec_class *vtable;
@@ -971,7 +971,7 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_ctr_class *vtable;
@@ -988,7 +988,7 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_ctrcbc_class *vtable;
@@ -1161,7 +1161,7 @@ void br_aes_small_ctrcbc_mac(const br_aes_small_ctrcbc_keys *ctx,
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_cbcenc_class *vtable;
@@ -1177,7 +1177,7 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_cbcdec_class *vtable;
@@ -1194,7 +1194,7 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_ctr_class *vtable;
@@ -1211,7 +1211,7 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_ctrcbc_class *vtable;
@@ -1386,7 +1386,7 @@ void br_aes_ct_ctrcbc_mac(const br_aes_ct_ctrcbc_keys *ctx,
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_cbcenc_class *vtable;
@@ -1402,7 +1402,7 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_cbcdec_class *vtable;
@@ -1419,7 +1419,7 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_ctr_class *vtable;
@@ -1436,7 +1436,7 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_ctrcbc_class *vtable;
@@ -1606,12 +1606,12 @@ void br_aes_ct64_ctrcbc_mac(const br_aes_ct64_ctrcbc_keys *ctx,
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_cbcenc_class *vtable;
 #ifndef BR_DOXYGEN_IGNORE
-  union 
+  union
   {
     unsigned char skni[16 * 15];
   } skey;
@@ -1625,12 +1625,12 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_cbcdec_class *vtable;
 #ifndef BR_DOXYGEN_IGNORE
-  union 
+  union
   {
     unsigned char skni[16 * 15];
   } skey;
@@ -1645,12 +1645,12 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_ctr_class *vtable;
 #ifndef BR_DOXYGEN_IGNORE
-  union 
+  union
   {
     unsigned char skni[16 * 15];
   } skey;
@@ -1665,12 +1665,12 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_ctrcbc_class *vtable;
 #ifndef BR_DOXYGEN_IGNORE
-  union 
+  union
   {
     unsigned char skni[16 * 15];
   } skey;
@@ -1905,12 +1905,12 @@ const br_block_ctrcbc_class *br_aes_x86ni_ctrcbc_get_vtable(void);
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_cbcenc_class *vtable;
 #ifndef BR_DOXYGEN_IGNORE
-  union 
+  union
   {
     unsigned char skni[16 * 15];
   } skey;
@@ -1924,12 +1924,12 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_cbcdec_class *vtable;
 #ifndef BR_DOXYGEN_IGNORE
-  union 
+  union
   {
     unsigned char skni[16 * 15];
   } skey;
@@ -1944,12 +1944,12 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_ctr_class *vtable;
 #ifndef BR_DOXYGEN_IGNORE
-  union 
+  union
   {
     unsigned char skni[16 * 15];
   } skey;
@@ -1964,12 +1964,12 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_ctrcbc_class *vtable;
 #ifndef BR_DOXYGEN_IGNORE
-  union 
+  union
   {
     unsigned char skni[16 * 15];
   } skey;
@@ -2195,7 +2195,7 @@ const br_block_ctrcbc_class *br_aes_pwr8_ctrcbc_get_vtable(void);
    \brief Aggregate structure large enough to be used as context for
    subkeys (CBC encryption) for all AES implementations.
 */
-typedef union 
+typedef union
 {
   const br_block_cbcenc_class *vtable;
   br_aes_big_cbcenc_keys c_big;
@@ -2210,7 +2210,7 @@ typedef union
    \brief Aggregate structure large enough to be used as context for
    subkeys (CBC decryption) for all AES implementations.
 */
-typedef union 
+typedef union
 {
   const br_block_cbcdec_class *vtable;
   br_aes_big_cbcdec_keys c_big;
@@ -2225,7 +2225,7 @@ typedef union
    \brief Aggregate structure large enough to be used as context for
    subkeys (CTR encryption and decryption) for all AES implementations.
 */
-typedef union 
+typedef union
 {
   const br_block_ctr_class *vtable;
   br_aes_big_ctr_keys c_big;
@@ -2240,7 +2240,7 @@ typedef union
    \brief Aggregate structure large enough to be used as context for
    subkeys (CTR encryption/decryption + CBC-MAC) for all AES implementations.
 */
-typedef union 
+typedef union
 {
   const br_block_ctrcbc_class *vtable;
   br_aes_big_ctrcbc_keys c_big;
@@ -2265,7 +2265,7 @@ typedef union
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_cbcenc_class *vtable;
@@ -2281,7 +2281,7 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_cbcdec_class *vtable;
@@ -2359,7 +2359,7 @@ void br_des_tab_cbcdec_run(const br_des_tab_cbcdec_keys *ctx, void *iv,
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_cbcenc_class *vtable;
@@ -2375,7 +2375,7 @@ typedef struct
    First field is a pointer to the vtable; it is set by the initialisation
    function. Other fields are not supposed to be accessed by user code.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_block_cbcdec_class *vtable;
@@ -2448,7 +2448,7 @@ void br_des_ct_cbcdec_run(const br_des_ct_cbcdec_keys *ctx, void *iv,
    \brief Aggregate structure large enough to be used as context for
    subkeys (CBC encryption) for all DES implementations.
 */
-typedef union 
+typedef union
 {
   const br_block_cbcenc_class *vtable;
   br_des_tab_cbcenc_keys tab;
@@ -2459,7 +2459,7 @@ typedef union
    \brief Aggregate structure large enough to be used as context for
    subkeys (CBC decryption) for all DES implementations.
 */
-typedef union 
+typedef union
 {
   const br_block_cbcdec_class *vtable;
   br_des_tab_cbcdec_keys c_tab;

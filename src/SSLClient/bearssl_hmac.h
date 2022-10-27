@@ -63,7 +63,7 @@ extern "C" {
    appropriate. Context initialisation and usage incurs no dynamic
    allocation, so there is no release function.
 */
-typedef struct 
+typedef struct
 {
 #ifndef BR_DOXYGEN_IGNORE
   const br_hash_class *dig_vtable;
@@ -108,7 +108,7 @@ static inline const br_hash_class *br_hmac_key_get_digest(
    is caller-allocated and has no release function since it does not
    dynamically allocate external resources. Its contents are opaque.
 */
-typedef struct 
+typedef struct
 {
 #ifndef BR_DOXYGEN_IGNORE
   br_hash_compat_context dig;

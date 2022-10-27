@@ -47,7 +47,7 @@
    reconnect to the last IPAddress, as opposed to any associated with the domain.
 */
 
-class SSLSession : public br_ssl_session_parameters 
+class SSLSession : public br_ssl_session_parameters
 {
 
   public:
@@ -56,7 +56,7 @@ class SSLSession : public br_ssl_session_parameters
 
        Sets all parameters to zero, and invalidates the session
     */
-    SSLSession(const char* hostname) : m_hostname(hostname) 
+    SSLSession(const char* hostname) : m_hostname(hostname)
     {}
 
     /**
@@ -67,13 +67,13 @@ class SSLSession : public br_ssl_session_parameters
        as if this session in invalid this value is not guarenteed
        to be reset to "".
     */
-    const String& get_hostname() const 
+    const String& get_hostname() const
     {
       return m_hostname;
     }
 
     /** @brief Returns a pointer to the ::br_ssl_session_parameters component of this class. */
-    br_ssl_session_parameters* to_br_session() 
+    br_ssl_session_parameters* to_br_session()
     {
       return (br_ssl_session_parameters *)this;
     }

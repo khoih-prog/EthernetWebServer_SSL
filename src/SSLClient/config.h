@@ -178,7 +178,7 @@
    enabling BR_ARMEL_CORTEXM_GCC also enables BR_LOMUL.
 */
 #if defined(__arm__) && defined(__thumb__)
-#define BR_ARMEL_CORTEXM_GCC   1
+  #define BR_ARMEL_CORTEXM_GCC   1
 #endif
 
 /*

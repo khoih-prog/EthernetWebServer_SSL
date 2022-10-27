@@ -225,12 +225,12 @@ extern "C" {
 /**
    \brief Aggregate structure for public keys.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Key type: `BR_KEYTYPE_RSA` or `BR_KEYTYPE_EC` */
   unsigned char key_type;
   /** \brief Actual public key. */
-  union 
+  union
   {
     /** \brief RSA public key. */
     br_rsa_public_key rsa;
@@ -244,7 +244,7 @@ typedef struct
 
    The DN is DER-encoded.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Encoded DN data. */
   unsigned char *data;
@@ -255,7 +255,7 @@ typedef struct
 /**
    \brief Trust anchor structure.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Encoded DN (X.500 name). */
   br_x500_name dn;
@@ -371,7 +371,7 @@ typedef struct
 */
 typedef struct br_x509_class_ br_x509_class;
 
-struct br_x509_class_ 
+struct br_x509_class_
 {
   /**
      \brief X.509 context size, in bytes.
@@ -482,7 +482,7 @@ struct br_x509_class_
    The "known key" engine returns an externally configured public key,
    and totally ignores the certificate contents.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Reference to the context vtable. */
   const br_x509_class *vtable;
@@ -575,7 +575,7 @@ void br_x509_knownkey_init_ec(br_x509_knownkey_context *ctx,
    does not fit in the provided buffer, then the copy is aborted and an
    error is reported.
 */
-typedef struct 
+typedef struct
 {
   /**
      \brief Element OID.
@@ -642,7 +642,7 @@ typedef struct
    The "minimal" engine performs a rudimentary but serviceable X.509 path
    validation.
 */
-typedef struct 
+typedef struct
 {
   const br_x509_class *vtable;
 
@@ -651,13 +651,13 @@ typedef struct
   br_x509_pkey pkey;
 
   /* CPU for the T0 virtual machine. */
-  struct 
+  struct
   {
     uint32_t *dp;
     uint32_t *rp;
     const unsigned char *ip;
   } cpu;
-  
+
   uint32_t dp_stack[32];
   uint32_t rp_stack[32];
   int err;
@@ -932,7 +932,7 @@ br_x509_minimal_set_name_elements(br_x509_minimal_context *ctx,
 
    Contents are opaque and shall not be accessed directly.
 */
-typedef struct 
+typedef struct
 {
 
 #ifndef BR_DOXYGEN_IGNORE
@@ -940,13 +940,13 @@ typedef struct
   br_x509_pkey pkey;
 
   /* CPU for the T0 virtual machine. */
-  struct 
+  struct
   {
     uint32_t *dp;
     uint32_t *rp;
     const unsigned char *ip;
   } cpu;
-  
+
   uint32_t dp_stack[32];
   uint32_t rp_stack[32];
   int err;
@@ -1030,11 +1030,11 @@ void br_x509_decoder_push(br_x509_decoder_context *ctx,
 static inline br_x509_pkey *
 br_x509_decoder_get_pkey(br_x509_decoder_context *ctx)
 {
-  if (ctx->decoded && ctx->err == 0) 
+  if (ctx->decoded && ctx->err == 0)
   {
     return &ctx->pkey;
-  } 
-  else 
+  }
+  else
   {
     return NULL;
   }
@@ -1053,16 +1053,16 @@ br_x509_decoder_get_pkey(br_x509_decoder_context *ctx)
 static inline int
 br_x509_decoder_last_error(br_x509_decoder_context *ctx)
 {
-  if (ctx->err != 0) 
+  if (ctx->err != 0)
   {
     return ctx->err;
   }
-  
-  if (!ctx->decoded) 
+
+  if (!ctx->decoded)
   {
     return BR_ERR_X509_TRUNCATED;
   }
-  
+
   return 0;
 }
 
@@ -1116,7 +1116,7 @@ br_x509_decoder_get_signer_hash_id(br_x509_decoder_context *ctx)
 /**
    \brief Type for an X.509 certificate (DER-encoded).
 */
-typedef struct 
+typedef struct
 {
   /** \brief The DER-encoded certificate data. */
   unsigned char *data;
@@ -1133,24 +1133,24 @@ typedef struct
 
    Structure contents are opaque and shall not be accessed directly.
 */
-typedef struct 
+typedef struct
 {
 #ifndef BR_DOXYGEN_IGNORE
   /* Structure for returning the private key. */
-  union 
+  union
   {
     br_rsa_private_key rsa;
     br_ec_private_key ec;
   } key;
 
   /* CPU for the T0 virtual machine. */
-  struct 
+  struct
   {
     uint32_t *dp;
     uint32_t *rp;
     const unsigned char *ip;
   } cpu;
-  
+
   uint32_t dp_stack[32];
   uint32_t rp_stack[32];
   int err;
@@ -1205,16 +1205,16 @@ void br_skey_decoder_push(br_skey_decoder_context *ctx,
 static inline int
 br_skey_decoder_last_error(const br_skey_decoder_context *ctx)
 {
-  if (ctx->err != 0) 
+  if (ctx->err != 0)
   {
     return ctx->err;
   }
-  
-  if (ctx->key_type == 0) 
+
+  if (ctx->key_type == 0)
   {
     return BR_ERR_X509_TRUNCATED;
   }
-  
+
   return 0;
 }
 
@@ -1230,11 +1230,11 @@ br_skey_decoder_last_error(const br_skey_decoder_context *ctx)
 static inline int
 br_skey_decoder_key_type(const br_skey_decoder_context *ctx)
 {
-  if (ctx->err == 0) 
+  if (ctx->err == 0)
   {
     return ctx->key_type;
-  } 
-  else 
+  }
+  else
   {
     return 0;
   }
@@ -1254,11 +1254,11 @@ br_skey_decoder_key_type(const br_skey_decoder_context *ctx)
 static inline const br_rsa_private_key *
 br_skey_decoder_get_rsa(const br_skey_decoder_context *ctx)
 {
-  if (ctx->err == 0 && ctx->key_type == BR_KEYTYPE_RSA) 
+  if (ctx->err == 0 && ctx->key_type == BR_KEYTYPE_RSA)
   {
     return &ctx->key.rsa;
-  } 
-  else 
+  }
+  else
   {
     return NULL;
   }
@@ -1278,11 +1278,11 @@ br_skey_decoder_get_rsa(const br_skey_decoder_context *ctx)
 static inline const br_ec_private_key *
 br_skey_decoder_get_ec(const br_skey_decoder_context *ctx)
 {
-  if (ctx->err == 0 && ctx->key_type == BR_KEYTYPE_EC) 
+  if (ctx->err == 0 && ctx->key_type == BR_KEYTYPE_EC)
   {
     return &ctx->key.ec;
-  } 
-  else 
+  }
+  else
   {
     return NULL;
   }

@@ -237,7 +237,8 @@ extern "C" {
    MAC, and keeping track of the record sequence number.
 */
 typedef struct br_sslrec_in_class_ br_sslrec_in_class;
-struct br_sslrec_in_class_ {
+struct br_sslrec_in_class_
+{
   /**
      \brief Context size (in bytes).
   */
@@ -292,7 +293,7 @@ struct br_sslrec_in_class_ {
 */
 typedef struct br_sslrec_out_class_ br_sslrec_out_class;
 
-struct br_sslrec_out_class_ 
+struct br_sslrec_out_class_
 {
   /**
      \brief Context size (in bytes).
@@ -347,7 +348,7 @@ struct br_sslrec_out_class_
    The no-encryption engine processes outgoing records during the initial
    handshake, before encryption is applied.
 */
-typedef struct 
+typedef struct
 {
   /** \brief No-encryption engine vtable. */
   const br_sslrec_out_class *vtable;
@@ -369,7 +370,7 @@ extern const br_sslrec_out_class br_sslrec_out_clear_vtable;
 */
 typedef struct br_sslrec_in_cbc_class_ br_sslrec_in_cbc_class;
 
-struct br_sslrec_in_cbc_class_ 
+struct br_sslrec_in_cbc_class_
 {
   /**
      \brief Superclass, as first vtable field.
@@ -410,7 +411,7 @@ struct br_sslrec_in_cbc_class_
 */
 typedef struct br_sslrec_out_cbc_class_ br_sslrec_out_cbc_class;
 
-struct br_sslrec_out_cbc_class_ 
+struct br_sslrec_out_cbc_class_
 {
   /**
      \brief Superclass, as first vtable field.
@@ -447,19 +448,19 @@ struct br_sslrec_out_cbc_class_
    The first field points to the vtable. The other fields are opaque
    and shall not be accessed directly.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable. */
   const br_sslrec_in_cbc_class *vtable;
 #ifndef BR_DOXYGEN_IGNORE
   uint64_t seq;
-  union 
+  union
   {
     const br_block_cbcdec_class *vtable;
     br_aes_gen_cbcdec_keys aes;
     br_des_gen_cbcdec_keys des;
   } bc;
-  
+
   br_hmac_key_context mac;
   size_t mac_len;
   unsigned char iv[16];
@@ -479,19 +480,19 @@ extern const br_sslrec_in_cbc_class br_sslrec_in_cbc_vtable;
    The first field points to the vtable. The other fields are opaque
    and shall not be accessed directly.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable. */
   const br_sslrec_out_cbc_class *vtable;
 #ifndef BR_DOXYGEN_IGNORE
   uint64_t seq;
-  union 
+  union
   {
     const br_block_cbcenc_class *vtable;
     br_aes_gen_cbcenc_keys aes;
     br_des_gen_cbcenc_keys des;
   } bc;
-  
+
   br_hmac_key_context mac;
   size_t mac_len;
   unsigned char iv[16];
@@ -516,7 +517,7 @@ extern const br_sslrec_out_cbc_class br_sslrec_out_cbc_vtable;
 */
 typedef struct br_sslrec_in_gcm_class_ br_sslrec_in_gcm_class;
 
-struct br_sslrec_in_gcm_class_ 
+struct br_sslrec_in_gcm_class_
 {
   /**
      \brief Superclass, as first vtable field.
@@ -552,7 +553,7 @@ struct br_sslrec_in_gcm_class_
 */
 typedef struct br_sslrec_out_gcm_class_ br_sslrec_out_gcm_class;
 
-struct br_sslrec_out_gcm_class_ 
+struct br_sslrec_out_gcm_class_
 {
   /**
      \brief Superclass, as first vtable field.
@@ -586,24 +587,24 @@ struct br_sslrec_out_gcm_class_
    The first field points to the vtable. The other fields are opaque
    and shall not be accessed directly.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable. */
-  union 
+  union
   {
     const void *gen;
     const br_sslrec_in_gcm_class *in;
     const br_sslrec_out_gcm_class *out;
   } vtable;
-  
+
 #ifndef BR_DOXYGEN_IGNORE
   uint64_t seq;
-  union 
+  union
   {
     const br_block_ctr_class *vtable;
     br_aes_gen_ctr_keys aes;
   } bc;
-  
+
   br_ghash gh;
   unsigned char iv[4];
   unsigned char h[16];
@@ -632,7 +633,7 @@ extern const br_sslrec_out_gcm_class br_sslrec_out_gcm_vtable;
 */
 typedef struct br_sslrec_in_chapol_class_ br_sslrec_in_chapol_class;
 
-struct br_sslrec_in_chapol_class_ 
+struct br_sslrec_in_chapol_class_
 {
   /**
      \brief Superclass, as first vtable field.
@@ -666,7 +667,7 @@ struct br_sslrec_in_chapol_class_
 */
 typedef struct br_sslrec_out_chapol_class_ br_sslrec_out_chapol_class;
 
-struct br_sslrec_out_chapol_class_ 
+struct br_sslrec_out_chapol_class_
 {
   /**
      \brief Superclass, as first vtable field.
@@ -698,16 +699,16 @@ struct br_sslrec_out_chapol_class_
    The first field points to the vtable. The other fields are opaque
    and shall not be accessed directly.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable. */
-  union 
+  union
   {
     const void *gen;
     const br_sslrec_in_chapol_class *in;
     const br_sslrec_out_chapol_class *out;
   } vtable;
-  
+
 #ifndef BR_DOXYGEN_IGNORE
   uint64_t seq;
   unsigned char key[32];
@@ -739,7 +740,7 @@ extern const br_sslrec_out_chapol_class br_sslrec_out_chapol_vtable;
 */
 typedef struct br_sslrec_in_ccm_class_ br_sslrec_in_ccm_class;
 
-struct br_sslrec_in_ccm_class_ 
+struct br_sslrec_in_ccm_class_
 {
   /**
      \brief Superclass, as first vtable field.
@@ -774,7 +775,7 @@ struct br_sslrec_in_ccm_class_
 */
 typedef struct br_sslrec_out_ccm_class_ br_sslrec_out_ccm_class;
 
-struct br_sslrec_out_ccm_class_ 
+struct br_sslrec_out_ccm_class_
 {
   /**
      \brief Superclass, as first vtable field.
@@ -807,24 +808,24 @@ struct br_sslrec_out_ccm_class_
    The first field points to the vtable. The other fields are opaque
    and shall not be accessed directly.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable. */
-  union 
+  union
   {
     const void *gen;
     const br_sslrec_in_ccm_class *in;
     const br_sslrec_out_ccm_class *out;
   } vtable;
-  
+
 #ifndef BR_DOXYGEN_IGNORE
   uint64_t seq;
-  union 
+  union
   {
     const br_block_ctrcbc_class *vtable;
     br_aes_gen_ctrcbc_keys aes;
   } bc;
-  
+
   unsigned char iv[4];
   size_t tag_len;
 #endif
@@ -845,7 +846,7 @@ extern const br_sslrec_out_ccm_class br_sslrec_out_ccm_vtable;
 /**
    \brief Type for session parameters, to be saved for session resumption.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Session ID buffer. */
   unsigned char session_id[32];
@@ -881,7 +882,7 @@ typedef struct
 
    Structure contents are opaque and shall not be accessed directly.
 */
-typedef struct 
+typedef struct
 {
 #ifndef BR_DOXYGEN_IGNORE
   /*
@@ -952,7 +953,7 @@ typedef struct
   /*
      Record handler contexts.
   */
-  union 
+  union
   {
     const br_sslrec_in_class *vtable;
     br_sslrec_in_cbc_context cbc;
@@ -960,8 +961,8 @@ typedef struct
     br_sslrec_chapol_context chapol;
     br_sslrec_ccm_context ccm;
   } in;
-  
-  union 
+
+  union
   {
     const br_sslrec_out_class *vtable;
     br_sslrec_out_clear_context clear;
@@ -1050,13 +1051,13 @@ typedef struct
      RSA-4096, this means at least 512 bytes. (Other pad usages
      require its length to be at least 256.)
   */
-  struct 
+  struct
   {
     uint32_t *dp;
     uint32_t *rp;
     const unsigned char *ip;
   } cpu;
-  
+
   uint32_t dp_stack[32];
   uint32_t rp_stack[32];
   unsigned char pad[512];
@@ -2322,7 +2323,7 @@ typedef struct br_ssl_client_context_ br_ssl_client_context;
 /**
    \brief Type for the client certificate, if requested by the server.
 */
-typedef struct 
+typedef struct
 {
   /**
      \brief Authentication type.
@@ -2398,7 +2399,7 @@ typedef struct
 */
 typedef struct br_ssl_client_certificate_class_ br_ssl_client_certificate_class;
 
-struct br_ssl_client_certificate_class_ 
+struct br_ssl_client_certificate_class_
 {
   /**
      \brief Context size (in bytes).
@@ -2600,7 +2601,7 @@ struct br_ssl_client_certificate_class_
    Apart from the first field (vtable pointer), its contents are
    opaque and shall not be accessed directly.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable. */
   const br_ssl_client_certificate_class *vtable;
@@ -2624,7 +2625,7 @@ typedef struct
    Apart from the first field (vtable pointer), its contents are
    opaque and shall not be accessed directly.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable. */
   const br_ssl_client_certificate_class *vtable;
@@ -2648,7 +2649,7 @@ typedef struct
    a pointer to that field. The other structure fields are opaque and
    must not be accessed directly.
 */
-struct br_ssl_client_context_ 
+struct br_ssl_client_context_
 {
   /**
      \brief The encapsulated engine context.
@@ -2695,7 +2696,7 @@ struct br_ssl_client_context_
      For the core certificate handlers, thus avoiding (in most
      cases) the need for an externally provided policy context.
   */
-  union 
+  union
   {
     const br_ssl_client_certificate_class *vtable;
     br_ssl_client_certificate_rsa_context single_rsa;
@@ -3086,7 +3087,7 @@ typedef struct br_ssl_server_context_ br_ssl_server_context;
    \brief Type for the server policy choices, taken after analysis of
    the client message (ClientHello).
 */
-typedef struct 
+typedef struct
 {
   /**
      \brief Cipher suite to use with that client.
@@ -3166,7 +3167,7 @@ typedef struct
 */
 typedef struct br_ssl_server_policy_class_ br_ssl_server_policy_class;
 
-struct br_ssl_server_policy_class_ 
+struct br_ssl_server_policy_class_
 {
   /**
      \brief Context size (in bytes).
@@ -3316,7 +3317,7 @@ struct br_ssl_server_policy_class_
    Apart from the first field (vtable pointer), its contents are
    opaque and shall not be accessed directly.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable. */
   const br_ssl_server_policy_class *vtable;
@@ -3344,7 +3345,7 @@ typedef struct
    Apart from the first field (vtable pointer), its contents are
    opaque and shall not be accessed directly.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable. */
   const br_ssl_server_policy_class *vtable;
@@ -3372,7 +3373,7 @@ typedef struct
 */
 typedef struct br_ssl_session_cache_class_ br_ssl_session_cache_class;
 
-struct br_ssl_session_cache_class_ 
+struct br_ssl_session_cache_class_
 {
   /**
      \brief Context size (in bytes).
@@ -3428,7 +3429,7 @@ struct br_ssl_session_cache_class_
    Apart from the first field (vtable pointer), the structure
    contents are opaque and shall not be accessed directly.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable. */
   const br_ssl_session_cache_class *vtable;
@@ -3477,7 +3478,7 @@ void br_ssl_session_cache_lru_forget(
    a pointer to that field. The other structure fields are opaque and
    must not be accessed directly.
 */
-struct br_ssl_server_context_ 
+struct br_ssl_server_context_
 {
   /**
      \brief The encapsulated engine context.
@@ -3527,7 +3528,7 @@ struct br_ssl_server_context_
      For the core handlers, thus avoiding (in most cases) the
      need for an externally provided policy context.
   */
-  union 
+  union
   {
     const br_ssl_server_policy_class *vtable;
     br_ssl_server_policy_rsa_context single_rsa;
@@ -3963,7 +3964,7 @@ br_ssl_server_set_trust_anchor_names(br_ssl_server_context *cc,
 */
 static inline void
 br_ssl_server_set_trust_anchor_names_alt(br_ssl_server_context *cc,
-    const br_x509_trust_anchor *tas, size_t num)
+                                         const br_x509_trust_anchor *tas, size_t num)
 {
   cc->ta_names = NULL;
   cc->tas = tas;
@@ -4028,7 +4029,7 @@ int br_ssl_server_reset(br_ssl_server_context *cc);
    This structure is initialised with `br_sslio_init()`. Its contents
    are opaque and shall not be accessed directly.
 */
-typedef struct 
+typedef struct
 {
 #ifndef BR_DOXYGEN_IGNORE
   br_ssl_engine_context *engine;

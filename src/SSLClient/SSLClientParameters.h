@@ -48,7 +48,7 @@
    ECC certificates if possible, as SSLClientParameters will make a copy of both the
    certificate and the private key in memory, and ECC keys tend to be smaller than RSA ones.
 */
-class SSLClientParameters 
+class SSLClientParameters
 {
   public:
     /**
@@ -81,7 +81,8 @@ class SSLClientParameters
        @param key_len The number of bytes in key_pem
        @return An SSLClientParameters context, to be used with SSLClient::setMutualAuthParams.
     */
-    static SSLClientParameters fromPEM(const char* cert_pem, const size_t cert_len, const char* key_pem, const size_t key_len);
+    static SSLClientParameters fromPEM(const char* cert_pem, const size_t cert_len, const char* key_pem,
+                                       const size_t key_len);
 
     /**
        @brief Create mutual authentication parameters from a DER certificate and private key
@@ -109,28 +110,29 @@ class SSLClientParameters
        @param key_len The number of bytes in key_ders
        @return An SSLClientParameters context, to be used with SSLClient::setMutualAuthParams.
     */
-    static SSLClientParameters fromDER(const char* cert_der, const size_t cert_len, const char* key_der, const size_t key_len);
+    static SSLClientParameters fromDER(const char* cert_der, const size_t cert_len, const char* key_der,
+                                       const size_t key_len);
 
     /** mTLS information used by SSLClient during authentication */
-    const br_x509_certificate* getCertChain() const 
+    const br_x509_certificate* getCertChain() const
     {
       return &m_cert_struct;
     }
 
     /** mTLS information used by SSLClient during authentication */
-    int getCertType() const 
+    int getCertType() const
     {
       return br_skey_decoder_key_type(&m_key_struct);
     }
 
     /** mTLS information used by SSLClient during authentication */
-    const br_ec_private_key* getECKey() const 
+    const br_ec_private_key* getECKey() const
     {
       return br_skey_decoder_get_ec(&m_key_struct);
     }
 
     /** mTLS information used by SSLClient during authentication */
-    const br_rsa_private_key* getRSAKey() const 
+    const br_rsa_private_key* getRSAKey() const
     {
       return br_skey_decoder_get_rsa(&m_key_struct);
     }

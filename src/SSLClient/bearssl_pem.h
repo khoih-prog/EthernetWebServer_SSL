@@ -109,11 +109,11 @@ extern "C" {
 
    Contents are opaque (they should not be accessed directly).
 */
-typedef struct 
+typedef struct
 {
 #ifndef BR_DOXYGEN_IGNORE
   /* CPU for the T0 virtual machine. */
-  struct 
+  struct
   {
     uint32_t *dp;
     uint32_t *rp;

@@ -146,7 +146,7 @@
    names. Some of the options can be explicitly set in the internal
    `"config.h"` file.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Configurable option name. */
   const char *name;

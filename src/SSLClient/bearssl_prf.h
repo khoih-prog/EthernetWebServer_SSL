@@ -62,7 +62,7 @@ extern "C" {
    all). If the chunk length is zero, then the pointer to the chunk data
    may be `NULL`.
 */
-typedef struct 
+typedef struct
 {
   /**
      \brief Pointer to the chunk data.

@@ -33,7 +33,7 @@
    Check out README.md for more info.
 */
 
-class EthernetSSLClient : public Client 
+class EthernetSSLClient : public Client
 {
   public:
     /**
@@ -44,7 +44,7 @@ class EthernetSSLClient : public Client
        checking the errors, you can do so with EthernetSSLClient::getWriteError(),
        which will return one of these values.
     */
-    enum Error 
+    enum Error
     {
       SSL_OK = 0,
       /** The underlying client failed to connect, probably not an issue with SSL */
@@ -67,7 +67,7 @@ class EthernetSSLClient : public Client
        Use these values when initializing EthernetSSLClient to set how many logs you
        would like to see in the Serial monitor.
     */
-    enum DebugLevel 
+    enum DebugLevel
     {
       /** No logging output */
       SSL_NONE = 0,
@@ -212,9 +212,9 @@ class EthernetSSLClient : public Client
        fails to become ready for writing data.
     */
     size_t write(const uint8_t *buf, size_t size) override;
-    
+
     /** @see EthernetSSLClient::write(uint8_t*, size_t) */
-    size_t write(uint8_t b) override 
+    size_t write(uint8_t b) override
     {
       return write(&b, 1);
     }
@@ -265,10 +265,10 @@ class EthernetSSLClient : public Client
        @brief Read a single byte, or -1 if none is available.
        @see EthernetSSLClient::read(uint8_t*, size_t)
     */
-    int read() override 
+    int read() override
     {
       uint8_t read_val;
-      
+
       return read(&read_val, 1) > 0 ? read_val : -1;
     };
 
@@ -361,7 +361,7 @@ class EthernetSSLClient : public Client
 
         @returns The SessionCache template parameter.
     */
-    size_t getSessionCount() const 
+    size_t getSessionCount() const
     {
       return m_sessions.size();
     }
@@ -371,13 +371,13 @@ class EthernetSSLClient : public Client
 
        @returns true if connected, false if not
     */
-    operator bool() 
+    operator bool()
     {
       return connected() > 0;
     }
 
     /** @brief Returns a reference to the client object stored in this class. Take care not to break it. */
-    Client& getClient() 
+    Client& getClient()
     {
       return m_client;
     }
@@ -386,7 +386,7 @@ class EthernetSSLClient : public Client
        @brief Set the timeout when waiting for an SSL response.
        @param t The timeout value, in milliseconds (defaults to 30 seconds if not set). Do not set to zero.
     */
-    void setTimeout(unsigned int t) 
+    void setTimeout(unsigned int t)
     {
       m_timeout = t;
     }
@@ -395,33 +395,33 @@ class EthernetSSLClient : public Client
        @brief Get the timeout when waiting for an SSL response.
        @returns The timeout value in milliseconds.
     */
-    unsigned int getTimeout() const 
+    unsigned int getTimeout() const
     {
       return m_timeout;
     }
-    
-		/**
-    @brief Change the time used during x509 verification to a different value.
 
-    This function directly calls br_x509_minimal_set_time to change the validation
-    time used by the minimal verification engine. You can use this function if the default value
-    of the compile time is causing issues. See https://bearssl.org/apidoc/bearssl__x509_8h.html#a7f3558b1999ce904084d578700b1002c
-    for more information what this function does and how to use it.
+    /**
+      @brief Change the time used during x509 verification to a different value.
 
-    @param days Days are counted in a proleptic Gregorian calendar since January 1st, 0 AD.
-    @param seconds Seconds are counted since midnight, from 0 to 86400 (a count of 86400 is possible only if a leap second happened).
+      This function directly calls br_x509_minimal_set_time to change the validation
+      time used by the minimal verification engine. You can use this function if the default value
+      of the compile time is causing issues. See https://bearssl.org/apidoc/bearssl__x509_8h.html#a7f3558b1999ce904084d578700b1002c
+      for more information what this function does and how to use it.
+
+      @param days Days are counted in a proleptic Gregorian calendar since January 1st, 0 AD.
+      @param seconds Seconds are counted since midnight, from 0 to 86400 (a count of 86400 is possible only if a leap second happened).
     */
-    
+
     void setVerificationTime(uint32_t days, uint32_t seconds);
 
   private:
     /** @brief Returns an instance of m_client that is polymorphic and can be used by EthernetSSLClient */
-    Client& get_arduino_client() 
+    Client& get_arduino_client()
     {
       return m_client;
     }
-    
-    const Client& get_arduino_client() const 
+
+    const Client& get_arduino_client() const
     {
       return m_client;
     }
@@ -451,12 +451,12 @@ class EthernetSSLClient : public Client
 
     /** @brief debugging print function, only prints if m_debug is true */
     template<typename T>
-    void m_print(const T str, const char* func_name, const DebugLevel level) const 
+    void m_print(const T str, const char* func_name, const DebugLevel level) const
     {
       // check the current debug level and serial status
-      if (level > m_debug || !Serial) 
+      if (level > m_debug || !Serial)
         return;
-        
+
       // print prefix
       m_print_prefix(func_name, level);
       // print the message
@@ -465,19 +465,19 @@ class EthernetSSLClient : public Client
 
     /** @brief Prints a info message to serial, if info messages are enabled */
     template<typename T>
-    void m_info(const T str, const char* func_name) const 
+    void m_info(const T str, const char* func_name) const
     {
       m_print(str, func_name, SSL_INFO);
     }
 
     template<typename T>
-    void m_warn(const T str, const char* func_name) const 
+    void m_warn(const T str, const char* func_name) const
     {
       m_print(str, func_name, SSL_WARN);
     }
 
     template<typename T>
-    void m_error(const T str, const char* func_name) const 
+    void m_error(const T str, const char* func_name) const
     {
       m_print(str, func_name, SSL_ERROR);
     }
@@ -487,7 +487,7 @@ class EthernetSSLClient : public Client
     //============================================
     // create a reference the client
     Client& m_client;
-    
+
     // also store an array of SSLSessions, so we can resume communication with multiple websites
     std::vector<SSLSession> m_sessions;
     // as well as the maximmum number of sessions we can store
@@ -520,7 +520,7 @@ class EthernetSSLClient : public Client
     unsigned char m_iobuf[2048];
     //unsigned char m_iobuf[4096];
     //////
-    
+
     // store the index of where we are writing in the buffer
     // so we can send our records all at once to prevent
     // weird timing issues

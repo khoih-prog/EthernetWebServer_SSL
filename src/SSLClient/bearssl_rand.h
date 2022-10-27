@@ -133,7 +133,7 @@ extern "C" {
 */
 typedef struct br_prng_class_ br_prng_class;
 
-struct br_prng_class_ 
+struct br_prng_class_
 {
   /**
      \brief Size (in bytes) of the context structure appropriate for
@@ -195,7 +195,7 @@ struct br_prng_class_
    The context contents are opaque, except the first field, which
    supports OOP.
 */
-typedef struct 
+typedef struct
 {
   /**
      \brief Pointer to the vtable.
@@ -326,7 +326,7 @@ br_prng_seeder br_prng_seeder_system(const char **name);
    The context contents are opaque, except the first field, which
    supports OOP.
 */
-typedef struct 
+typedef struct
 {
   /**
      \brief Pointer to the vtable.

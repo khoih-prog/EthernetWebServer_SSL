@@ -71,7 +71,7 @@ br_client_init_TLS12_only(br_ssl_client_context *cc,
      -- AES-128 is preferred over AES-256 (AES-128 is already
         strong enough, and AES-256 is 40% more expensive).
   */
-  static const uint16_t suites[] = 
+  static const uint16_t suites[] =
   {
     BR_TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,
     BR_TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256,
@@ -405,7 +405,7 @@ br_client_init_TLS12_only(br_ssl_client_context *cc,
      The trust an
   */
   memset(xc, 0, sizeof * xc);
-  
+
   br_x509_minimal_init(xc, &br_sha256_vtable,
                        trust_anchors, trust_anchors_num);
 

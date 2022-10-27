@@ -179,7 +179,7 @@ extern "C" {
 */
 typedef struct br_aead_class_ br_aead_class;
 
-struct br_aead_class_ 
+struct br_aead_class_
 {
 
   /**
@@ -354,7 +354,7 @@ struct br_aead_class_
    GCM context structure. It is up to the caller to allocate and
    initialise that block cipher context.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_aead_class *vtable;
@@ -578,7 +578,7 @@ extern const br_aead_class br_gcm_vtable;
    EAX context structure. It is up to the caller to allocate and
    initialise that block cipher context.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Pointer to vtable for this context. */
   const br_aead_class *vtable;
@@ -604,7 +604,7 @@ typedef struct
    for lower per-message overhead. Captured values do not depend on
    the nonce.
 */
-typedef struct 
+typedef struct
 {
 #ifndef BR_DOXYGEN_IGNORE
   unsigned char st[3][16];
@@ -898,7 +898,7 @@ extern const br_aead_class br_eax_vtable;
    CCM context structure. It is up to the caller to allocate and
    initialise that block cipher context.
 */
-typedef struct 
+typedef struct
 {
 #ifndef BR_DOXYGEN_IGNORE
   const br_block_ctrcbc_class **bctx;

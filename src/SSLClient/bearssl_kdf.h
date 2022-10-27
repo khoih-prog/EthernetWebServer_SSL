@@ -116,10 +116,10 @@ extern "C" {
    appropriate. Context initialisation and usage incurs no dynamic
    allocation, so there is no release function.
 */
-typedef struct 
+typedef struct
 {
 #ifndef BR_DOXYGEN_IGNORE
-  union 
+  union
   {
     br_hmac_context hmac_ctx;
     br_hmac_key_context prk_ctx;
@@ -215,7 +215,7 @@ size_t br_hkdf_produce(br_hkdf_context *hc,
    appropriate. Context initialisation and usage incurs no dynamic
    allocation, so there is no release function.
 */
-typedef struct 
+typedef struct
 {
 #ifndef BR_DOXYGEN_IGNORE
   unsigned char dbuf[200];

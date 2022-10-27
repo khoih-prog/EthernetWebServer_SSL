@@ -27,33 +27,33 @@
 static const unsigned char *
 api_generator(int curve, size_t *len)
 {
-  if (curve == BR_EC_secp256r1) 
+  if (curve == BR_EC_secp256r1)
   {
     return br_ec_p256_m15.generator(curve, len);
   }
-  
+
   return br_ec_prime_i15.generator(curve, len);
 }
 
 static const unsigned char *
 api_order(int curve, size_t *len)
 {
-  if (curve == BR_EC_secp256r1) 
+  if (curve == BR_EC_secp256r1)
   {
     return br_ec_p256_m15.order(curve, len);
   }
-  
+
   return br_ec_prime_i15.order(curve, len);
 }
 
 static size_t
 api_xoff(int curve, size_t *len)
 {
-  if (curve == BR_EC_secp256r1) 
+  if (curve == BR_EC_secp256r1)
   {
     return br_ec_p256_m15.xoff(curve, len);
   }
-  
+
   return br_ec_prime_i15.xoff(curve, len);
 }
 
@@ -61,9 +61,11 @@ static uint32_t
 api_mul(unsigned char *G, size_t Glen,
         const unsigned char *kb, size_t kblen, int curve)
 {
-  if (curve == BR_EC_secp256r1) {
+  if (curve == BR_EC_secp256r1)
+  {
     return br_ec_p256_m15.mul(G, Glen, kb, kblen, curve);
   }
+
   return br_ec_prime_i15.mul(G, Glen, kb, kblen, curve);
 }
 
@@ -71,11 +73,11 @@ static size_t
 api_mulgen(unsigned char *R,
            const unsigned char *x, size_t xlen, int curve)
 {
-  if (curve == BR_EC_secp256r1) 
+  if (curve == BR_EC_secp256r1)
   {
     return br_ec_p256_m15.mulgen(R, x, xlen, curve);
   }
-  
+
   return br_ec_prime_i15.mulgen(R, x, xlen, curve);
 }
 
@@ -84,18 +86,18 @@ api_muladd(unsigned char *A, const unsigned char *B, size_t len,
            const unsigned char *x, size_t xlen,
            const unsigned char *y, size_t ylen, int curve)
 {
-  if (curve == BR_EC_secp256r1) 
+  if (curve == BR_EC_secp256r1)
   {
     return br_ec_p256_m15.muladd(A, B, len,
                                  x, xlen, y, ylen, curve);
   }
-  
+
   return br_ec_prime_i15.muladd(A, B, len,
                                 x, xlen, y, ylen, curve);
 }
 
 /* see bearssl_ec.h */
-const br_ec_impl br_ec_prime_fast_256 = 
+const br_ec_impl br_ec_prime_fast_256 =
 {
   (uint32_t)0x03800000,
   &api_generator,

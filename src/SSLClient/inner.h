@@ -37,7 +37,7 @@
    good reasons.
 */
 #if _MSC_VER
-#pragma warning( disable : 4146 )
+  #pragma warning( disable : 4146 )
 #endif
 
 /*
@@ -165,7 +165,7 @@
 #ifndef BR_GCC
   #if __GNUC__ && !__clang__
     #define BR_GCC   1
-    
+
     #if __GNUC__ > 4
       #define BR_GCC_5_0   1
     #elif __GNUC__ == 4 && __GNUC_MINOR__ >= 9
@@ -181,7 +181,7 @@
     #elif __GNUC__ == 4 && __GNUC_MINOR__ >= 4
       #define BR_GCC_4_4   1
     #endif
-    
+
     #if BR_GCC_5_0
       #define BR_GCC_4_9   1
     #endif
@@ -209,13 +209,13 @@
 #ifndef BR_CLANG
   #if __clang__
     #define BR_CLANG   1
-    
+
     #if __clang_major__ > 3 || (__clang_major__ == 3 && __clang_minor__ >= 8)
       #define BR_CLANG_3_8   1
     #elif __clang_major__ == 3 && __clang_minor__ >= 7
       #define BR_CLANG_3_7   1
     #endif
-    
+
     #if BR_CLANG_3_8
       #define BR_CLANG_3_7   1
     #endif
@@ -228,11 +228,11 @@
 #ifndef BR_MSC
   #if _MSC_VER
     #define BR_MSC   1
-    
+
     #if _MSC_VER >= 1900
       #define BR_MSC_2015   1
     #elif _MSC_VER >= 1800
-    # define BR_MSC_2013   1
+      #define BR_MSC_2013   1
     #elif _MSC_VER >= 1700
       #define BR_MSC_2012   1
     #elif _MSC_VER >= 1600
@@ -242,7 +242,7 @@
     #elif _MSC_VER >= 1400
       #define BR_MSC_2005   1
     #endif
-    
+
     #if BR_MSC_2015
       #define BR_MSC_2013   1
     #endif
@@ -337,12 +337,12 @@
 #endif
 
 #ifndef BR_USE_GETENTROPY
-  #if (defined __linux__ \
+#if (defined __linux__ \
     && (__GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 25))) \
     || (defined __FreeBSD__ && __FreeBSD__ >= 12) \
     || defined __OpenBSD__
-    #define BR_USE_GETENTROPY   1
-  #endif
+#define BR_USE_GETENTROPY   1
+#endif
 #endif
 
 #ifndef BR_USE_WIN32_RAND
@@ -465,19 +465,19 @@
    "right".
 */
 
-typedef union 
+typedef union
 {
   uint16_t u;
   unsigned char b[sizeof(uint16_t)];
 } br_union_u16;
 
-typedef union 
+typedef union
 {
   uint32_t u;
   unsigned char b[sizeof(uint32_t)];
 } br_union_u32;
 
-typedef union 
+typedef union
 {
   uint64_t u;
   unsigned char b[sizeof(uint64_t)];
@@ -520,7 +520,7 @@ br_dec16le(const void *src)
   const unsigned char *buf;
 
   buf = src;
-  
+
   return (unsigned)buf[0] | ((unsigned)buf[1] << 8);
 #endif
 }
@@ -534,7 +534,7 @@ br_dec16be(const void *src)
   const unsigned char *buf;
 
   buf = src;
-  
+
   return ((unsigned)buf[0] << 8) | (unsigned)buf[1];
 #endif
 }
@@ -580,7 +580,7 @@ br_dec32le(const void *src)
   const unsigned char *buf;
 
   buf = src;
-  
+
   return (uint32_t)buf[0]
          | ((uint32_t)buf[1] << 8)
          | ((uint32_t)buf[2] << 16)
@@ -597,7 +597,7 @@ br_dec32be(const void *src)
   const unsigned char *buf;
 
   buf = src;
-  
+
   return ((uint32_t)buf[0] << 24)
          | ((uint32_t)buf[1] << 16)
          | ((uint32_t)buf[2] << 8)
@@ -642,7 +642,7 @@ br_dec64le(const void *src)
   const unsigned char *buf;
 
   buf = src;
-  
+
   return (uint64_t)br_dec32le(buf)
          | ((uint64_t)br_dec32le(buf + 4) << 32);
 #endif
@@ -657,7 +657,7 @@ br_dec64be(const void *src)
   const unsigned char *buf;
 
   buf = src;
-  
+
   return ((uint64_t)br_dec32be(buf) << 32)
          | (uint64_t)br_dec32be(buf + 4);
 #endif
@@ -689,7 +689,7 @@ br_swap32(uint32_t x)
 {
   x = ((x & (uint32_t)0x00FF00FF) << 8)
       | ((x >> 8) & (uint32_t)0x00FF00FF);
-      
+
   return (x << 16) | (x >> 16);
 }
 
@@ -787,7 +787,7 @@ EQ(uint32_t x, uint32_t y)
   uint32_t q;
 
   q = x ^ y;
-  
+
   return NOT((q | -q) >> 31);
 }
 
@@ -800,7 +800,7 @@ NEQ(uint32_t x, uint32_t y)
   uint32_t q;
 
   q = x ^ y;
-  
+
   return (q | -q) >> 31;
 }
 
@@ -825,7 +825,7 @@ GT(uint32_t x, uint32_t y)
   uint32_t z;
 
   z = y - x;
-  
+
   return (z ^ ((x ^ y) & (x ^ z))) >> 31;
 }
 
@@ -855,7 +855,7 @@ EQ0(int32_t x)
   uint32_t q;
 
   q = (uint32_t)x;
-  
+
   return ~(q | -q) >> 31;
 }
 
@@ -871,7 +871,7 @@ GT0(int32_t x)
   uint32_t q;
 
   q = (uint32_t)x;
-  
+
   return (~q & -q) >> 31;
 }
 
@@ -907,7 +907,7 @@ LE0(int32_t x)
      do an OR with x itself to account for x = -2^31.
   */
   q = (uint32_t)x;
-  
+
   return (q | ~ -q) >> 31;
 }
 
@@ -929,12 +929,20 @@ BIT_LENGTH(uint32_t x)
   uint32_t k, c;
 
   k = NEQ(x, 0);
-  c = GT(x, 0xFFFF); x = MUX(c, x >> 16, x); k += c << 4;
-  c = GT(x, 0x00FF); x = MUX(c, x >>  8, x); k += c << 3;
-  c = GT(x, 0x000F); x = MUX(c, x >>  4, x); k += c << 2;
-  c = GT(x, 0x0003); x = MUX(c, x >>  2, x); k += c << 1;
+  c = GT(x, 0xFFFF);
+  x = MUX(c, x >> 16, x);
+  k += c << 4;
+  c = GT(x, 0x00FF);
+  x = MUX(c, x >>  8, x);
+  k += c << 3;
+  c = GT(x, 0x000F);
+  x = MUX(c, x >>  4, x);
+  k += c << 2;
+  c = GT(x, 0x0003);
+  x = MUX(c, x >>  2, x);
+  k += c << 1;
   k += GT(x, 0x0001);
-  
+
   return k;
 }
 
@@ -992,7 +1000,7 @@ MUL31_lo(uint32_t x, uint32_t y)
   xh = (x >> 16)    | (uint32_t)0x80000000;
   yl = (y & 0xFFFF) | (uint32_t)0x80000000;
   yh = (y >> 16)    | (uint32_t)0x80000000;
-  
+
   return (xl * yl + ((xl * yh + xh * yl) << 16)) & (uint32_t)0x7FFFFFFF;
 }
 
@@ -1018,11 +1026,11 @@ MUL31_lo(uint32_t x, uint32_t y)
    multiplication is not constant-time.
 */
 #if BR_CT_MUL15
-  #define MUL15(x, y)   (((uint32_t)(x)   | (uint32_t)0x80000000) \
+#define MUL15(x, y)   (((uint32_t)(x)   | (uint32_t)0x80000000) \
                          * ((uint32_t)(y) | (uint32_t)0x80000000) \
                          & (uint32_t)0x7FFFFFFF)
 #else
-  #define MUL15(x, y)   ((uint32_t)(x) * (uint32_t)(y))
+#define MUL15(x, y)   ((uint32_t)(x) * (uint32_t)(y))
 #endif
 
 /*
@@ -1041,10 +1049,10 @@ MUL31_lo(uint32_t x, uint32_t y)
    and yields bigger code, which is why it is deactivated by default.
 */
 #if BR_NO_ARITH_SHIFT
-  #define ARSH(x, n)   (((uint32_t)(x) >> (n)) \
+#define ARSH(x, n)   (((uint32_t)(x) >> (n)) \
                         | ((-((uint32_t)(x) >> 31)) << (32 - (n))))
 #else
-  #define ARSH(x, n)   ((*(int32_t *)&(x)) >> (n))
+#define ARSH(x, n)   ((*(int32_t *)&(x)) >> (n))
 #endif
 
 /*
@@ -1066,7 +1074,7 @@ br_rem(uint32_t hi, uint32_t lo, uint32_t d)
   uint32_t r;
 
   br_divrem(hi, lo, d, &r);
-  
+
   return r;
 }
 
@@ -1199,12 +1207,12 @@ br_i32_word(const uint32_t *a, uint32_t off)
 
   u = (size_t)(off >> 5) + 1;
   j = (unsigned)off & 31;
-  
-  if (j == 0) 
+
+  if (j == 0)
   {
     return a[u];
-  } 
-  else 
+  }
+  else
   {
     return (a[u] >> j) | (a[u + 1] << (32 - j));
   }
@@ -1618,8 +1626,8 @@ uint32_t br_i62_modpow_opt(uint32_t *x31, const unsigned char *e, size_t elen,
    on the temporaries).
 */
 typedef uint32_t (*br_i31_modpow_opt_type)(uint32_t *x,
-    const unsigned char *e, size_t elen,
-    const uint32_t *m, uint32_t m0i, uint32_t *tmp, size_t twlen);
+                                           const unsigned char *e, size_t elen,
+                                           const uint32_t *m, uint32_t m0i, uint32_t *tmp, size_t twlen);
 
 /*
    Wrapper for br_i62_modpow_opt() that uses the same type as
@@ -2050,7 +2058,7 @@ uint32_t br_rsa_i31_keygen_inner(const br_prng_class **rng,
    Type for generic EC parameters: curve order (unsigned big-endian
    encoding) and encoded conventional generator.
 */
-typedef struct 
+typedef struct
 {
   int curve;
   const unsigned char *order;
@@ -2108,7 +2116,7 @@ void br_ecdsa_i15_bits2int(uint16_t *x,
    Under these conditions, 'asn1len' is necessarily equal to either len
    or len+1.
 */
-typedef struct 
+typedef struct
 {
   const unsigned char *data;
   size_t len;
@@ -2401,11 +2409,11 @@ int br_ssl_choose_hash(unsigned bf);
 
   #define lxvw4x(xt, ra, rb)        lxvw4x_(xt, ra, rb)
   #define stxvw4x(xt, ra, rb)       stxvw4x_(xt, ra, rb)
-  
+
   #define bdnz(foo)                 bdnz_(foo)
   #define bdz(foo)                  bdz_(foo)
   #define beq(foo)                  beq_(foo)
-  
+
   #define li(rx, value)             li_(rx, value)
   #define addi(rx, ra, imm)         addi_(rx, ra, imm)
   #define cmpldi(rx, imm)           cmpldi_(rx, imm)
@@ -2434,15 +2442,15 @@ int br_ssl_choose_hash(unsigned bf);
   #define vperm(vt, va, vb, vc)     vperm_(vt, va, vb, vc)
   #define vpmsumd(vt, va, vb)       vpmsumd_(vt, va, vb)
   #define xxpermdi(vt, va, vb, d)   xxpermdi_(vt, va, vb, d)
-  
+
   #define lxvw4x_(xt, ra, rb)       "\tlxvw4x\t" #xt "," #ra "," #rb "\n"
   #define stxvw4x_(xt, ra, rb)      "\tstxvw4x\t" #xt "," #ra "," #rb "\n"
-  
+
   #define label(foo)                #foo "%=:\n"
   #define bdnz_(foo)                "\tbdnz\t" #foo "%=\n"
   #define bdz_(foo)                 "\tbdz\t" #foo "%=\n"
   #define beq_(foo)                 "\tbeq\t" #foo "%=\n"
-  
+
   #define li_(rx, value)            "\tli\t" #rx "," #value "\n"
   #define addi_(rx, ra, imm)        "\taddi\t" #rx "," #ra "," #imm "\n"
   #define cmpldi_(rx, imm)          "\tcmpldi\t" #rx "," #imm "\n"
@@ -2505,18 +2513,18 @@ int br_ssl_choose_hash(unsigned bf);
    some internal compiler errors.
 */
 #if BR_GCC && !BR_GCC_5_0
-  #if BR_GCC_4_6
-    #define BR_TARGETS_X86_UP \
+#if BR_GCC_4_6
+#define BR_TARGETS_X86_UP \
       _Pragma("GCC push_options") \
       _Pragma("GCC target(\"sse2,ssse3,sse4.1,aes,pclmul,rdrnd\")")
-    #define BR_TARGETS_X86_DOWN \
+#define BR_TARGETS_X86_DOWN \
       _Pragma("GCC pop_options")
-  #else
-    #define BR_TARGETS_X86_UP \
+#else
+#define BR_TARGETS_X86_UP \
       _Pragma("GCC target(\"sse2,ssse3,sse4.1,aes,pclmul\")")
-    #define BR_TARGETS_X86_DOWN
-  #endif
-  #pragma GCC diagnostic ignored "-Wpsabi"
+#define BR_TARGETS_X86_DOWN
+#endif
+#pragma GCC diagnostic ignored "-Wpsabi"
 #endif
 
 #if BR_CLANG && !BR_CLANG_3_8
@@ -2566,7 +2574,7 @@ br_cpuid(uint32_t mask_eax, uint32_t mask_ebx,
 #if BR_GCC || BR_CLANG
   unsigned eax, ebx, ecx, edx;
 
-  if (__get_cpuid(1, &eax, &ebx, &ecx, &edx)) 
+  if (__get_cpuid(1, &eax, &ebx, &ecx, &edx))
   {
     if ((eax & mask_eax) == mask_eax
         && (ebx & mask_ebx) == mask_ebx
@@ -2576,11 +2584,12 @@ br_cpuid(uint32_t mask_eax, uint32_t mask_ebx,
       return 1;
     }
   }
+
 #elif BR_MSC
   int info[4];
 
   __cpuid(info, 1);
-  
+
   if (((uint32_t)info[0] & mask_eax) == mask_eax
       && ((uint32_t)info[1] & mask_ebx) == mask_ebx
       && ((uint32_t)info[2] & mask_ecx) == mask_ecx
@@ -2588,6 +2597,7 @@ br_cpuid(uint32_t mask_eax, uint32_t mask_ebx,
   {
     return 1;
   }
+
 #endif
   return 0;
 }

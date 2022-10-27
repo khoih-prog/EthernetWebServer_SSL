@@ -61,14 +61,15 @@ int EthernetSSLClient::connect(IPAddress ip, uint16_t port)
   const char* func_name = __func__;
 
   // connection check
-  if (m_client.connected()) 
+  if (m_client.connected())
     m_warn("Arduino client is already connected? Continuing anyway...", func_name);
 
   // reset indexs for safety
   m_write_idx = 0;
 
   // Warning for security
-  m_warn("Using a raw IP Address for an SSL connection bypasses some important verification steps. You should use a domain name (www.google.com) whenever possible.", func_name);
+  m_warn("Using a raw IP Address for an SSL connection bypasses some important verification steps. You should use a domain name (www.google.com) whenever possible.",
+         func_name);
 
   // first we need our hidden client member to negotiate the socket for us,
   // since most times socket functionality is implemented in hardeware.
@@ -123,20 +124,20 @@ size_t EthernetSSLClient::write(const uint8_t *buf, size_t size)
   // check if the socket is still open and such
   if (!m_soft_connected(func_name) || !buf || !size)
     return 0;
-    
+
   // wait until bearssl is ready to send
-  if (m_run_until(BR_SSL_SENDAPP) < 0) 
+  if (m_run_until(BR_SSL_SENDAPP) < 0)
   {
-	  m_error("Failed while waiting for the engine to enter BR_SSL_SENDAPP", func_name);
-	  return 0;
-  }  
+    m_error("Failed while waiting for the engine to enter BR_SSL_SENDAPP", func_name);
+    return 0;
+  }
 
   // add to the bearssl io buffer, simply appending whatever we want to write
   size_t alen;
   unsigned char *br_buf = br_ssl_engine_sendapp_buf(&m_sslctx.eng, &alen);
   size_t cur_idx = 0;
-  
-  if (alen == 0) 
+
+  if (alen == 0)
   {
     m_error("BearSSL returned zero length buffer for sending, did an internal error occur?", func_name);
     return 0;
@@ -296,10 +297,11 @@ void EthernetSSLClient::stop()
     // run SSL to finish any existing transactions
     flush();
   }
+
   // close the ethernet socket
   m_client.flush();
   m_client.stop();
-  
+
 
   // we are no longer connected
   m_is_connected = false;
@@ -312,7 +314,7 @@ uint8_t EthernetSSLClient::connected()
 
   // check all of the error cases
   const auto c_con = m_client.connected();
-  
+
   const auto br_con = br_ssl_engine_current_state(&m_sslctx.eng) != BR_SSL_CLOSED && m_is_connected;
   const auto wr_ok = getWriteError() == 0;
 
@@ -322,9 +324,9 @@ uint8_t EthernetSSLClient::connected()
     // If we've got a write error, the client probably failed for some reason
     if (m_client.getWriteError())
     {
-      m_error("Socket was unexpectedly interrupted. m_client error: ", func_name);   
+      m_error("Socket was unexpectedly interrupted. m_client error: ", func_name);
       m_error(m_client.getWriteError(), func_name);
-      
+
       setWriteError(SSL_CLIENT_WRTIE_ERROR);
     }
     // Else tell the user the endpoint closed the socket on us (ouch)
@@ -405,172 +407,179 @@ void EthernetSSLClient::setMutualAuthParams(const SSLClientParameters& params)
 }
 
 /* see SSLClient.h */
-void EthernetSSLClient::setVerificationTime(uint32_t days, uint32_t seconds) 
+void EthernetSSLClient::setVerificationTime(uint32_t days, uint32_t seconds)
 {
   br_x509_minimal_set_time(&m_x509ctx, days, seconds);
 }
 
-bool EthernetSSLClient::m_soft_connected(const char* func_name) 
+bool EthernetSSLClient::m_soft_connected(const char* func_name)
 {
   // check if the socket is still open and such
-  if (getWriteError()) 
+  if (getWriteError())
   {
     m_error("Cannot operate if the write error is not reset: ", func_name);
     m_print_ssl_error(getWriteError(), SSL_ERROR);
-    
+
     return false;
   }
+
   // check if the ssl engine is still open
-  if (!m_is_connected || br_ssl_engine_current_state(&m_sslctx.eng) == BR_SSL_CLOSED) 
+  if (!m_is_connected || br_ssl_engine_current_state(&m_sslctx.eng) == BR_SSL_CLOSED)
   {
     m_error("Cannot operate on a closed SSL connection.", func_name);
     int error = br_ssl_engine_last_error(&m_sslctx.eng);
-    
-    if (error != BR_ERR_OK) 
+
+    if (error != BR_ERR_OK)
       m_print_br_error(error, SSL_ERROR);
-      
+
     return false;
   }
+
   return true;
 }
 
 /* see SSLClient.h */
-int EthernetSSLClient::m_start_ssl(const char* host, SSLSession* ssl_ses) 
+int EthernetSSLClient::m_start_ssl(const char* host, SSLSession* ssl_ses)
 {
   const char* func_name = __func__;
-  
+
   // clear the write error
   setWriteError(SSL_OK);
   // get some random data by reading the analog pin we've been handed
   // we want 128 bits to be safe, as recommended by the bearssl docs
   uint8_t rng_seeds[16];
   // take the bottom 8 bits of the analog read
-  
+
 #if 1
+
   // KH mod to use micro()
   for (uint8_t i = 0; i < sizeof rng_seeds; i++)
     rng_seeds[i] = static_cast<uint8_t>((uint16_t) micros() * (uint16_t) (micros() >> 8));
+
 #else
+
   for (uint8_t i = 0; i < sizeof rng_seeds; i++)
     rng_seeds[i] = static_cast<uint8_t>(analogRead(m_analog_pin));
+
 #endif
 
   br_ssl_engine_inject_entropy(&m_sslctx.eng, rng_seeds, sizeof rng_seeds);
-  
+
   // inject session parameters for faster reconnection, if we have any
-  if (ssl_ses != nullptr) 
+  if (ssl_ses != nullptr)
   {
     br_ssl_engine_set_session_parameters(&m_sslctx.eng, ssl_ses->to_br_session());
     m_info("Set SSL session!", func_name);
   }
-  
+
   // reset the engine, but make sure that it reset successfully
   int ret = br_ssl_client_reset(&m_sslctx, host, 1);
-  
-  if (!ret) 
+
+  if (!ret)
   {
     m_error("Reset of bearSSL failed (is bearssl setup properly?)", func_name);
     m_print_br_error(br_ssl_engine_last_error(&m_sslctx.eng), SSL_ERROR);
     setWriteError(SSL_BR_CONNECT_FAIL);
-    
+
     return 0;
   }
-  
+
   // initialize the SSL socket over the network
   // normally this would happen in write, but I think it makes
   // a little more structural sense to put it here
-  if (m_run_until(BR_SSL_SENDAPP) < 0) 
+  if (m_run_until(BR_SSL_SENDAPP) < 0)
   {
     m_error("Failed to initlalize the SSL layer", func_name);
     m_print_br_error(br_ssl_engine_last_error(&m_sslctx.eng), SSL_ERROR);
     return 0;
   }
-  
+
   m_info("Connection successful!", func_name);
   m_is_connected = true;
-  
+
   // all good to go! the SSL socket should be up and running
   // overwrite the session we got with new parameters
   if (ssl_ses != nullptr)
     br_ssl_engine_get_session_parameters(&m_sslctx.eng, ssl_ses->to_br_session());
-  else if (host != nullptr) 
+  else if (host != nullptr)
   {
     if (m_sessions.size() >= m_max_sessions)
       m_sessions.erase(m_sessions.begin());
-      
+
     SSLSession session(host);
     br_ssl_engine_get_session_parameters(&m_sslctx.eng, session.to_br_session());
     m_sessions.push_back(session);
   }
-  
+
   return 1;
 }
 
 /* see SSLClient.h */
-int EthernetSSLClient::m_run_until(const unsigned target) 
+int EthernetSSLClient::m_run_until(const unsigned target)
 {
   const char* func_name = __func__;
-  
+
   unsigned lastState = 0;
   size_t lastLen = 0;
   const unsigned long start = millis();
-  
-  for (;;) 
-  {   
+
+  for (;;)
+  {
     //ET_LOGDEBUG1(F("m_run_until #00, begin for, target = "), target);
-    
+
     unsigned state = m_update_engine();
-       
+
     // error check
-    if (state == BR_SSL_CLOSED || getWriteError() != SSL_OK) 
+    if (state == BR_SSL_CLOSED || getWriteError() != SSL_OK)
     {
-      if (state == BR_SSL_CLOSED) 
+      if (state == BR_SSL_CLOSED)
       {
         m_warn("Terminating because the ssl engine closed", func_name);
       }
-      else 
+      else
       {
         m_warn("Terminating with write error: ", func_name);
         m_warn(getWriteError(), func_name);
       }
-      
+
       return -1;
     }
-    
+
     // timeout check
-    if (millis() - start > getTimeout()) 
+    if (millis() - start > getTimeout())
     {
-      m_error("SSL internals timed out! This could be an internal error, bad data sent from the server, or data being discarded due to a buffer overflow. If you are using Ethernet, did you modify the library properly (see README)?", func_name);
+      m_error("SSL internals timed out! This could be an internal error, bad data sent from the server, or data being discarded due to a buffer overflow. If you are using Ethernet, did you modify the library properly (see README)?",
+              func_name);
       setWriteError(SSL_BR_WRITE_ERROR);
       stop();
-      
+
       return -1;
     }
-    
+
     // debug
-    if (state != lastState || lastState == 0) 
+    if (state != lastState || lastState == 0)
     {
       lastState = state;
       m_info("m_run changed state:", func_name);
       m_print_br_state(state, DebugLevel::SSL_INFO);
     }
-    
-    if (state & BR_SSL_RECVREC) 
+
+    if (state & BR_SSL_RECVREC)
     {
       size_t len;
       br_ssl_engine_recvrec_buf(&m_sslctx.eng, &len);
-      
-      if (lastLen != len) 
+
+      if (lastLen != len)
       {
         m_info("Expected bytes count: ", func_name);
         m_info(lastLen = len, func_name);
       }
     }
-    
+
     /*
       If we reached our target, then we are finished.
     */
-    if (state & target || (target == 0 && state == 0)) 
+    if (state & target || (target == 0 && state == 0))
       return 0;
 
     /*
@@ -583,28 +592,29 @@ int EthernetSSLClient::m_run_until(const unsigned target)
            to remedy the problem by telling the engine to discard
            the data.
     */
-    
-    if (state & BR_SSL_RECVAPP && target & BR_SSL_SENDAPP) 
+
+    if (state & BR_SSL_RECVAPP && target & BR_SSL_SENDAPP)
     {
       size_t len;
-      
-      if (br_ssl_engine_recvapp_buf(&m_sslctx.eng, &len) != nullptr) 
+
+      if (br_ssl_engine_recvapp_buf(&m_sslctx.eng, &len) != nullptr)
       {
         m_write_idx = 0;
         m_warn("Discarded unread data to favor a write operation", func_name);
         br_ssl_engine_recvapp_ack(&m_sslctx.eng, len);
         continue;
       }
-      else 
+      else
       {
-        m_error("SSL engine state is RECVAPP, however the buffer was null! (This is a problem with BearSSL internals)", func_name);
+        m_error("SSL engine state is RECVAPP, however the buffer was null! (This is a problem with BearSSL internals)",
+                func_name);
         setWriteError(SSL_BR_WRITE_ERROR);
         stop();
-        
+
         return -1;
       }
     }
-       
+
     /*
        We can reach that point if the target RECVAPP, and
        the state contains SENDAPP only. This may happen with
@@ -613,71 +623,71 @@ int EthernetSSLClient::m_run_until(const unsigned target)
        record.
     */
     if (state & BR_SSL_SENDAPP && target & BR_SSL_RECVAPP)
-    {     
-      br_ssl_engine_flush(&m_sslctx.eng, 0);   
+    {
+      br_ssl_engine_flush(&m_sslctx.eng, 0);
     }
   }
 }
 
 /* see SSLClient.h*/
-unsigned EthernetSSLClient::m_update_engine() 
+unsigned EthernetSSLClient::m_update_engine()
 {
   const char* func_name = __func__;
-  
-  for (;;) 
+
+  for (;;)
   {
     //ET_LOGDEBUG(F("======================================================"));
     //ET_LOGDEBUG(F("EthernetSSLClient::m_update_engine, for loop begin #00"));
-    
+
     // get the state
     unsigned state = br_ssl_engine_current_state(&m_sslctx.eng);
-   
+
     // debug
-    if (m_br_last_state == 0 || state != m_br_last_state) 
+    if (m_br_last_state == 0 || state != m_br_last_state)
     {
       m_br_last_state = state;
       m_print_br_state(state, DebugLevel::SSL_INFO);
     }
-   
-    if (state & BR_SSL_CLOSED) 
+
+    if (state & BR_SSL_CLOSED)
       return state;
-   
+
     /*
       If there is some record data to send, do it. This takes
       precedence over everything else.
     */
-    if (state & BR_SSL_SENDREC) 
+    if (state & BR_SSL_SENDREC)
     {
       unsigned char *buf;
       size_t len;
       int wlen;
 
       buf = br_ssl_engine_sendrec_buf(&m_sslctx.eng, &len);
-      wlen = m_client.write(buf, len); 
+      wlen = m_client.write(buf, len);
       m_client.flush();
-      
-      
-      if (wlen <= 0) 
+
+
+      if (wlen <= 0)
       {
         // if the arduino client encountered an error
-        if (m_client.getWriteError() || !m_client.connected())   
+        if (m_client.getWriteError() || !m_client.connected())
         {
           m_error("Error writing to m_client", func_name);
           m_error(m_client.getWriteError(), func_name);
-          
+
           setWriteError(SSL_CLIENT_WRTIE_ERROR);
         }
-        
+
         // else presumably the socket just closed itself, so just stop the engine
         stop();
         return 0;
       }
-      
-      if (wlen > 0) 
+
+      if (wlen > 0)
       {
         br_ssl_engine_sendrec_ack(&m_sslctx.eng, wlen);
       }
-      
+
       continue;
     }
 
@@ -685,46 +695,46 @@ unsigned EthernetSSLClient::m_update_engine()
        If the client has specified there is client data to send, and
        the engine is ready to handle it, send it along.
     */
-    if (m_write_idx > 0) 
+    if (m_write_idx > 0)
     {
       // if we've reached the point where BR_SSL_SENDAPP is off but
       // data has been written to the io buffer, something is wrong
-      if (!(state & BR_SSL_SENDAPP)) 
+      if (!(state & BR_SSL_SENDAPP))
       {
         m_error("Error m_write_idx > 0 but the ssl engine is not ready for data", func_name);
         m_error(br_ssl_engine_current_state(&m_sslctx.eng), func_name);
         m_error(br_ssl_engine_last_error(&m_sslctx.eng), func_name);
         setWriteError(SSL_BR_WRITE_ERROR);
         stop();
-        
+
         return 0;
       }
       // else time to send the application data
-      else if (state & BR_SSL_SENDAPP) 
+      else if (state & BR_SSL_SENDAPP)
       {
         size_t alen;
         unsigned char *buf = br_ssl_engine_sendapp_buf(&m_sslctx.eng, &alen);
-        
+
         // engine check
-        if (alen == 0 || buf == nullptr) 
+        if (alen == 0 || buf == nullptr)
         {
           m_error("Engine set write flag but returned null buffer", func_name);
           setWriteError(SSL_BR_WRITE_ERROR);
           stop();
-          
+
           return 0;
         }
-        
+
         // sanity check
-        if (alen < m_write_idx) 
+        if (alen < m_write_idx)
         {
           m_error("Alen is less than m_write_idx", func_name);
           setWriteError(SSL_INTERNAL_ERROR);
           stop();
-          
+
           return 0;
         }
-        
+
         // all good? lets send the data
         // presumably the EthernetSSLClient::write function has already added
         // data to *buf, so now we tell bearssl it's time for the
@@ -744,54 +754,54 @@ unsigned EthernetSSLClient::m_update_engine()
        recieved it so far. If we have, then we can update the state.
        else we can return that we're still waiting for the server.
     */
-    if (state & BR_SSL_RECVREC) 
+    if (state & BR_SSL_RECVREC)
     {
       size_t len;
       unsigned char * buf = br_ssl_engine_recvrec_buf(&m_sslctx.eng, &len);
-      
+
       // do we have the record you're looking for?
       const auto avail = m_client.available();
-    
-      if (avail > 0) 
+
+      if (avail > 0)
       {
         ET_LOGDEBUG1(F("m_update_engine #4-1-1, state ="), state);
         ET_LOGDEBUG3(F("avail ="),   avail, F(", len ="), len);
-        
+
         // I suppose so!
         int rlen = m_client.read(buf, avail < (int) len ? avail : len);
-      
-        if (rlen <= 0) 
+
+        if (rlen <= 0)
         {
           m_error("Error reading bytes from m_client. Write Error: ", func_name);
-          
+
           m_error(m_client.getWriteError(), func_name);
-          
+
           setWriteError(SSL_CLIENT_WRTIE_ERROR);
           stop();
-          
+
           return 0;
         }
-        
-        if (rlen > 0) 
+
+        if (rlen > 0)
         {
           br_ssl_engine_recvrec_ack(&m_sslctx.eng, rlen);
         }
-   
+
         continue;
       }
       // guess not, tell the state we're waiting still
-      else 
+      else
       {
         //ET_LOGDEBUG3(F("m_update_engine #4-5, Bytes avail ="), avail,  F(", Bytes needed ="), len);
         //////
-        
+
         // add a delay since spamming get_arduino_client().availible breaks the poor wiz chip
         delay(10);
-        
+
         return state;
       }
     }
-    
+
     // if it's not any of the above states, then it must be waiting to send or recieve app data
     // in which case we return
     return state;
@@ -799,25 +809,25 @@ unsigned EthernetSSLClient::m_update_engine()
 }
 
 /* see SSLClientImpl.h */
-int EthernetSSLClient::m_get_session_index(const char* host) const 
+int EthernetSSLClient::m_get_session_index(const char* host) const
 {
   const char* func_name = __func__;
-  
-  if (host == nullptr) 
+
+  if (host == nullptr)
     return -1;
-    
+
   // search for a matching session with the IP
-  for (uint8_t i = 0; i < getSessionCount(); i++) 
+  for (uint8_t i = 0; i < getSessionCount(); i++)
   {
     // if we're looking at a real session
-    if (m_sessions[i].get_hostname().equals(host)) 
+    if (m_sessions[i].get_hostname().equals(host))
     {
       m_info(m_sessions[i].get_hostname(), func_name);
-      
+
       return i;
     }
   }
-  
+
   // none found
   return -1;
 }
@@ -827,16 +837,26 @@ void EthernetSSLClient::m_print_prefix(const char* func_name, const DebugLevel l
 {
   // print the sslclient prefix
   Serial.print("(EthernetSSLClient)");
-  
+
   // print the debug level
-  switch (level) 
+  switch (level)
   {
-    case SSL_INFO: Serial.print("(SSL_INFO)"); break;
-    case SSL_WARN: Serial.print("(SSL_WARN)"); break;
-    case SSL_ERROR: Serial.print("(SSL_ERROR)"); break;
-    default: Serial.print("(Unknown level)");
+    case SSL_INFO:
+      Serial.print("(SSL_INFO)");
+      break;
+
+    case SSL_WARN:
+      Serial.print("(SSL_WARN)");
+      break;
+
+    case SSL_ERROR:
+      Serial.print("(SSL_ERROR)");
+      break;
+
+    default:
+      Serial.print("(Unknown level)");
   }
-  
+
   // print the function name
   Serial.print("(");
   Serial.print(func_name);
@@ -844,257 +864,325 @@ void EthernetSSLClient::m_print_prefix(const char* func_name, const DebugLevel l
 }
 
 /* See SSLClient.h */
-void EthernetSSLClient::m_print_ssl_error(const int ssl_error, const DebugLevel level) const 
+void EthernetSSLClient::m_print_ssl_error(const int ssl_error, const DebugLevel level) const
 {
-  if (level > m_debug) 
+  if (level > m_debug)
     return;
-    
+
   m_print_prefix(__func__, level);
-  
-  switch (ssl_error) 
+
+  switch (ssl_error)
   {
-    case SSL_OK: 
-      Serial.println("SSL_OK"); 
+    case SSL_OK:
+      Serial.println("SSL_OK");
       break;
-    case SSL_CLIENT_CONNECT_FAIL: 
-      Serial.println("SSL_CLIENT_CONNECT_FAIL"); 
+
+    case SSL_CLIENT_CONNECT_FAIL:
+      Serial.println("SSL_CLIENT_CONNECT_FAIL");
       break;
-    case SSL_BR_CONNECT_FAIL: 
-      Serial.println("SSL_BR_CONNECT_FAIL"); 
+
+    case SSL_BR_CONNECT_FAIL:
+      Serial.println("SSL_BR_CONNECT_FAIL");
       break;
-    case SSL_CLIENT_WRTIE_ERROR: 
-      Serial.println("SSL_CLIENT_WRITE_FAIL"); 
+
+    case SSL_CLIENT_WRTIE_ERROR:
+      Serial.println("SSL_CLIENT_WRITE_FAIL");
       break;
-    case SSL_BR_WRITE_ERROR: 
-      Serial.println("SSL_BR_WRITE_ERROR"); 
+
+    case SSL_BR_WRITE_ERROR:
+      Serial.println("SSL_BR_WRITE_ERROR");
       break;
-    case SSL_INTERNAL_ERROR: 
-      Serial.println("SSL_INTERNAL_ERROR"); 
+
+    case SSL_INTERNAL_ERROR:
+      Serial.println("SSL_INTERNAL_ERROR");
       break;
-    case SSL_OUT_OF_MEMORY: 
-      Serial.println("SSL_OUT_OF_MEMORY"); 
+
+    case SSL_OUT_OF_MEMORY:
+      Serial.println("SSL_OUT_OF_MEMORY");
       break;
   }
 }
 
 /* See SSLClient.h */
-void EthernetSSLClient::m_print_br_error(const unsigned br_error_code, const DebugLevel level) const 
+void EthernetSSLClient::m_print_br_error(const unsigned br_error_code, const DebugLevel level) const
 {
-  if (level > m_debug) 
+  if (level > m_debug)
     return;
-    
+
   m_print_prefix(__func__, level);
-  
-  switch (br_error_code) {
-    case BR_ERR_BAD_PARAM: 
-      Serial.println("Caller-provided parameter is incorrect."); 
+
+  switch (br_error_code)
+  {
+    case BR_ERR_BAD_PARAM:
+      Serial.println("Caller-provided parameter is incorrect.");
       break;
-    case BR_ERR_BAD_STATE: 
-      Serial.println("Operation requested by the caller cannot be applied with the current context state (e.g. reading data while outgoing data is waiting to be sent)."); 
+
+    case BR_ERR_BAD_STATE:
+      Serial.println("Operation requested by the caller cannot be applied with the current context state (e.g. reading data while outgoing data is waiting to be sent).");
       break;
-    case BR_ERR_UNSUPPORTED_VERSION: 
-      Serial.println("Incoming protocol or record version is unsupported."); 
+
+    case BR_ERR_UNSUPPORTED_VERSION:
+      Serial.println("Incoming protocol or record version is unsupported.");
       break;
-    case BR_ERR_BAD_VERSION: 
-      Serial.println("Incoming record version does not match the expected version."); 
+
+    case BR_ERR_BAD_VERSION:
+      Serial.println("Incoming record version does not match the expected version.");
       break;
-    case BR_ERR_BAD_LENGTH: 
-      Serial.println("Incoming record length is invalid."); 
+
+    case BR_ERR_BAD_LENGTH:
+      Serial.println("Incoming record length is invalid.");
       break;
-    case BR_ERR_TOO_LARGE: 
-      Serial.println("Incoming record is too large to be processed, or buffer is too small for the handshake message to send."); 
+
+    case BR_ERR_TOO_LARGE:
+      Serial.println("Incoming record is too large to be processed, or buffer is too small for the handshake message to send.");
       break;
-    case BR_ERR_BAD_MAC: 
-      Serial.println("Decryption found an invalid padding, or the record MAC is not correct."); 
+
+    case BR_ERR_BAD_MAC:
+      Serial.println("Decryption found an invalid padding, or the record MAC is not correct.");
       break;
-    case BR_ERR_NO_RANDOM: 
-      Serial.println("No initial entropy was provided, and none can be obtained from the OS."); 
+
+    case BR_ERR_NO_RANDOM:
+      Serial.println("No initial entropy was provided, and none can be obtained from the OS.");
       break;
-    case BR_ERR_UNKNOWN_TYPE: 
-      Serial.println("Incoming record type is unknown."); 
+
+    case BR_ERR_UNKNOWN_TYPE:
+      Serial.println("Incoming record type is unknown.");
       break;
-    case BR_ERR_UNEXPECTED: 
-      Serial.println("Incoming record or message has wrong type with regards to the current engine state."); 
+
+    case BR_ERR_UNEXPECTED:
+      Serial.println("Incoming record or message has wrong type with regards to the current engine state.");
       break;
-    case BR_ERR_BAD_CCS: 
-      Serial.println("ChangeCipherSpec message from the peer has invalid contents."); 
+
+    case BR_ERR_BAD_CCS:
+      Serial.println("ChangeCipherSpec message from the peer has invalid contents.");
       break;
-    case BR_ERR_BAD_ALERT: 
-      Serial.println("Alert message from the peer has invalid contents (odd length)."); 
+
+    case BR_ERR_BAD_ALERT:
+      Serial.println("Alert message from the peer has invalid contents (odd length).");
       break;
-    case BR_ERR_BAD_HANDSHAKE: 
-      Serial.println("Incoming handshake message decoding failed."); 
+
+    case BR_ERR_BAD_HANDSHAKE:
+      Serial.println("Incoming handshake message decoding failed.");
       break;
-    case BR_ERR_OVERSIZED_ID: 
-      Serial.println("ServerHello contains a session ID which is larger than 32 bytes."); 
+
+    case BR_ERR_OVERSIZED_ID:
+      Serial.println("ServerHello contains a session ID which is larger than 32 bytes.");
       break;
-    case BR_ERR_BAD_CIPHER_SUITE: 
-      Serial.println("Server wants to use a cipher suite that we did not claim to support. This is also reported if we tried to advertise a cipher suite that we do not support."); 
+
+    case BR_ERR_BAD_CIPHER_SUITE:
+      Serial.println("Server wants to use a cipher suite that we did not claim to support. This is also reported if we tried to advertise a cipher suite that we do not support.");
       break;
-    case BR_ERR_BAD_COMPRESSION: 
-      Serial.println("Server wants to use a compression that we did not claim to support."); 
+
+    case BR_ERR_BAD_COMPRESSION:
+      Serial.println("Server wants to use a compression that we did not claim to support.");
       break;
-    case BR_ERR_BAD_FRAGLEN: 
-      Serial.println("Server's max fragment length does not match client's."); 
+
+    case BR_ERR_BAD_FRAGLEN:
+      Serial.println("Server's max fragment length does not match client's.");
       break;
-    case BR_ERR_BAD_SECRENEG: 
-      Serial.println("Secure renegotiation failed."); 
+
+    case BR_ERR_BAD_SECRENEG:
+      Serial.println("Secure renegotiation failed.");
       break;
-    case BR_ERR_EXTRA_EXTENSION: 
-      Serial.println("Server sent an extension type that we did not announce, or used the same extension type several times in a single ServerHello."); 
+
+    case BR_ERR_EXTRA_EXTENSION:
+      Serial.println("Server sent an extension type that we did not announce, or used the same extension type several times in a single ServerHello.");
       break;
-    case BR_ERR_BAD_SNI: 
-      Serial.println("Invalid Server Name Indication contents (when used by the server, this extension shall be empty)."); 
+
+    case BR_ERR_BAD_SNI:
+      Serial.println("Invalid Server Name Indication contents (when used by the server, this extension shall be empty).");
       break;
-    case BR_ERR_BAD_HELLO_DONE: 
-      Serial.println("Invalid ServerHelloDone from the server (length is not 0)."); 
+
+    case BR_ERR_BAD_HELLO_DONE:
+      Serial.println("Invalid ServerHelloDone from the server (length is not 0).");
       break;
-    case BR_ERR_LIMIT_EXCEEDED: 
-      Serial.println("Internal limit exceeded (e.g. server's public key is too large)."); 
+
+    case BR_ERR_LIMIT_EXCEEDED:
+      Serial.println("Internal limit exceeded (e.g. server's public key is too large).");
       break;
-    case BR_ERR_BAD_FINISHED: 
-      Serial.println("Finished message from peer does not match the expected value."); 
+
+    case BR_ERR_BAD_FINISHED:
+      Serial.println("Finished message from peer does not match the expected value.");
       break;
-    case BR_ERR_RESUME_MISMATCH: 
-      Serial.println("Session resumption attempt with distinct version or cipher suite."); 
+
+    case BR_ERR_RESUME_MISMATCH:
+      Serial.println("Session resumption attempt with distinct version or cipher suite.");
       break;
-    case BR_ERR_INVALID_ALGORITHM: 
-      Serial.println("Unsupported or invalid algorithm (ECDHE curve, signature algorithm, hash function)."); 
+
+    case BR_ERR_INVALID_ALGORITHM:
+      Serial.println("Unsupported or invalid algorithm (ECDHE curve, signature algorithm, hash function).");
       break;
-    case BR_ERR_BAD_SIGNATURE: 
-      Serial.println("Invalid signature in ServerKeyExchange or CertificateVerify message."); 
+
+    case BR_ERR_BAD_SIGNATURE:
+      Serial.println("Invalid signature in ServerKeyExchange or CertificateVerify message.");
       break;
-    case BR_ERR_WRONG_KEY_USAGE: 
-      Serial.println("Peer's public key does not have the proper type or is not allowed for the requested operation."); 
+
+    case BR_ERR_WRONG_KEY_USAGE:
+      Serial.println("Peer's public key does not have the proper type or is not allowed for the requested operation.");
       break;
-    case BR_ERR_NO_CLIENT_AUTH: 
-      Serial.println("Client did not send a certificate upon request, or the client certificate could not be validated."); 
+
+    case BR_ERR_NO_CLIENT_AUTH:
+      Serial.println("Client did not send a certificate upon request, or the client certificate could not be validated.");
       break;
-    case BR_ERR_IO: 
-      Serial.println("I/O error or premature close on transport stream."); 
+
+    case BR_ERR_IO:
+      Serial.println("I/O error or premature close on transport stream.");
       break;
-    case BR_ERR_X509_INVALID_VALUE: 
-      Serial.println("Invalid value in an ASN.1 structure."); 
+
+    case BR_ERR_X509_INVALID_VALUE:
+      Serial.println("Invalid value in an ASN.1 structure.");
       break;
-    case BR_ERR_X509_TRUNCATED: 
-      Serial.println("Truncated certificate or other ASN.1 object."); 
+
+    case BR_ERR_X509_TRUNCATED:
+      Serial.println("Truncated certificate or other ASN.1 object.");
       break;
-    case BR_ERR_X509_EMPTY_CHAIN: 
-      Serial.println("Empty certificate chain (no certificate at all)."); 
+
+    case BR_ERR_X509_EMPTY_CHAIN:
+      Serial.println("Empty certificate chain (no certificate at all).");
       break;
-    case BR_ERR_X509_INNER_TRUNC: 
-      Serial.println("Decoding error: inner element extends beyond outer element size."); 
+
+    case BR_ERR_X509_INNER_TRUNC:
+      Serial.println("Decoding error: inner element extends beyond outer element size.");
       break;
-    case BR_ERR_X509_BAD_TAG_CLASS: 
-      Serial.println("Decoding error: unsupported tag class (application or private)."); 
+
+    case BR_ERR_X509_BAD_TAG_CLASS:
+      Serial.println("Decoding error: unsupported tag class (application or private).");
       break;
-    case BR_ERR_X509_BAD_TAG_VALUE: 
-      Serial.println("Decoding error: unsupported tag value."); 
+
+    case BR_ERR_X509_BAD_TAG_VALUE:
+      Serial.println("Decoding error: unsupported tag value.");
       break;
-    case BR_ERR_X509_INDEFINITE_LENGTH: 
-      Serial.println("Decoding error: indefinite length."); 
+
+    case BR_ERR_X509_INDEFINITE_LENGTH:
+      Serial.println("Decoding error: indefinite length.");
       break;
-    case BR_ERR_X509_EXTRA_ELEMENT: 
-      Serial.println("Decoding error: extraneous element."); 
+
+    case BR_ERR_X509_EXTRA_ELEMENT:
+      Serial.println("Decoding error: extraneous element.");
       break;
-    case BR_ERR_X509_UNEXPECTED: 
-      Serial.println("Decoding error: unexpected element."); 
+
+    case BR_ERR_X509_UNEXPECTED:
+      Serial.println("Decoding error: unexpected element.");
       break;
-    case BR_ERR_X509_NOT_CONSTRUCTED: 
-      Serial.println("Decoding error: expected constructed element, but is primitive."); 
+
+    case BR_ERR_X509_NOT_CONSTRUCTED:
+      Serial.println("Decoding error: expected constructed element, but is primitive.");
       break;
-    case BR_ERR_X509_NOT_PRIMITIVE: 
-      Serial.println("Decoding error: expected primitive element, but is constructed."); 
+
+    case BR_ERR_X509_NOT_PRIMITIVE:
+      Serial.println("Decoding error: expected primitive element, but is constructed.");
       break;
-    case BR_ERR_X509_PARTIAL_BYTE: 
-      Serial.println("Decoding error: BIT STRING length is not multiple of 8."); 
+
+    case BR_ERR_X509_PARTIAL_BYTE:
+      Serial.println("Decoding error: BIT STRING length is not multiple of 8.");
       break;
-    case BR_ERR_X509_BAD_BOOLEAN: 
-      Serial.println("Decoding error: BOOLEAN value has invalid length."); 
+
+    case BR_ERR_X509_BAD_BOOLEAN:
+      Serial.println("Decoding error: BOOLEAN value has invalid length.");
       break;
-    case BR_ERR_X509_OVERFLOW: 
-      Serial.println("Decoding error: value is off-limits."); 
+
+    case BR_ERR_X509_OVERFLOW:
+      Serial.println("Decoding error: value is off-limits.");
       break;
-    case BR_ERR_X509_BAD_DN: 
-      Serial.println("Invalid distinguished name."); 
+
+    case BR_ERR_X509_BAD_DN:
+      Serial.println("Invalid distinguished name.");
       break;
-    case BR_ERR_X509_BAD_TIME: 
-      Serial.println("Invalid date/time representation."); 
+
+    case BR_ERR_X509_BAD_TIME:
+      Serial.println("Invalid date/time representation.");
       break;
-    case BR_ERR_X509_UNSUPPORTED: 
-      Serial.println("Certificate contains unsupported features that cannot be ignored."); 
+
+    case BR_ERR_X509_UNSUPPORTED:
+      Serial.println("Certificate contains unsupported features that cannot be ignored.");
       break;
-    case BR_ERR_X509_LIMIT_EXCEEDED: 
-      Serial.println("Key or signature size exceeds internal limits."); 
+
+    case BR_ERR_X509_LIMIT_EXCEEDED:
+      Serial.println("Key or signature size exceeds internal limits.");
       break;
-    case BR_ERR_X509_WRONG_KEY_TYPE: 
-      Serial.println("Key type does not match that which was expected."); 
+
+    case BR_ERR_X509_WRONG_KEY_TYPE:
+      Serial.println("Key type does not match that which was expected.");
       break;
-    case BR_ERR_X509_BAD_SIGNATURE: 
-      Serial.println("Signature is invalid."); 
+
+    case BR_ERR_X509_BAD_SIGNATURE:
+      Serial.println("Signature is invalid.");
       break;
-    case BR_ERR_X509_TIME_UNKNOWN: 
-      Serial.println("Validation time is unknown."); 
+
+    case BR_ERR_X509_TIME_UNKNOWN:
+      Serial.println("Validation time is unknown.");
       break;
-    case BR_ERR_X509_EXPIRED: 
-      Serial.println("Certificate is expired or not yet valid."); 
+
+    case BR_ERR_X509_EXPIRED:
+      Serial.println("Certificate is expired or not yet valid.");
       break;
-    case BR_ERR_X509_DN_MISMATCH: 
-      Serial.println("Issuer/Subject DN mismatch in the chain."); 
+
+    case BR_ERR_X509_DN_MISMATCH:
+      Serial.println("Issuer/Subject DN mismatch in the chain.");
       break;
-    case BR_ERR_X509_BAD_SERVER_NAME: 
-      Serial.println("Expected server name was not found in the chain."); 
+
+    case BR_ERR_X509_BAD_SERVER_NAME:
+      Serial.println("Expected server name was not found in the chain.");
       break;
-    case BR_ERR_X509_CRITICAL_EXTENSION: 
-      Serial.println("Unknown critical extension in certificate."); 
+
+    case BR_ERR_X509_CRITICAL_EXTENSION:
+      Serial.println("Unknown critical extension in certificate.");
       break;
-    case BR_ERR_X509_NOT_CA: Serial.println("Not a CA, or path length constraint violation."); 
-    break;
-    case BR_ERR_X509_FORBIDDEN_KEY_USAGE: 
-      Serial.println("Key Usage extension prohibits intended usage."); 
+
+    case BR_ERR_X509_NOT_CA:
+      Serial.println("Not a CA, or path length constraint violation.");
       break;
-    case BR_ERR_X509_WEAK_PUBLIC_KEY: 
-      Serial.println("Public key found in certificate is too small."); 
+
+    case BR_ERR_X509_FORBIDDEN_KEY_USAGE:
+      Serial.println("Key Usage extension prohibits intended usage.");
       break;
-    case BR_ERR_X509_NOT_TRUSTED: 
-      Serial.println("Chain could not be linked to a trust anchor. See https://github.com/OPEnSLab-OSU/SSLClient/blob/master/TrustAnchors.md"); 
+
+    case BR_ERR_X509_WEAK_PUBLIC_KEY:
+      Serial.println("Public key found in certificate is too small.");
       break;
-    case 296: 
-      Serial.println("Server denied access (did you setup mTLS correctly?)"); 
+
+    case BR_ERR_X509_NOT_TRUSTED:
+      Serial.println("Chain could not be linked to a trust anchor. See https://github.com/OPEnSLab-OSU/SSLClient/blob/master/TrustAnchors.md");
       break;
-    default: 
-      Serial.print("Unknown error code: "); Serial.println(br_error_code); 
+
+    case 296:
+      Serial.println("Server denied access (did you setup mTLS correctly?)");
+      break;
+
+    default:
+      Serial.print("Unknown error code: ");
+      Serial.println(br_error_code);
       break;
   }
 }
 
 
-void EthernetSSLClient::m_print_br_state(const unsigned state, const DebugLevel level) const 
+void EthernetSSLClient::m_print_br_state(const unsigned state, const DebugLevel level) const
 {
   const char* func_name = __func__;
-  
-  if (level > m_debug) 
+
+  if (level > m_debug)
     return;
-    
+
   m_print_prefix(func_name, level);
   m_info("State: ", func_name);
-  
-  if (state == 0) 
+
+  if (state == 0)
     Serial.println("    Invalid");
-  else if (state & BR_SSL_CLOSED) 
+  else if (state & BR_SSL_CLOSED)
     Serial.println("   Connection closed");
-  else 
+  else
   {
-    if (state & BR_SSL_SENDREC) 
+    if (state & BR_SSL_SENDREC)
       Serial.println("   SENDREC");
-      
-    if (state & BR_SSL_RECVREC) 
+
+    if (state & BR_SSL_RECVREC)
       Serial.println("   RECVREC");
-      
-    if (state & BR_SSL_SENDAPP) 
+
+    if (state & BR_SSL_SENDAPP)
       Serial.println("   SENDAPP");
-      
-    if (state & BR_SSL_RECVAPP) 
+
+    if (state & BR_SSL_RECVAPP)
       Serial.println("   RECVAPP");
   }
 }

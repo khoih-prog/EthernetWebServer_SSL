@@ -159,7 +159,7 @@ extern "C" {
    integers use unsigned big-endian representation; extra leading bytes
    of value 0 are allowed.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Modulus. */
   unsigned char *n;
@@ -180,7 +180,7 @@ typedef struct
    extra leading bytes of value 0 are allowed. However, the modulus bit
    length (`n_bitlen`) MUST be exact.
 */
-typedef struct 
+typedef struct
 {
   /** \brief Modulus bit length (in bits, exact value). */
   uint32_t n_bitlen;
@@ -1612,7 +1612,7 @@ br_rsa_compute_pubexp br_rsa_compute_pubexp_get_default(void);
    \return  the private exponent length (in bytes), or 0.
 */
 typedef size_t (*br_rsa_compute_privexp)(void *d,
-    const br_rsa_private_key *sk, uint32_t pubexp);
+                                         const br_rsa_private_key *sk, uint32_t pubexp);
 
 /**
    \brief Recompute RSA private exponent ("i15" engine).
