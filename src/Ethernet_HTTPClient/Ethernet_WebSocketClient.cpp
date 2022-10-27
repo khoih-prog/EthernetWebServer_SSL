@@ -5,10 +5,10 @@
   EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
 
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
-  
+
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
-       
-  Version: 1.9.2
+
+  Version: 1.9.3
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -21,8 +21,9 @@
   1.9.0   K Hoang      05/05/2022 Add support to custom SPI for Teensy, Mbed RP2040, Portenta_H7, etc.
   1.9.1   K Hoang      25/08/2022 Auto-select SPI SS/CS pin according to board package
   1.9.2   K Hoang      07/09/2022 Slow SPI clock for old W5100 shield or SAMD Zero. Improve support for SAMD21
+  1.9.3   K Hoang      26/10/2022 Add support to Seeed XIAO_NRF52840 and XIAO_NRF52840_SENSE using `mbed` or `nRF52` core
  *****************************************************************************************************************************/
- 
+
 // (c) Copyright Arduino. 2016
 // Released under Apache License, version 2.0
 
@@ -59,7 +60,7 @@ int EthernetWebSocketClient::begin(const char* aPath)
   // start the GET request
   beginRequest();
   connectionKeepAlive();
-  
+
   int status = get(aPath);
 
   if (status == 0)
@@ -72,7 +73,7 @@ int EthernetWebSocketClient::begin(const char* aPath)
     {
       randomKey[i] = random(0x01, 0xff);
     }
-    
+
     memset(base64RandomKey, 0x00, sizeof(base64RandomKey));
     base64_encode(randomKey, sizeof(randomKey), (unsigned char*)base64RandomKey, sizeof(base64RandomKey));
 
@@ -160,11 +161,11 @@ int EthernetWebSocketClient::endMessage()
   {
     maskKey[i] = random(0xff);
   }
-  
+
   EthernetHttpClient::write(maskKey, sizeof(maskKey));
 
   // mask the data and send
-  for (int i = 0; i < (int)iTxSize; i++) 
+  for (int i = 0; i < (int)iTxSize; i++)
   {
     iTxBuffer[i] ^= maskKey[i % sizeof(maskKey)];
   }
@@ -279,12 +280,12 @@ int EthernetWebSocketClient::parseMessage()
   else if (TYPE_PING == messageType())
   {
     beginMessage(TYPE_PONG);
-    
+
     while (available())
     {
       write(read());
     }
-    
+
     endMessage();
 
     iRxSize = 0;
@@ -338,7 +339,7 @@ int EthernetWebSocketClient::ping()
 
   beginMessage(TYPE_PING);
   write(pingData, sizeof(pingData));
-  
+
   return endMessage();
 }
 

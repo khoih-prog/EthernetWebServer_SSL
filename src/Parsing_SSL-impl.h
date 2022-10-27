@@ -5,10 +5,10 @@
   EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
 
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
-  
+
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
-       
-  Version: 1.9.2
+
+  Version: 1.9.3
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -21,8 +21,9 @@
   1.9.0   K Hoang      05/05/2022 Add support to custom SPI for Teensy, Mbed RP2040, Portenta_H7, etc.
   1.9.1   K Hoang      25/08/2022 Auto-select SPI SS/CS pin according to board package
   1.9.2   K Hoang      07/09/2022 Slow SPI clock for old W5100 shield or SAMD Zero. Improve support for SAMD21
+  1.9.3   K Hoang      26/10/2022 Add support to Seeed XIAO_NRF52840 and XIAO_NRF52840_SENSE using `mbed` or `nRF52` core
  *****************************************************************************************************************************/
- 
+
 #pragma once
 
 #ifndef ETHERNET_WEBSERVER_SSL_PARSING_IMPL_H
@@ -32,7 +33,7 @@
 #include "EthernetWebServer_SSL.hpp"
 
 #ifndef WEBSERVER_MAX_POST_ARGS
-#define WEBSERVER_MAX_POST_ARGS 32
+  #define WEBSERVER_MAX_POST_ARGS 32
 #endif
 
 // KH
@@ -175,6 +176,7 @@ bool EthernetWebServer::_parseRequest(EthernetClient& client)
 
   // KH
 #if USE_NEW_WEBSERVER_VERSION
+
   if (methodStr == "HEAD")
   {
     method = HTTP_HEAD;
@@ -199,12 +201,15 @@ bool EthernetWebServer::_parseRequest(EthernetClient& client)
   {
     method = HTTP_PATCH;
   }
+
 #else
+
   if (methodStr == "POST")
   {
     method = HTTP_POST;
   }
-  else if (methodStr == "DELETE") {
+  else if (methodStr == "DELETE")
+  {
 
     method = HTTP_DELETE;
   }
@@ -220,6 +225,7 @@ bool EthernetWebServer::_parseRequest(EthernetClient& client)
   {
     method = HTTP_PATCH;
   }
+
 #endif
 
   _currentMethod = method;
@@ -248,13 +254,13 @@ bool EthernetWebServer::_parseRequest(EthernetClient& client)
     String boundaryStr;
     String headerName;
     String headerValue;
-    
+
 #if USE_NEW_WEBSERVER_VERSION
     bool isEncoded  = false;
-#endif    
-    
+#endif
+
     bool isForm     = false;
-    
+
     uint32_t contentLength = 0;
 
     //parse headers
@@ -275,7 +281,7 @@ bool EthernetWebServer::_parseRequest(EthernetClient& client)
 
       headerName  = req.substring(0, headerDiv);
       headerValue = req.substring(headerDiv + 1);
-      
+
       headerValue.trim();
       _collectHeader(headerName.c_str(), headerValue.c_str());
 
@@ -286,7 +292,7 @@ bool EthernetWebServer::_parseRequest(EthernetClient& client)
       if (headerName.equalsIgnoreCase("Content-Type"))
       {
         using namespace mime;
-        
+
         if (headerValue.startsWith(mimeTable[txt].mimeType))
         {
           isForm = false;
@@ -294,7 +300,7 @@ bool EthernetWebServer::_parseRequest(EthernetClient& client)
         else if (headerValue.startsWith("application/x-www-form-urlencoded"))
         {
           isForm = false;
-#if USE_NEW_WEBSERVER_VERSION          
+#if USE_NEW_WEBSERVER_VERSION
           isEncoded = true;
 #endif
         }
@@ -501,7 +507,8 @@ bool EthernetWebServer::_collectHeader(const char* headerName, const char* heade
 
 struct storeArgHandler
 {
-  void operator() (String& key, String& value, const String& data, int equal_index, int pos, int key_end_pos, int next_index)
+  void operator() (String& key, String& value, const String& data, int equal_index, int pos, int key_end_pos,
+                   int next_index)
   {
     key = EthernetWebServer::urlDecode(data.substring(pos, key_end_pos));
 
@@ -514,9 +521,16 @@ struct storeArgHandler
 
 struct nullArgHandler
 {
-  void operator() (String& key, String& value, const String& data, int equal_index, int pos, int key_end_pos, int next_index)
+  void operator() (String& key, String& value, const String& data, int equal_index, int pos, int key_end_pos,
+                   int next_index)
   {
-    (void)key; (void)value; (void)data; (void)equal_index; (void)pos; (void)key_end_pos; (void)next_index;
+    (void)key;
+    (void)value;
+    (void)data;
+    (void)equal_index;
+    (void)pos;
+    (void)key_end_pos;
+    (void)next_index;
     // do nothing
   }
 };
@@ -538,7 +552,8 @@ void EthernetWebServer::_parseArguments(const String& data)
 
 /////////////////////////////////////////////////////////////////////////
 
-int EthernetWebServer::_parseArgumentsPrivate(const String& data, vl::Func<void(String&, String&, const String&, int, int, int, int)> handler)
+int EthernetWebServer::_parseArgumentsPrivate(const String& data,
+                                              vl::Func<void(String&, String&, const String&, int, int, int, int)> handler)
 {
   ET_LOGDEBUG1(F("args: "), data);
 
@@ -658,7 +673,7 @@ void EthernetWebServer::_parseArguments(const String& data)
   ET_LOGDEBUG1(F("args count: "), _currentArgCount);
 
   _currentArgs = new RequestArgument[_currentArgCount + 1];
-  
+
   int pos = 0;
   int iarg;
 
@@ -765,9 +780,9 @@ bool EthernetWebServer::_parseForm(EthernetClient& client, const String& boundar
   } while (line.length() == 0 && retry < 3);
 
   client.readStringUntil('\n');
-  
+
   //start reading the form
-  if (line == ("--" + boundary)) 
+  if (line == ("--" + boundary))
   {
     if (_postArgs)
       delete[] _postArgs;
@@ -781,7 +796,7 @@ bool EthernetWebServer::_parseForm(EthernetClient& client, const String& boundar
       String argValue;
       String argType;
       String argFilename;
-      
+
       bool argIsFile = false;
 
       line = client.readStringUntil('\r');
@@ -816,7 +831,7 @@ bool EthernetWebServer::_parseForm(EthernetClient& client, const String& boundar
           ET_LOGDEBUG1(F("PostArg Name: "), argName);
 
           using namespace mime;
-          
+
           argType = mimeTable[txt].mimeType;
           line    = client.readStringUntil('\r');
           client.readStringUntil('\n');
@@ -882,8 +897,9 @@ bool EthernetWebServer::_parseForm(EthernetClient& client, const String& boundar
 
             _currentUpload->status = UPLOAD_FILE_WRITE;
             uint8_t argByte = _uploadReadByte(client);
-            
+
 readfile:
+
             while (argByte != 0x0D)
             {
               if (!client.connected())
@@ -955,7 +971,7 @@ readfile:
                   ET_LOGDEBUG(F("Done Parsing POST"));
                   break;
                 }
-                
+
                 continue;
               }
               else
@@ -964,7 +980,7 @@ readfile:
                 _uploadWriteByte(0x0A);
                 _uploadWriteByte((uint8_t)('-'));
                 _uploadWriteByte((uint8_t)('-'));
-                
+
                 uint32_t i = 0;
 
                 while (i < boundary.length())
@@ -989,7 +1005,8 @@ readfile:
     }
 
     int iarg;
-    int totalArgs = ((WEBSERVER_MAX_POST_ARGS - _postArgsLen) < _currentArgCount) ? (WEBSERVER_MAX_POST_ARGS - _postArgsLen) : _currentArgCount;
+    int totalArgs = ((WEBSERVER_MAX_POST_ARGS - _postArgsLen) < _currentArgCount) ? (WEBSERVER_MAX_POST_ARGS - _postArgsLen)
+                    : _currentArgCount;
 
     for (iarg = 0; iarg < totalArgs; iarg++)
     {
@@ -1018,7 +1035,7 @@ readfile:
       _postArgs = nullptr;
       _postArgsLen = 0;
     }
-    
+
     return true;
   }
 
@@ -1045,7 +1062,7 @@ bool EthernetWebServer::_parseFormUploadAborted()
 
 /////////////////////////////////////////////////////////////////////////
 
-bool EthernetWebServer::_parseForm(EthernetClient& client, const String& boundary, uint32_t len) 
+bool EthernetWebServer::_parseForm(EthernetClient& client, const String& boundary, uint32_t len)
 {
   ET_LOGDEBUG1(F("Parse Form: Boundary: "), boundary);
   ET_LOGDEBUG1(F("Length: "), len);
@@ -1073,7 +1090,7 @@ bool EthernetWebServer::_parseForm(EthernetClient& client, const String& boundar
       String argValue;
       String argType;
       String argFilename;
-      
+
       bool argIsFile = false;
 
       line = client.readStringUntil('\r');
@@ -1169,6 +1186,7 @@ bool EthernetWebServer::_parseForm(EthernetClient& client, const String& boundar
             uint8_t argByte       = _uploadReadByte(client);
 
 readfile:
+
             while (argByte != 0x0D)
             {
               if (!client.connected())
@@ -1241,6 +1259,7 @@ readfile:
 
                   break;
                 }
+
                 continue;
               }
               else
@@ -1249,7 +1268,7 @@ readfile:
                 _uploadWriteByte(0x0A);
                 _uploadWriteByte((uint8_t)('-'));
                 _uploadWriteByte((uint8_t)('-'));
-                
+
                 uint32_t i = 0;
 
                 while (i < boundary.length())
@@ -1283,7 +1302,9 @@ readfile:
       arg.value = _currentArgs[iarg].value;
     }
 
-    if (_currentArgs) delete[] _currentArgs;
+    if (_currentArgs)
+      delete[] _currentArgs;
+
     _currentArgs = new RequestArgument[postArgsLen];
 
     for (iarg = 0; iarg < postArgsLen; iarg++)

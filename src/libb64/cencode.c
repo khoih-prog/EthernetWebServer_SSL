@@ -4,10 +4,10 @@
   EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
 
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
-  
+
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
-       
-  Version: 1.9.2
+
+  Version: 1.9.3
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -20,10 +20,11 @@
   1.9.0   K Hoang      05/05/2022 Add support to custom SPI for Teensy, Mbed RP2040, Portenta_H7, etc.
   1.9.1   K Hoang      25/08/2022 Auto-select SPI SS/CS pin according to board package
   1.9.2   K Hoang      07/09/2022 Slow SPI clock for old W5100 shield or SAMD Zero. Improve support for SAMD21
+  1.9.3   K Hoang      26/10/2022 Add support to Seeed XIAO_NRF52840 and XIAO_NRF52840_SENSE using `mbed` or `nRF52` core
  *****************************************************************************************************************************/
- 
+
 #if !(ESP32 || ESP8266)
- 
+
 #include "cencode.h"
 
 const int CHARS_PER_LINE = 72;
@@ -71,8 +72,8 @@ int base64_encode_block(const char* plaintext_in, int length_in, char* code_out,
         result = (fragment & 0x0fc) >> 2;
         *codechar++ = base64_encode_value(result);
         result = (fragment & 0x003) << 4;
-        
-        // fall through
+
+      // fall through
 
       case step_B:
         if (plainchar == plaintextend)
@@ -86,9 +87,9 @@ int base64_encode_block(const char* plaintext_in, int length_in, char* code_out,
         result |= (fragment & 0x0f0) >> 4;
         *codechar++ = base64_encode_value(result);
         result = (fragment & 0x00f) << 2;
-        
-        // fall through
-        
+
+      // fall through
+
       case step_C:
         if (plainchar == plaintextend)
         {
@@ -110,7 +111,7 @@ int base64_encode_block(const char* plaintext_in, int length_in, char* code_out,
           *codechar++ = '\n';
           state_in->stepcount = 0;
         }
-        
+
         // fall through
       }
   }
@@ -130,10 +131,12 @@ int base64_encode_blockend(char* code_out, base64_encodestate* state_in)
       *codechar++ = '=';
       *codechar++ = '=';
       break;
+
     case step_C:
       *codechar++ = base64_encode_value(state_in->result);
       *codechar++ = '=';
       break;
+
     case step_A:
       break;
   }

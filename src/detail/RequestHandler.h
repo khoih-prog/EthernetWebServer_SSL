@@ -5,10 +5,10 @@
   EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
 
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
-  
+
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
-       
-  Version: 1.9.2
+
+  Version: 1.9.3
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -21,6 +21,7 @@
   1.9.0   K Hoang      05/05/2022 Add support to custom SPI for Teensy, Mbed RP2040, Portenta_H7, etc.
   1.9.1   K Hoang      25/08/2022 Auto-select SPI SS/CS pin according to board package
   1.9.2   K Hoang      07/09/2022 Slow SPI clock for old W5100 shield or SAMD Zero. Improve support for SAMD21
+  1.9.3   K Hoang      26/10/2022 Add support to Seeed XIAO_NRF52840 and XIAO_NRF52840_SENSE using `mbed` or `nRF52` core
  *****************************************************************************************************************************/
 
 #pragma once
@@ -43,14 +44,14 @@ class RequestHandler
     {
       ETW_UNUSED(method);
       ETW_UNUSED(uri);
-      
+
       return false;
     }
 
     virtual bool canUpload(const String& uri)
     {
       ETW_UNUSED(uri);
-      
+
       return false;
     }
 
@@ -59,11 +60,11 @@ class RequestHandler
       ETW_UNUSED(server);
       ETW_UNUSED(requestMethod);
       ETW_UNUSED(requestUri);
-      
+
       return false;
     }
 
-    virtual void upload(EthernetWebServer& server, const String& requestUri, const HTTPUpload& upload) 
+    virtual void upload(EthernetWebServer& server, const String& requestUri, const HTTPUpload& upload)
     {
       ETW_UNUSED(server);
       ETW_UNUSED(requestUri);

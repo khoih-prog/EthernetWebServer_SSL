@@ -5,10 +5,10 @@
   EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
 
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
-  
+
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
-       
-  Version: 1.9.2
+
+  Version: 1.9.3
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -21,6 +21,7 @@
   1.9.0   K Hoang      05/05/2022 Add support to custom SPI for Teensy, Mbed RP2040, Portenta_H7, etc.
   1.9.1   K Hoang      25/08/2022 Auto-select SPI SS/CS pin according to board package
   1.9.2   K Hoang      07/09/2022 Slow SPI clock for old W5100 shield or SAMD Zero. Improve support for SAMD21
+  1.9.3   K Hoang      26/10/2022 Add support to Seeed XIAO_NRF52840 and XIAO_NRF52840_SENSE using `mbed` or `nRF52` core
  *****************************************************************************************************************************/
 
 #pragma once
@@ -39,7 +40,8 @@ class FunctionRequestHandler : public RequestHandler
 {
   public:
 
-    FunctionRequestHandler(EthernetWebServer::THandlerFunction fn, EthernetWebServer::THandlerFunction ufn, const String &uri, const HTTPMethod& method)
+    FunctionRequestHandler(EthernetWebServer::THandlerFunction fn, EthernetWebServer::THandlerFunction ufn,
+                           const String &uri, const HTTPMethod& method)
       : _fn(fn)
       , _ufn(ufn)
       , _uri(uri)
@@ -78,7 +80,7 @@ class FunctionRequestHandler : public RequestHandler
     bool handle(EthernetWebServer& server, const HTTPMethod& requestMethod, const String& requestUri) override
     {
       ETW_UNUSED(server);
-      
+
       if (!canHandle(requestMethod, requestUri))
         return false;
 
@@ -90,7 +92,7 @@ class FunctionRequestHandler : public RequestHandler
     {
       ETW_UNUSED(server);
       ETW_UNUSED(upload);
-      
+
       if (canUpload(requestUri))
         _ufn();
     }
@@ -102,33 +104,34 @@ class FunctionRequestHandler : public RequestHandler
     HTTPMethod _method;
 };
 
-class StaticRequestHandler : public RequestHandler 
+class StaticRequestHandler : public RequestHandler
 {
     using WebServerType = EthernetWebServer;
-    
-public:
+
+  public:
     StaticRequestHandler(FS& fs, const char* path, const char* uri, const char* cache_header)
-    : _fs(fs)
-    , _uri(uri)
-    , _path(path)
-    , _cache_header(cache_header)
+      : _fs(fs)
+      , _uri(uri)
+      , _path(path)
+      , _cache_header(cache_header)
     {
-        //DEBUGV("StaticRequestHandler: path=%s uri=%s, cache_header=%s\r\n", path, uri, cache_header == __null ? "" : cache_header);
-        _isFile = fs.exists(path);
-        _baseUriLength = _uri.length();
+      //DEBUGV("StaticRequestHandler: path=%s uri=%s, cache_header=%s\r\n", path, uri, cache_header == __null ? "" : cache_header);
+      _isFile = fs.exists(path);
+      _baseUriLength = _uri.length();
     }
 
-    bool validMethod(HTTPMethod requestMethod){
-        return (requestMethod == HTTP_GET) || (requestMethod == HTTP_HEAD);
+    bool validMethod(HTTPMethod requestMethod)
+    {
+      return (requestMethod == HTTP_GET) || (requestMethod == HTTP_HEAD);
     }
 
     /* Deprecated version. Please use mime::getContentType instead */
-    static String getContentType(const String& path) __attribute__((deprecated)) 
+    static String getContentType(const String& path) __attribute__((deprecated))
     {
-        return mime_esp::getContentType(path);
+      return mime_esp::getContentType(path);
     }
 
-protected:
+  protected:
     FS _fs;
     bool _isFile;
     String _uri;
@@ -139,64 +142,66 @@ protected:
 
 
 class StaticFileRequestHandler
-    :
-public StaticRequestHandler 
+  :
+  public StaticRequestHandler
 {
     using SRH = StaticRequestHandler;
     using WebServerType = EthernetWebServer;
 
-public:
+  public:
     StaticFileRequestHandler(FS& fs, const char* path, const char* uri, const char* cache_header)
-        :
-    StaticRequestHandler{fs, path, uri, cache_header}
+      :
+      StaticRequestHandler{fs, path, uri, cache_header}
     {
-        File f = SRH::_fs.open(path, "r");
-        MD5Builder calcMD5;
-        calcMD5.begin();
-        calcMD5.addStream(f, f.size());
-        calcMD5.calculate();
-        calcMD5.getBytes(_ETag_md5);
-        f.close();
+      File f = SRH::_fs.open(path, "r");
+      MD5Builder calcMD5;
+      calcMD5.begin();
+      calcMD5.addStream(f, f.size());
+      calcMD5.calculate();
+      calcMD5.getBytes(_ETag_md5);
+      f.close();
     }
 
-    bool canHandle(const HTTPMethod& requestMethod, const String& requestUri) override  
+    bool canHandle(const HTTPMethod& requestMethod, const String& requestUri) override
     {
-        return SRH::validMethod(requestMethod) && requestUri == SRH::_uri;
+      return SRH::validMethod(requestMethod) && requestUri == SRH::_uri;
     }
 
-    bool handle(EthernetWebServer& server, const HTTPMethod& requestMethod, const String& requestUri) 
+    bool handle(EthernetWebServer& server, const HTTPMethod& requestMethod, const String& requestUri)
     {
-        if (!canHandle(requestMethod, requestUri))
-            return false;
+      if (!canHandle(requestMethod, requestUri))
+        return false;
 
-        
-        const String etag = "\"" + base64::encode(_ETag_md5, 16) + "\"";
 
-        if(server.header("If-None-Match") == etag){
-            server.send(304);
-            return true;
-        }
+      const String etag = "\"" + base64::encode(_ETag_md5, 16) + "\"";
 
-        File f = SRH::_fs.open(SRH::_path, "r");
-
-        if (!f)
-            return false;
-
-        if (!_isFile) {
-            f.close();
-            return false;
-        }
-
-        if (SRH::_cache_header.length() != 0)
-            server.sendHeader("Cache-Control", SRH::_cache_header);
-
-        server.sendHeader("ETag", etag);
-
-        server.streamFile(f, mime_esp::getContentType(SRH::_path), requestMethod);
+      if (server.header("If-None-Match") == etag)
+      {
+        server.send(304);
         return true;
+      }
+
+      File f = SRH::_fs.open(SRH::_path, "r");
+
+      if (!f)
+        return false;
+
+      if (!_isFile)
+      {
+        f.close();
+        return false;
+      }
+
+      if (SRH::_cache_header.length() != 0)
+        server.sendHeader("Cache-Control", SRH::_cache_header);
+
+      server.sendHeader("ETag", etag);
+
+      server.streamFile(f, mime_esp::getContentType(SRH::_path), requestMethod);
+      return true;
     }
 
-protected:
+  protected:
     uint8_t _ETag_md5[16];
 };
 

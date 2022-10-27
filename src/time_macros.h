@@ -1,12 +1,12 @@
 /****************************************************************************************************************************
   time_macros.h
-  
+
   EthernetWebServer_SSL is a library for the Ethernet shields to run WebServer and Client with/without SSL
 
   Use SSLClient Library code from https://github.com/OPEnSLab-OSU/SSLClient
-  
+
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
-       
+
   Version: 1.9.2
 
   Version Modified By   Date      Comments
