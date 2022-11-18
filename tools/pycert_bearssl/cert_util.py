@@ -23,7 +23,7 @@ import os
 
 CERT_PATTERN = re.compile("^\-\-\-\-\-BEGIN CERTIFICATE\-\-\-\-\-[a-z,A-Z,0-9,\n,\/,+]+={0,2}\n\-\-\-\-\-END CERTIFICATE-\-\-\-\-", re.MULTILINE)
 
-# Default name prefixes for varibles used in the hearder autogeneration
+# Default name prefixes for variables used in the hearder autogeneration
 # Autogenerator will follow these names with a number
 # e.g. "TA_DN0"
 # Distinguished name array prefix
@@ -78,8 +78,8 @@ extern "C"
 # Template that defines a static array of bytes
 # This takes in a few named parameters:
 #  - ray_type: The type (int, unsigned char) to use for the static array
-#  - ray_name: The varible name of the static array
-#  - ray_data: The comma seperated data of the array (ex. "0x12, 0x34, ...")
+#  - ray_name: The variable name of the static array
+#  - ray_data: The comma separated data of the array (ex. "0x12, 0x34, ...")
 CRAY_TEMPLATE = """\
 static const {ray_type} {ray_name}[] = {{
 {ray_data}
@@ -90,8 +90,8 @@ static const {ray_type} {ray_name}[] = {{
 # This takes in a few named parameters:
 #  - ta_dn_name: The name of the static byte array containing the distunguished
 #    name of the certificate.
-#  - rsa_number_name: Varible name of the static array containing the RSA number
-#  - rsa_exp_name: Varible name of the static array containing the RSA exponent
+#  - rsa_number_name: variable name of the static array containing the RSA number
+#  - rsa_exp_name: variable name of the static array containing the RSA exponent
 CROOTCA_TEMPLATE = """\
     {{
         {{ (unsigned char *){ta_dn_name}, sizeof {ta_dn_name} }},
@@ -110,8 +110,8 @@ CROOTCA_TEMPLATE = """\
 # This takes in a few named parameters:
 #  - ta_dn_name: The name of the static byte array containing the distunguished
 #    name of the certificate.
-#  - ec_number_name: Varible name of the static array containing ec public key
-#  - ec_curve_name: Varible name of the enum that describes curve type
+#  - ec_number_name: variable name of the static array containing ec public key
+#  - ec_curve_name: variable name of the enum that describes curve type
 CROOTCA_EC_TEMPLATE = """\
     {{
         {{ (unsigned char *){ta_dn_name}, sizeof {ta_dn_name} }},
@@ -219,7 +219,7 @@ def decribe_cert_object(cert, cert_num, domain=None):
     x509 object, domain should be a string name, and cert_num should be
     an integer.
     """
-    # get the label from the subject feild on the certificate
+    # get the label from the subject field on the certificate
     label = ""
     com = dict(cert.get_subject().get_components())
     if b'CN' in com:
@@ -228,7 +228,7 @@ def decribe_cert_object(cert, cert_num, domain=None):
         label = com[b'OU'].decode("utf-8")
     elif b'O' in com:
         label = com[b'O'].decode("utf-8")
-    # return the formated string
+    # return the formatted string
     crypto = cert.to_cryptography()
     out_str = CCERT_DESC_TEMPLATE.format(
         cert_num=cert_num,
@@ -327,7 +327,7 @@ def x509_to_header(x509Certs, cert_var, cert_length_var, output_file, keep_dupes
             ))
         else:
             raise Exception(f'Unknown public key type {numbers_typename}')
-    # concatonate it all into the big header file template
+    # concatenate it all into the big header file template
     # cert descriptions
     cert_desc_out = '\n * \n'.join(cert_desc)
     # static arrays

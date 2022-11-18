@@ -20,9 +20,9 @@ import click
 import certifi
 from OpenSSL import crypto
 
-# Default name for the cert length varible
+# Default name for the cert length variable
 CERT_LENGTH_NAME = "TAs_NUM"
-# Defualt name for the cert array varible
+# Default name for the cert array variable
 CERT_ARRAY_NAME = "TAs"
 
 # Click setup and commands:
