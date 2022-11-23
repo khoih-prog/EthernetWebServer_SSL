@@ -5,8 +5,11 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](#Contributing)
 [![GitHub issues](https://img.shields.io/github/issues/khoih-prog/EthernetWebServer_SSL.svg)](http://github.com/khoih-prog/EthernetWebServer_SSL/issues)
 
+
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Donate to my libraries using BuyMeACoffee" style="height: 50px !important;width: 181px !important;" ></a>
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-orange.svg?logo=buy-me-a-coffee&logoColor=FFDD00" style="height: 20px !important;width: 200px !important;" ></a>
+<a href="https://profile-counter.glitch.me/khoih-prog/count.svg" title="Total khoih-prog Visitor count"><img src="https://profile-counter.glitch.me/khoih-prog/count.svg" style="height: 30px;width: 200px;"></a>
+<a href="https://profile-counter.glitch.me/khoih-prog-EthernetWebServer_SSL/count.svg" title="EthernetWebServer_SSL Visitor count"><img src="https://profile-counter.glitch.me/khoih-prog-EthernetWebServer_SSL/count.svg" style="height: 30px;width: 200px;"></a>
 
 
 ---
@@ -285,27 +288,27 @@ This [**EthernetWebServer_SSL** library](https://github.com/khoih-prog/EthernetW
 ## Prerequisites
 
  1. [`Arduino IDE 1.8.19+` for Arduino](https://github.com/arduino/Arduino). [![GitHub release](https://img.shields.io/github/release/arduino/Arduino.svg)](https://github.com/arduino/Arduino/releases/latest)
- 2. [`Arduino AVR core 1.8.5+`](https://github.com/arduino/ArduinoCore-avr) for Arduino (Use Arduino Board Manager) AVR boards. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-avr.svg)](https://github.com/arduino/ArduinoCore-avr/releases/latest)
+ 2. [`Arduino AVR core 1.8.6+`](https://github.com/arduino/ArduinoCore-avr) for Arduino (Use Arduino Board Manager) AVR boards. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-avr.svg)](https://github.com/arduino/ArduinoCore-avr/releases/latest)
  3. [`Teensy core v1.57+`](https://www.pjrc.com/teensy/td_download.html) for Teensy (4.1, 4.0, 3.6, 3.5, 3,2, 3.1, 3.0) boards.
  4. [`Arduino SAM DUE core v1.6.12+`](https://github.com/arduino/ArduinoCore-sam) for SAM DUE ARM Cortex-M3 boards.
  5. [`Arduino SAMD core 1.8.13+`](https://github.com/arduino/ArduinoCore-samd) for SAMD ARM Cortex-M0+ boards. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-samd.svg)](https://github.com/arduino/ArduinoCore-samd/releases/latest)
- 6. [`Adafruit SAMD core 1.7.10+`](https://github.com/adafruit/ArduinoCore-samd) for SAMD ARM Cortex-M0+ and M4 boards (Nano 33 IoT, etc.). [![GitHub release](https://img.shields.io/github/release/adafruit/ArduinoCore-samd.svg)](https://github.com/adafruit/ArduinoCore-samd/releases/latest)
+ 6. [`Adafruit SAMD core 1.7.11+`](https://github.com/adafruit/ArduinoCore-samd) for SAMD ARM Cortex-M0+ and M4 boards (Nano 33 IoT, etc.). [![GitHub release](https://img.shields.io/github/release/adafruit/ArduinoCore-samd.svg)](https://github.com/adafruit/ArduinoCore-samd/releases/latest)
  7. [`Seeeduino SAMD core 1.8.3+`](https://github.com/Seeed-Studio/ArduinoCore-samd) for SAMD21/SAMD51 boards (XIAO M0, Wio Terminal, etc.). [![Latest release](https://img.shields.io/github/release/Seeed-Studio/ArduinoCore-samd.svg)](https://github.com/Seeed-Studio/ArduinoCore-samd/releases/latest/)
  8. [`Adafruit nRF52 v1.3.0+`](https://github.com/adafruit/Adafruit_nRF52_Arduino) for nRF52 boards such as Adafruit NRF52840_FEATHER, NRF52832_FEATHER, NRF52840_FEATHER_SENSE, NRF52840_ITSYBITSY, NRF52840_CIRCUITPLAY, NRF52840_CLUE, NRF52840_METRO, NRF52840_PCA10056, PARTICLE_XENON, **NINA_B302_ublox**, etc. [![GitHub release](https://img.shields.io/github/release/adafruit/Adafruit_nRF52_Arduino.svg)](https://github.com/adafruit/Adafruit_nRF52_Arduino/releases/latest)
  9. [`ESP32 Core 2.0.5+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards. [![Latest release](https://img.shields.io/github/release/espressif/arduino-esp32.svg)](https://github.com/espressif/arduino-esp32/releases/latest/)
 10. [`ESP8266 Core 3.0.2+`](https://github.com/esp8266/Arduino) for ESP8266-based boards. [![Latest release](https://img.shields.io/github/release/esp8266/Arduino.svg)](https://github.com/esp8266/Arduino/releases/latest/). To use ESP8266 core 2.7.1+ for LittleFS.
 11. [`ArduinoCore-mbed mbed_rp2040, mbed_nano, mbed_portenta core 3.4.1+`](https://github.com/arduino/ArduinoCore-mbed) for Arduino (Use Arduino Board Manager) **Portenta_H7, RP2040-based boards, such as Nano_RP2040_Connect, RASPBERRY_PI_PICO**. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-mbed.svg)](https://github.com/arduino/ArduinoCore-mbed/releases/latest)
-12. [`Earle Philhower's arduino-pico core v2.6.2+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
-13. [`ArduinoCore-fab-sam core v1.8.0+`](https://github.com/qbolsee/ArduinoCore-fab-sam) for SAMD21/SAMD51-based boards. [![GitHub release](https://img.shields.io/github/release/qbolsee/ArduinoCore-fab-sam.svg)](https://github.com/qbolsee/ArduinoCore-fab-sam/releases/latest)
+12. [`Earle Philhower's arduino-pico core v2.6.3+`](https://github.com/earlephilhower/arduino-pico) for RP2040-based boards such as **RASPBERRY_PI_PICO, ADAFRUIT_FEATHER_RP2040 and GENERIC_RP2040**, etc. [![GitHub release](https://img.shields.io/github/release/earlephilhower/arduino-pico.svg)](https://github.com/earlephilhower/arduino-pico/releases/latest)
+13. [`ArduinoCore-fab-sam core v1.11.0+`](https://github.com/qbolsee/ArduinoCore-fab-sam) for SAMD21/SAMD51-based boards. [![GitHub release](https://img.shields.io/github/release/qbolsee/ArduinoCore-fab-sam.svg)](https://github.com/qbolsee/ArduinoCore-fab-sam/releases/latest)
 14. [`Seeeduino nRF52 core 1.0.0+`](https://github.com/Seeed-Studio/Adafruit_nRF52_Arduino) for Seeed nRF52840-based boards such as **Seeed_XIAO_NRF52840 and Seeed_XIAO_NRF52840_SENSE**. [![GitHub release](https://img.shields.io/github/release/Seeed-Studio/Adafruit_nRF52_Arduino.svg)](https://github.com/Seeed-Studio/Adafruit_nRF52_Arduino/releases/latest)
 15. `Seeeduino mbed core 2.7.2+` for Seeed nRF52840-based boards such as **SEEED_XIAO_NRF52840 and SEEED_XIAO_NRF52840_SENSE**
 16. [`Functional-VLPP library v1.0.2+`](https://github.com/khoih-prog/functional-vlpp) to use server's lambda function. To install. check [![arduino-library-badge](https://www.ardu-badge.com/badge/Functional-Vlpp.svg?)](https://www.ardu-badge.com/Functional-Vlpp)
 17. Depending on which Ethernet card you're using:
-   - [`Ethernet_Generic library v2.6.2+`](https://github.com/khoih-prog/Ethernet_Generic) for W5100, W5200 and W5500/WIZ550io/WIZ850io/USR-ES1 with Wiznet W5500 chip.  [![GitHub release](https://img.shields.io/github/release/khoih-prog/Ethernet_Generic.svg)](https://github.com/khoih-prog/Ethernet_Generic/releases/latest)
+   - [`Ethernet_Generic library v2.7.1+`](https://github.com/khoih-prog/Ethernet_Generic) for W5100, W5200 and W5500/WIZ550io/WIZ850io/USR-ES1 with Wiznet W5500 chip.  [![GitHub release](https://img.shields.io/github/release/khoih-prog/Ethernet_Generic.svg)](https://github.com/khoih-prog/Ethernet_Generic/releases/latest)
    - [`EthernetENC library v2.0.3+`](https://github.com/jandrassy/EthernetENC) for ENC28J60. [![GitHub release](https://img.shields.io/github/release/jandrassy/EthernetENC.svg)](https://github.com/jandrassy/EthernetENC/releases/latest). **New and Better**
    - [`UIPEthernet library v2.0.12+`](https://github.com/UIPEthernet/UIPEthernet) for ENC28J60. [![GitHub release](https://img.shields.io/github/release/UIPEthernet/UIPEthernet.svg)](https://github.com/UIPEthernet/UIPEthernet/releases/latest)
    - [`NativeEthernet Library version stable111+`](https://github.com/vjmuzik/NativeEthernet) for Teensy 4.1 built-in Ethernet.
-   - [`QNEthernet Library version v0.15.0+`](https://github.com/ssilverman/QNEthernet) for Teensy 4.1 built-in Ethernet. **New**
+   - [`QNEthernet Library version v0.16.0+`](https://github.com/ssilverman/QNEthernet) for Teensy 4.1 built-in Ethernet. **New**
 
 ---
 ---
@@ -439,13 +442,13 @@ Whenever the above-mentioned compiler error issue is fixed with the new Arduino 
 
 #### 5. For Adafruit SAMD boards
  
- ***To be able to compile, run and automatically detect and display BOARD_NAME on Adafruit SAMD (Itsy-Bitsy M4, etc) boards***, you have to copy the whole [Adafruit SAMD Packages_Patches](Packages_Patches/adafruit/hardware/samd/1.7.10) directory into Adafruit samd directory (~/.arduino15/packages/adafruit/hardware/samd/1.7.10). 
+ ***To be able to compile, run and automatically detect and display BOARD_NAME on Adafruit SAMD (Itsy-Bitsy M4, etc) boards***, you have to copy the whole [Adafruit SAMD Packages_Patches](Packages_Patches/adafruit/hardware/samd/1.7.11) directory into Adafruit samd directory (~/.arduino15/packages/adafruit/hardware/samd/1.7.11). 
 
-Supposing the Adafruit SAMD core version is 1.7.10. These files must be copied into the directory:
+Supposing the Adafruit SAMD core version is 1.7.11. These files must be copied into the directory:
 
-- `~/.arduino15/packages/adafruit/hardware/samd/1.7.10/platform.txt`
-- `~/.arduino15/packages/adafruit/hardware/samd/1.7.10/cores/arduino/Print.h`
-- `~/.arduino15/packages/adafruit/hardware/samd/1.7.10/cores/arduino/Print.cpp`
+- `~/.arduino15/packages/adafruit/hardware/samd/1.7.11/platform.txt`
+- `~/.arduino15/packages/adafruit/hardware/samd/1.7.11/cores/arduino/Print.h`
+- `~/.arduino15/packages/adafruit/hardware/samd/1.7.11/cores/arduino/Print.cpp`
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz
 These files must be copied into the directory:
@@ -547,12 +550,12 @@ With core after v1.5.0, this step is not necessary anymore thanks to the PR [Add
 
 #### 9. For Portenta_H7 boards using Arduino IDE in Linux
 
-  **To be able to upload firmware to Portenta_H7 using Arduino IDE in Linux (Ubuntu, etc.)**, you have to copy the file [portenta_post_install.sh](Packages_Patches/arduino/hardware/mbed_portenta/3.3.0/portenta_post_install.sh) into mbed_portenta directory (~/.arduino15/packages/arduino/hardware/mbed_portenta/3.3.0/portenta_post_install.sh). 
+  **To be able to upload firmware to Portenta_H7 using Arduino IDE in Linux (Ubuntu, etc.)**, you have to copy the file [portenta_post_install.sh](Packages_Patches/arduino/hardware/mbed_portenta/3.4.1/portenta_post_install.sh) into mbed_portenta directory (~/.arduino15/packages/arduino/hardware/mbed_portenta/3.4.1/portenta_post_install.sh). 
   
   Then run the following command using `sudo`
   
 ```
-$ cd ~/.arduino15/packages/arduino/hardware/mbed_portenta/3.3.0
+$ cd ~/.arduino15/packages/arduino/hardware/mbed_portenta/3.4.1
 $ chmod 755 portenta_post_install.sh
 $ sudo ./portenta_post_install.sh
 ```
@@ -565,9 +568,9 @@ This will create the file `/etc/udev/rules.d/49-portenta_h7.rules` as follows:
 SUBSYSTEMS=="usb", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="035b", GROUP="plugdev", MODE="0666"
 ```
 
-Supposing the ArduinoCore-mbed core version is 3.3.0. Now only one file must be copied into the directory:
+Supposing the ArduinoCore-mbed core version is 3.4.1. Now only one file must be copied into the directory:
 
-- `~/.arduino15/packages/arduino/hardware/mbed_portenta/3.3.0/portenta_post_install.sh`
+- `~/.arduino15/packages/arduino/hardware/mbed_portenta/3.4.1/portenta_post_install.sh`
 
 Whenever a new version is installed, remember to copy this files into the new version directory. For example, new version is x.yy.zz
 
@@ -578,25 +581,25 @@ This file must be copied into the directory:
 
 #### 10. For RTL8720DN boards using AmebaD core
  
- To avoid compile error relating to PROGMEM, you have to copy the file [Realtek AmebaD core pgmspace.h](Packages_Patches/realtek/hardware/AmebaD/3.1.4/cores/ambd/avr/pgmspace.h) into Realtek AmebaD directory (~/.arduino15/packages/realtek/hardware/AmebaD/3.1.4/cores/arduino/avr/pgmspace.h). 
+ To avoid compile error relating to PROGMEM, you have to copy the file [Realtek AmebaD core pgmspace.h](Packages_Patches/realtek/hardware/AmebaD/3.1.4/cores/ambd/avr/pgmspace.h) into Realtek AmebaD directory (~/.arduino15/packages/realtek/hardware/AmebaD/3.1.4/cores/ambd/avr/pgmspace.h). 
 
 Supposing the Realtek AmebaD core version is 3.1.4. This file must be copied into the directory:
 
-- `~/.arduino15/packages/realtek/hardware/AmebaD/3.1.4/cores/arduino/avr/pgmspace.h`
+- `~/.arduino15/packages/realtek/hardware/AmebaD/3.1.4/cores/ambd/avr/pgmspace.h`
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz
 This file must be copied into the directory:
 
-- `~/.arduino15/packages/realtek/hardware/AmebaD/x.yy.zz/cores/arduino/avr/pgmspace.h`
+- `~/.arduino15/packages/realtek/hardware/AmebaD/x.yy.zz/cores/ambd/avr/pgmspace.h`
 
 
 #### 11. For SAMD21 and SAMD51 boards using ArduinoCore-fab-sam core
  
- To avoid compile error relating to SAMD21/SAMD51, you have to copy the file [ArduinoCore-fab-sam core pgmspace.h](Packages_Patches/Fab_SAM_Arduino/hardware/samd/1.8.0/boards.txt) into `ArduinoCore-fab-sam` samd directory (~/.arduino15/packages/Fab_SAM_Arduino/hardware/samd/1.8.0/boards.txt). 
+ To avoid compile error relating to SAMD21/SAMD51, you have to copy the file [ArduinoCore-fab-sam core pgmspace.h](Packages_Patches/Fab_SAM_Arduino/hardware/samd/1.9.0/boards.txt) into `ArduinoCore-fab-sam` samd directory (~/.arduino15/packages/Fab_SAM_Arduino/hardware/samd/1.9.0/boards.txt). 
 
-Supposing the `ArduinoCore-fab-sam` samd core version is 1.8.0. This file must be copied into the directory:
+Supposing the `ArduinoCore-fab-sam` samd core version is 1.9.0. This file must be copied into the directory:
 
-- `~/.arduino15/packages/Fab_SAM_Arduino/hardware/samd/1.8.0/boards.txt`
+- `~/.arduino15/packages/Fab_SAM_Arduino/hardware/samd/1.9.0/boards.txt`
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz
 This file must be copied into the directory:
@@ -1524,6 +1527,7 @@ br_client_init_TLS12_only(&m_sslctx, &m_x509ctx, m_trust_anchors, m_trust_anchor
 // comment the above line and uncomment the line below if you're having trouble connecting over SSL
 // br_ssl_client_init_full(&m_sslctx, &m_x509ctx, m_trust_anchors, m_trust_anchors_num);
 ```
+
 to this:
 
 ```cpp
@@ -1631,10 +1635,10 @@ https://github.com/khoih-prog/EthernetWebServer_SSL/blob/7357456c4364297da7102dd
 The following are debug terminal output and screen shot when running example [AdvancedWebServer](examples/AdvancedWebServer) on Adafruit NRF52840_FEATHER_EXPRESS with ENC28J60 using EthernetENC Library
 
 <p align="center">
-    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/pics/AdvancedWebServer.png">
+    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/raw/main/pics/AdvancedWebServer.png">
 </p>
 
-```
+```cpp
 Starting AdvancedWebServer on NRF52840_FEATHER with ENC28J60 using EthernetENC Library
 EthernetWebServer_SSL v1.9.3
 [ETHERNET_WEBSERVER] =========================
@@ -1773,7 +1777,7 @@ Connection: close
 
 The terminal output of ESP32 running a [ENC28J60_WM_Config example](https://github.com/khoih-prog/BlynkEthernet_WM/tree/master/examples/ENC28J60_WM_Config) of [BlynkEthernet_WM Library](https://github.com/khoih-prog/BlynkEthernet_WM)
 
-```
+```cpp
 Start ENC28J60_WM_Config on ESP32
 [38] EEPROMsz:1024
 [38] CCSum=0x29f2,RCSum=0x29f2
@@ -1812,7 +1816,7 @@ BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB
 
 The terminal output of **SAM DUE with W5x00 using Ethernet_Generic Library** running [WebClientMulti_SSL example](examples/WebClientMulti_SSL)
 
-```
+```cpp
 Start WebClientMulti_SSL on SAM DUE with W5x00 using Ethernet_Generic Library
 EthernetWebServer_SSL v1.9.3
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
@@ -1944,7 +1948,7 @@ Disconnecting.
 
 The terminal output of **SEEED_XIAO_M0 with W5x00 using Ethernet_Generic Library** running [WebClient_SSL example](examples/WebClient_SSL)
 
-```
+```cpp
 Start WebClient_SSL on SEEED_XIAO_M0 with W5x00 using Ethernet_Generic Library
 EthernetWebServer_SSL v1.9.3
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
@@ -2039,7 +2043,7 @@ Received 3405 bytes in 0.2072 s, rate = 16.43 kbytes/second
 
 5. The terminal output of **SAM DUE with W5x00 using Ethernet_Generic Library** running [MQTTClient_SSL_Complex example](examples/MQTTClient_SSL_Complex)
 
-```
+```cpp
 Start MQTTClient_SSL_Complex on SAM DUE with W5x00 using Ethernet_Generic Library
 EthernetWebServer_SSL v1.9.3
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
@@ -2077,7 +2081,7 @@ Message arrived [MQTT_Pub] Hello from MQTTClient_SSL_Complex on SAM DUE, millis 
 
 The terminal output of **SEEED_XIAO_M0 with W5x00 using Ethernet_Generic Library** running [MQTTS_ThingStream example](examples/MQTTS_ThingStream)
 
-```
+```cpp
 Start MQTTS_ThingStream on SEEED_XIAO_M0 with W5x00 using Ethernet_Generic Library
 EthernetWebServer_SSL v1.9.3
 [ETHERNET_WEBSERVER] Board : SEEED_XIAO_M0 , setCsPin: 1
@@ -2109,7 +2113,7 @@ MQTT Message receive [esp32-sniffer/12345678/ble] Hello from MQTTS_ThingStream o
 
 The terminal output of **MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library** running [MQTTS_ThingStream example](examples/MQTTS_ThingStream)
 
-```
+```cpp
 Start MQTTS_ThingStream on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library
 EthernetWebServer_SSL v1.9.3
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
@@ -2140,7 +2144,7 @@ MQTT Message receive [esp32-sniffer/12345678/ble] Hello from MQTTS_ThingStream o
 
 The terminal output of **MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library** running [MQTTClient_SSL example](examples/MQTTClient_SSL)
 
-```
+```cpp
 Start MQTTClient_SSL on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library
 EthernetWebServer_SSL v1.9.3
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
@@ -2182,11 +2186,11 @@ Message Send : MQTT_Pub => Hello from MQTTClient_SSL on MBED RASPBERRY_PI_PICO
 The following are debug terminal output and screen shot when running example [AdvancedWebServer](examples/AdvancedWebServer) on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library
 
 <p align="center">
-    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/pics/AdvancedWebServer_Mbed_RPi_Pico.png">
+    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/raw/main/pics/AdvancedWebServer_Mbed_RPi_Pico.png">
 </p>
 
 
-```
+```cpp
 Starting AdvancedWebServer on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library
 EthernetWebServer_SSL v1.9.3
 [EWS] =========== USE_ETHERNET_GENERIC ===========
@@ -2218,7 +2222,7 @@ HTTP EthernetWebServer is @ IP : 192.168.2.95
 
 The terminal output of **RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library** running [MQTTClient_SSL example](examples/MQTTClient_SSL)
 
-```
+```cpp
 Start MQTTClient_SSL on RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library
 EthernetWebServer_SSL v1.9.3
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
@@ -2253,11 +2257,11 @@ Message arrived [MQTT_Pub] Hello from MQTTClient_SSL on RASPBERRY_PI_PICO
 The following are debug terminal output and screen shot when running example [AdvancedWebServer](examples/AdvancedWebServer) on RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library
 
 <p align="center">
-    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/pics/AdvancedWebServer_RPi_Pico.png">
+    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/raw/main/pics/AdvancedWebServer_RPi_Pico.png">
 </p>
 
 
-```
+```cpp
 Starting AdvancedWebServer on RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library
 EthernetWebServer_SSL v1.9.3
 [ETHERNET_WEBSERVER] =========== USE_ETHERNET_GENERIC ===========
@@ -2291,10 +2295,10 @@ HTTP EthernetWebServer is @ IP : 192.168.2.99
 The following are debug terminal output and screen shot when running example [AdvancedWebServer_QNEthernet](examples/QNEthernet/AdvancedWebServer_QNEthernet) on **Teensy 4.1** using QNEthernet Library
 
 <p align="center">
-    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/pics/AdvancedWebServer_QNEthernet.png">
+    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/raw/main/pics/AdvancedWebServer_QNEthernet.png">
 </p>
 
-```
+```cpp
 Starting AdvancedWebServer_QNEthernet on TEENSY 4.1 using QNEthernet
 EthernetWebServer_SSL v1.9.3
 [ETHERNET_WEBSERVER] =========== USE_QN_ETHERNET ===========
@@ -2311,7 +2315,7 @@ HTTP EthernetWebServer is @ IP : 192.168.2.222
 The following are debug terminal output and screen shot when running example [MQTTClient_SSL](examples/QNEthernet/MQTTClient_SSL) on **Teensy 4.1** using QNEthernet Library
 
 
-```
+```cpp
 Starting MQTTClient_SSL on TEENSY 4.1 using QNEthernet
 EthernetWebServer_SSL v1.9.3
 [ETHERNET_WEBSERVER] =========== USE_QN_ETHERNET ===========
@@ -2341,7 +2345,7 @@ Message arrived [MQTT_Pub] Hello from MQTTClient_SSL on TEENSY 4.1
 The following are debug terminal output and screen shot when running example [WebClientMulti_SSL](examples/QNEthernet/WebClientMulti_SSL) on **Teensy 4.1** using QNEthernet Library
 
 
-```
+```cpp
 Starting WebClientMulti_SSL on TEENSY 4.1 using QNEthernet
 EthernetWebServer_SSL v1.9.3
 [ETHERNET_WEBSERVER] =========== USE_QN_ETHERNET ===========
@@ -2420,11 +2424,10 @@ LoopCount 1, Received 2876 bytes in 0.0002 s, rate = 12186.44 kbytes/second
 The following are debug terminal output and screen shot when running example [AdvancedWebServer](examples/AdvancedWebServer) on **PORTENTA_H7_M7** using Portenta_Ethernet Library
 
 <p align="center">
-    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/pics/AdvancedWebServer_PortentaH7.png">
+    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/raw/main/pics/AdvancedWebServer_PortentaH7.png">
 </p>
 
-```
-
+```cpp
 Starting AdvancedWebServer on PORTENTA_H7_M7 with Ethernet using Portenta_Ethernet Library
 EthernetWebServer_SSL v1.9.3
 [ETHERNET_WEBSERVER] ======== USE_PORTENTA_H7_ETHERNET ========
@@ -2443,11 +2446,11 @@ HTTP EthernetWebServer is @ IP : 192.168.2.101
 The following are debug terminal output and screen shot when running example [AdvancedWebServer](examples/AdvancedWebServer) on **PORTENTA_H7_M7** using Portenta_Ethernet Library
 
 <p align="center">
-    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/pics/AdvancedWebServer_RPi_Pico_SPI1.png">
+    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/raw/main/pics/AdvancedWebServer_RPi_Pico_SPI1.png">
 </p>
 
 
-```
+```cpp
 Starting AdvancedWebServer on RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library on SPI1
 EthernetWebServer_SSL v1.9.3
 [EWS] =========== USE_ETHERNET_GENERIC ===========
@@ -2480,11 +2483,11 @@ HTTP EthernetWebServer is @ IP : 192.168.2.104
 The following are debug terminal output and screen shot when running example [AdvancedWebServer_RP2040_SPI1](examples/AdvancedWebServer_RP2040_SPI1) on **MBED RASPBERRY_PI_PICO** with W5500 using Ethernet_Generic Library on `SPI1` and [ArduinoCore-mbed](https://github.com/arduino/ArduinoCore-mbed)
 
 <p align="center">
-    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/pics/AdvancedWebServer_Mbed_RPi_Pico_SPI1.png">
+    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/raw/main/pics/AdvancedWebServer_Mbed_RPi_Pico_SPI1.png">
 </p>
 
 
-```
+```cpp
 Starting AdvancedWebServer_RP2040_SPI1 on MBED RASPBERRY_PI_PICO with W5x00 using Ethernet_Generic Library with Large Buffer
 EthernetWebServer_SSL v1.9.3
 [EWS] =========== USE_ETHERNET_GENERIC ===========
@@ -2515,14 +2518,14 @@ HTTP EthernetWebServer is @ IP : 192.168.2.85
 The following are debug terminal output and screen shot when running example [AdvancedWebServer_Teensy4x_SPI1](examples/AdvancedWebServer_Teensy4x_SPI1) on **Teensy 4.1** with W5500 using Ethernet_Generic Library on SPI1
 
 <p align="center">
-    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/pics/AdvancedWebServer_Teensy41_SPI1.png">
+    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/raw/main/pics/AdvancedWebServer_Teensy41_SPI1.png">
 </p>
 
 <p align="center">
-    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/blob/main/pics/Teensy41_pinout.png">
+    <img src="https://github.com/khoih-prog/EthernetWebServer_SSL/raw/main/pics/Teensy41_pinout.png">
 </p>
 
-```
+```cpp
 Starting AdvancedWebServer_Teensy4x_SPI1 on TEENSY 4.1 with W5x00 using Ethernet_Generic Library with Large Buffer
 EthernetWebServer_SSL v1.9.3
 [EWS] =========== USE_ETHERNET_GENERIC ===========
@@ -2555,7 +2558,7 @@ HTTP EthernetWebServer is @ IP : 192.168.2.95
 The following are debug terminal output and screen shot when running example [MQTTClient_SSL](examples/MQTTClient_SSL) on **SAMD_ZERO** with W5100 using Ethernet_Generic Library on SPI
 
 
-```
+```cpp
 Start MQTTClient_SSL on SAMD_ZERO with W5x00 using Ethernet_Generic Library on SPI0/SPI
 EthernetWebServer_SSL v1.9.3
 [EWS] =========== USE_ETHERNET_GENERIC ===========
@@ -2712,4 +2715,4 @@ If you want to contribute to this project:
 
 ## Copyright
 
-Copyright 2020- Khoi Hoang
+Copyright (c) 2020- Khoi Hoang

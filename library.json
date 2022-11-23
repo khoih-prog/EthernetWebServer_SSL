@@ -33,13 +33,13 @@
     {
       "owner": "khoih-prog",
       "name": "Ethernet_Generic",
-      "version": "^2.6.2",
+      "version": "^2.7.1",
       "platforms": ["*"]
     },
     {
       "owner": "ssilverman",
       "name": "QNEthernet",
-      "version": ">=0.15.0",
+      "version": ">=0.16.0",
       "platforms": ["teensy"]
     }
   ],
