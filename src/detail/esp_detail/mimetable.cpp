@@ -8,7 +8,7 @@
 
   Built by Khoi Hoang https://github.com/khoih-prog/EthernetWebServer_SSL
 
-  Version: 1.9.3
+  Version: 1.10.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
@@ -22,6 +22,7 @@
   1.9.1   K Hoang      25/08/2022 Auto-select SPI SS/CS pin according to board package
   1.9.2   K Hoang      07/09/2022 Slow SPI clock for old W5100 shield or SAMD Zero. Improve support for SAMD21
   1.9.3   K Hoang      26/10/2022 Add support to Seeed XIAO_NRF52840 and XIAO_NRF52840_SENSE using `mbed` or `nRF52` core
+  1.10.0  K Hoang      22/12/2022 Fix compile errors for new ESP32 core v2.0.6
  *****************************************************************************************************************************/
 
 #if (ESP32 || ESP8266)
