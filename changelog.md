@@ -9,6 +9,7 @@
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Donate to my libraries using BuyMeACoffee" style="height: 50px !important;width: 181px !important;" ></a>
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-orange.svg?logo=buy-me-a-coffee&logoColor=FFDD00" style="height: 20px !important;width: 200px !important;" ></a>
 
+
 ---
 ---
 
@@ -16,6 +17,7 @@
 
 
 * [Changelog](#changelog)
+  * [Releases v1.10.0](#releases-v1100)
   * [Releases v1.9.3](#releases-v193)
   * [Releases v1.9.2](#releases-v192)
   * [Releases v1.9.1](#releases-v191)
@@ -47,6 +49,10 @@
 ---
 
 ## Changelog
+
+### Releases v1.10.0
+
+1. Fix compile errors for new ESP32 core `v2.0.6`
 
 ### Releases v1.9.3
 
